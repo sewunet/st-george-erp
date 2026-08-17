@@ -2,7 +2,7 @@ version: "2.4"
 
 services:
   odoo:
-    image: ghcr.io/nstda/st-george_odoo
+    image: ghcr.io/sewunet/st-george_odoo
     restart: always
     container_name: st-george-odoo
     env_file:

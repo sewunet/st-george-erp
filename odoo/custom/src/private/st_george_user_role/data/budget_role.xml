@@ -10,7 +10,7 @@
         <field name="group_id" ref="group_role_budget_manager" />
         <field
             name="implied_ids"
-            eval="[(6, 0, [ref('egov_user_role.group_role_employee'),
+            eval="[(6, 0, [ref('st_george_user_role.group_role_employee'),
                            ref('account.group_account_invoice'),
                            ref('budget_control.group_budget_control_manager'),
                            ref('purchase_request.group_purchase_request_manager'),

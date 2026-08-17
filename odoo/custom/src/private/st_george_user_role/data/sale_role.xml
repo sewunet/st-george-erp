@@ -10,7 +10,7 @@
         <field name="group_id" ref="group_role_sale_user" />
         <field
             name="implied_ids"
-            eval="[(6, 0, [ref('egov_user_role.group_role_employee'),
+            eval="[(6, 0, [ref('st_george_user_role.group_role_employee'),
                            ref('sales_team.group_sale_salesman'),
                            ref('stock.group_stock_user'),
                            ])]"

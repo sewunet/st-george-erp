@@ -2,32 +2,20 @@ name: Docker Image Push
 
 on:
   push:
-    # Publish `main` as Docker `latest` image.
     branches:
       - main
       - seed
-
-    # Publish `v1.2.3` tags as releases.
     tags:
       - v*
-
-  # Run tests for any PRs.
   pull_request:
 
 env:
-  IMAGE_NAME: egov_odoo
+  # Updated to st-george_odoo to match your docker-compose.yml
+  IMAGE_NAME: st-george_odoo
   DOODBA_ENVIRONMENT: prod
-  ODOO_VERSION: "15.0"
-  DB_FILTER: "prod"
-  PGDATABASE: "prod"
-  LIST_DB: "true"
-  PROXY_MODE: "true"
-
-  
+  ODOO_VERSION: "19.0"
 
 jobs:
-  # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
   push:
     runs-on: ubuntu-latest
     permissions:
@@ -35,28 +23,43 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v3
+      # Fix 1: Fetch all git submodules recursively so Doodba has Odoo source code
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Build image
-        run: docker build ./odoo --file ./odoo/Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}" --build-arg ODOO_VERSION=$ODOO_VERSION
+        run: |
+          docker build ./odoo \
+            --file ./odoo/Dockerfile \
+            --tag $IMAGE_NAME \
+            --label "runnumber=${GITHUB_RUN_ID}" \
+            --build-arg ODOO_VERSION=$ODOO_VERSION
 
+      # Fix 2: Login only on push (prevents error/failure during pull requests)
       - name: Log in to registry
-        # This is where you will update the personal access token to GITHUB_TOKEN
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+        if: github.event_name != 'pull_request'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+      # Fix 3: Tag and push image
       - name: Push image
+        if: github.event_name != 'pull_request'
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
 
-          # Change all uppercase to lowercase
+          # Convert repository owner and image name to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          # Strip git ref prefix from version
+
+          # Extract version/branch/tag
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name
+
+          # Strip "v" prefix from tag releases (e.g., v1.0.0 -> 1.0.0)
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          # Use Docker `latest` tag convention
+
+          # Alias 'main' branch to 'latest'
           [ "$VERSION" == "main" ] && VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
+
+          echo "Target Image ID: $IMAGE_ID:$VERSION"
+
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
