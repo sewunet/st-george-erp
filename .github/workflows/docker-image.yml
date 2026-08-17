@@ -3,7 +3,7 @@ name: Docker Image Push
 on:
   push:
     branches:
-      - main
+      - master
       - seed
     tags:
       - v*
