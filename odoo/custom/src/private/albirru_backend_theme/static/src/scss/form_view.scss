@@ -1,0 +1,493 @@
+// Albirru Backend Theme - Form View Styles
+// Compatible with Odoo 19
+
+.o_form_view {
+    background: var(--albirru-light-bg);
+    border: none;
+
+    // Form Sheet Container
+    .o_form_view_container {
+        background: var(--albirru-light-bg);
+    }
+
+    // Form Sheet
+    .o_form_sheet_bg {
+        background: var(--albirru-light-bg);
+        padding: var(--albirru-spacing-sm) var(--albirru-spacing-lg) 0 var(--albirru-spacing-lg);
+        border: none;
+
+        .o_form_sheet {
+            background: var(--albirru-light-bg-secondary);
+            border-radius: var(--albirru-radius-lg);
+            box-shadow: var(--albirru-shadow-md);
+            padding: var(--albirru-spacing-xl);
+            max-width: 100%; // Remove max-width constraint from sheet, let container handle it
+            margin-bottom: var(--albirru-spacing-lg);
+            border: 1px solid var(--albirru-light-border);
+
+            @media (max-width: #{$breakpoint-md-max}) {
+                padding: var(--albirru-spacing-md);
+                margin: 0;
+                border-radius: 0;
+            }
+        }
+    }
+
+    // Form Title
+    .oe_title {
+        margin-bottom: var(--albirru-spacing-lg);
+
+        h1 {
+            color: var(--albirru-primary);
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .o_field_widget {
+            input {
+                font-size: var(--albirru-font-xl);
+                font-weight: 700;
+                color: var(--albirru-primary);
+
+                &::placeholder {
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+
+    // Field Labels
+    .o_form_label {
+        font-weight: 600;
+        color: var(--albirru-light-text);
+        font-size: var(--albirru-font-sm);
+        margin-bottom: 4px;
+
+        &.o_required_modifier {
+            color: var(--albirru-primary);
+        }
+    }
+
+    // Input Fields - Bordered Style (Default)
+    .o_field_widget {
+        margin-bottom: 2px;
+
+        input.o_input,
+        textarea.o_input,
+        .o_input,
+        select.o_input {
+            border: 1px solid var(--albirru-light-border);
+            border-radius: var(--albirru-radius-md);
+            padding: 8px 12px;
+            background-color: var(--albirru-light-bg-secondary);
+            color: var(--albirru-light-text);
+            transition: border-color var(--albirru-transition-fast), box-shadow var(--albirru-transition-fast), background-color var(--albirru-transition-fast);
+
+            &:focus {
+                border-color: var(--albirru-primary);
+                background-color: var(--albirru-light-bg-secondary);
+                box-shadow: 0 0 0 3px rgba(var(--albirru-primary-rgb), 0.12);
+                outline: none;
+            }
+
+            &:hover:not(:focus) {
+                border-color: color-mix(in srgb, var(--albirru-light-border) 70%, black);
+            }
+        }
+
+        &.o_field_boolean_toggle {
+            .o_switch {
+                >input:checked+label {
+                    background-color: var(--albirru-primary);
+                }
+            }
+        }
+    }
+
+    // Notebook Tabs
+    .o_notebook {
+        margin-top: var(--albirru-spacing-xl);
+
+        .nav-tabs {
+            border-bottom: 1px solid var(--albirru-light-border);
+            gap: 2px;
+
+            .nav-item {
+                .nav-link {
+                    border: none;
+                    border-bottom: 3px solid transparent;
+                    margin-bottom: -1px;
+                    padding: 10px 16px;
+                    color: var(--albirru-light-text-muted);
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    font-size: var(--albirru-font-xs);
+                    letter-spacing: 0.5px;
+                    border-radius: 0;
+                    transition: all var(--albirru-transition-fast);
+
+                    &:hover {
+                        color: var(--albirru-primary);
+                        background: transparent;
+                        border-bottom-color: rgba(var(--albirru-primary-rgb), 0.3);
+                    }
+
+                    &.active {
+                        color: var(--albirru-primary);
+                        border-bottom-color: var(--albirru-primary);
+                        background: transparent;
+                    }
+                }
+            }
+        }
+
+        .tab-content {
+            padding: var(--albirru-spacing-lg) 0;
+        }
+    }
+
+    // Status Bar
+    .o_form_statusbar {
+        background: var(--albirru-light-bg-secondary);
+        border-bottom: 1px solid var(--albirru-light-border);
+        padding: 8px var(--albirru-spacing-lg);
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .o_statusbar_buttons {
+            // web.StatusBarButtons ships `gap-1` on this element and Bootstrap
+            // generates its utilities with !important, so specificity cannot
+            // widen the button spacing here.
+            gap: 8px !important;
+
+            .btn {
+                border-radius: var(--albirru-radius-md);
+                font-weight: 600;
+                padding: 6px 16px;
+                text-transform: none;
+            }
+        }
+
+        .o_statusbar_status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            .o_arrow_button {
+                border-radius: 20px;
+                padding: 6px 16px;
+                font-weight: 600;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                transition: all var(--albirru-transition-fast);
+                position: relative;
+                border: 1px solid var(--albirru-light-border);
+                background: var(--albirru-light-bg);
+                color: var(--albirru-light-text-muted);
+
+                &.o_arrow_button_current {
+                    background: linear-gradient(135deg, var(--albirru-primary) 0%, color-mix(in srgb, var(--albirru-primary) 85%, black) 100%);
+                    color: white;
+                    border-color: var(--albirru-primary);
+                    box-shadow: 0 2px 8px rgba(var(--albirru-primary-rgb), 0.3);
+                }
+
+                &:hover:not(.o_arrow_button_current):not(.disabled) {
+                    background: var(--albirru-light-hover);
+                    border-color: var(--albirru-primary);
+                    color: var(--albirru-primary);
+                }
+
+                &:before,
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // Button Box
+    .oe_button_box {
+        margin-bottom: var(--albirru-spacing-md);
+
+        .oe_stat_button {
+            border-radius: var(--albirru-radius-md);
+            border: 1px solid var(--albirru-light-border);
+            margin-left: 8px;
+            transition: all var(--albirru-transition-fast);
+
+            &:hover {
+                background-color: var(--albirru-light-hover);
+                border-color: var(--albirru-primary);
+            }
+
+            .o_button_icon {
+                color: var(--albirru-primary);
+            }
+        }
+    }
+}
+
+// Chatter General Improvements
+.o_form_view {
+    .o-mail-Form-chatter {
+        background: var(--albirru-light-bg);
+        border-left: 1px solid var(--albirru-light-border);
+        padding: 0;
+
+        .o-mail-Chatter {
+            background: var(--albirru-light-bg-secondary);
+            margin: var(--albirru-spacing-lg);
+            border-radius: var(--albirru-radius-lg);
+            box-shadow: var(--albirru-shadow-md);
+            border: 1px solid var(--albirru-light-border);
+            overflow: hidden;
+
+            .o-mail-Chatter-top {
+                background: var(--albirru-light-bg-secondary);
+                border-bottom: 1px solid var(--albirru-light-border);
+                padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+            }
+        }
+    }
+}
+
+// Chatter Position - Right (default behavior with width consistency)
+html[data-albirru-chatter="right"] {
+    .o_action_manager {
+        .o_form_view.o_xxl_form_view {
+
+            // The form view itself - ensure it takes proper space
+            .o_form_view_container {
+                flex: 1 1 auto;
+                overflow-y: auto;
+            }
+
+            // The form renderer contains both sheet and chatter
+            .o_form_renderer {
+                display: flex;
+                flex-direction: row;
+                height: 100%;
+
+                // Form sheet background - should take remaining space
+                .o_form_sheet_bg {
+                    flex: 1 1 auto;
+                    overflow-y: auto;
+                    min-width: 0; // Important for flex shrinking
+
+                    // Status bar inside form sheet bg - should match form sheet width
+                    .o_form_statusbar {
+                        background: var(--albirru-light-bg-secondary);
+                        border-bottom: 1px solid var(--albirru-light-border);
+                        border-radius: var(--albirru-radius-lg) var(--albirru-radius-lg) 0 0;
+                        margin-bottom: 0;
+                        box-shadow: var(--albirru-shadow-sm);
+                    }
+
+                    // Form sheet - remove top border radius when statusbar exists
+                    .o_form_sheet {
+                        border-radius: 0 0 var(--albirru-radius-lg) var(--albirru-radius-lg);
+                        margin-top: 0;
+                    }
+
+                    // When no statusbar, keep normal border radius
+                    .o_form_sheet:first-child {
+                        border-radius: var(--albirru-radius-lg);
+                    }
+                }
+
+                // Chatter aside - fixed width
+                .o-mail-Form-chatter.o-aside {
+                    flex: 0 0 auto;
+                    width: 360px;
+                    min-width: 360px;
+                    max-width: 360px;
+                    overflow-y: auto;
+                }
+            }
+        }
+    }
+}
+
+// Chatter Position - Bottom
+html[data-albirru-chatter="bottom"] {
+    .o_form_view.o_xxl_form_view {
+        // form_controller.scss pins `flex-flow: row nowrap !important` on
+        // .o_xxl_form_view, which is exactly the wide-screen case this option
+        // exists for. Without !important the chatter silently stays on the right.
+        flex-direction: column !important;
+        flex-flow: column nowrap !important;
+        display: flex;
+        height: 100%;
+        overflow: hidden;
+
+        .o_form_view_container {
+            width: 100%;
+            height: 100%;
+            flex: 1 1 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .o_form_renderer {
+        flex-direction: column;
+        flex-flow: column nowrap;
+        display: flex;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        overflow-x: auto;
+        height: 100%;
+
+        .o_form_sheet_bg {
+            overflow: visible;
+            flex: 0 0 auto;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            min-height: auto;
+            // Reduced top padding (5px), keep left/right/bottom for proper spacing
+            padding: 5px var(--albirru-spacing-lg) var(--albirru-spacing-lg) var(--albirru-spacing-lg);
+
+            // Status bar - full width styling
+            .o_form_statusbar {
+                background: var(--albirru-light-bg-secondary);
+                border-bottom: 1px solid var(--albirru-light-border);
+                border-radius: var(--albirru-radius-lg) var(--albirru-radius-lg) 0 0;
+                margin-bottom: 0;
+                box-shadow: var(--albirru-shadow-sm);
+            }
+
+            // Form sheet - full width
+            .o_form_sheet {
+                max-width: 100%;
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                margin-bottom: 0;
+                border-radius: 0 0 var(--albirru-radius-lg) var(--albirru-radius-lg);
+            }
+
+            // When no statusbar, keep full border radius
+            .o_form_sheet:first-child {
+                border-radius: var(--albirru-radius-lg);
+            }
+        }
+
+        .o-mail-Form-chatter {
+            width: 100%;
+            max-width: 100%;
+            flex: 0 0 auto;
+            margin-top: 0;
+            height: auto;
+            min-height: auto;
+        }
+    }
+
+    .o_form_view {
+        --formView-sheetBg-padding-right: var(--albirru-spacing-lg);
+
+        .o-mail-Form-chatter {
+            &.o-aside {
+                width: 100%;
+                max-width: 100%;
+                border-left: none;
+                border-top: 1px solid var(--albirru-light-border);
+                padding: var(--albirru-spacing-lg);
+                background: var(--albirru-light-bg);
+                margin: 0;
+
+                .o-mail-Chatter {
+                    max-width: 100%;
+                    margin: 0;
+                    width: 100%;
+                    box-shadow: var(--albirru-shadow-md);
+                    border-radius: var(--albirru-radius-lg);
+                    height: auto;
+                    min-height: auto;
+                }
+            }
+
+            &:not(.o-aside) {
+                padding: var(--albirru-spacing-lg);
+                max-width: 100%;
+                margin: 0;
+                width: 100%;
+
+                .o-mail-Chatter {
+                    height: auto;
+                    min-height: auto;
+                }
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Field labels inside <group>.
+//
+// form_controller.scss resets `font-weight` to normal and `margin-bottom` to
+// its own spacing unit at `.o_form_view .o_group .o_form_label`, which is more
+// specific than the theme's `.o_form_view .o_form_label`. Since practically
+// every field label sits inside a group, the theme's label styling above only
+// ever applied to the handful of labels declared outside one. Matching core's
+// selector exactly lets source order settle it, and leaves core's deliberate
+// `.o_wrap_label .o_form_label` bold rule intact.
+//
+// Colour and font-size are not repeated here: core sets neither at this depth,
+// so the rule above still wins for them.
+// ---------------------------------------------------------------------------
+.o_form_view .o_group .o_form_label {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+// Input Style - Underlined
+html[data-albirru-input="underlined"] {
+    .o_form_view {
+        .o_field_widget {
+
+            input.o_input,
+            textarea.o_input,
+            .o_input,
+            select.o_input {
+                border: none;
+                border-bottom: 1px solid var(--albirru-light-border);
+                border-radius: 0;
+                padding-left: 0;
+                padding-right: 0;
+
+                &:focus {
+                    border-bottom-color: var(--albirru-primary);
+                    box-shadow: 0 1px 0 0 var(--albirru-primary);
+                }
+            }
+        }
+    }
+}
+
+// Input Style - Filled
+html[data-albirru-input="filled"] {
+    .o_form_view {
+        .o_field_widget {
+
+            input.o_input,
+            textarea.o_input,
+            .o_input,
+            select.o_input {
+                border: none;
+                background: var(--albirru-light-hover);
+                border-radius: var(--albirru-radius-md);
+
+                &:focus {
+                    background: var(--albirru-light-bg-secondary);
+                    box-shadow: 0 0 0 2px var(--albirru-primary);
+                }
+            }
+        }
+    }
+}

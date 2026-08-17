@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="club_shell_header" name="St. George Club Header">
+        <section class="sg-home-topbar" aria-label="Club contact and social links">
+            <div class="sg-home-container sg-home-topbar__inner">
+                <div class="sg-home-contact">
+                    <a href="mailto:info@stgeorgesportsclub.com">info@stgeorgesportsclub.com</a>
+                    <a href="tel:+251115555555">+251-11-555-5555</a>
+                </div>
+                <nav class="sg-home-social" aria-label="Social links">
+                    <a href="#" aria-label="Facebook placeholder">Facebook</a>
+                    <a href="#" aria-label="X/Twitter placeholder">X/Twitter</a>
+                    <a href="#" aria-label="YouTube placeholder">YouTube</a>
+                    <a href="#" aria-label="Instagram placeholder">Instagram</a>
+                </nav>
+            </div>
+        </section>
+
+        <header class="sg-home-header">
+            <div class="sg-home-container sg-home-header__inner">
+                <a class="sg-home-brand" href="/" aria-label="St. George Sports Club home">
+                    <img src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                    <span>
+                        <strong>ST. GEORGE</strong>
+                        <small>SPORTS CLUB</small>
+                        <em>SINCE 1935</em>
+                    </span>
+                </a>
+                <nav class="sg-home-nav" aria-label="Club navigation">
+                    <a href="/">Home</a>
+                    <a href="/club/events">Events</a>
+                    <a href="/club/fan/register">Join as a Fan</a>
+                    <a href="/club#latest-club-updates">News</a>
+                    <a href="/club#about-club">About Us</a>
+                    <a href="/contactus">Contact Us</a>
+                </nav>
+                <div class="sg-home-header__actions">
+                    <a class="sg-home-icon-link" href="/website/search" aria-label="Search"><i class="fa fa-search" aria-hidden="true"/></a>
+                    <a class="sg-home-account" t-att-href="'/web' if not request.env.user._is_public() else '/web/login'">
+                        <t t-if="request.env.user._is_public()">Sign In</t>
+                        <t t-else="">My Account</t>
+                    </a>
+                    <a class="sg-home-contact-btn" href="/contactus">Contact Us</a>
+                </div>
+            </div>
+        </header>
+    </template>
+
+    <template id="club_shell_footer" name="St. George Club Footer">
+        <footer class="sg-home-footer">
+            <div class="sg-home-container sg-home-footer__grid">
+                <section>
+                    <img src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                    <h2>ST. GEORGE SPORTS CLUB</h2>
+                    <p class="sg-home-footer__since">SINCE 1935</p>
+                    <p>One Club. One Heart. One Legacy.</p>
+                </section>
+                <section>
+                    <h2>Useful Links</h2>
+                    <a href="/">Home</a>
+                    <a href="/club/events">Events</a>
+                    <a href="/club/fan/register">Join as a Fan</a>
+                    <a href="/club#latest-club-updates">News</a>
+                    <a href="/club#about-club">About Us</a>
+                    <a href="/contactus">Contact Us</a>
+                </section>
+                <section>
+                    <h2>About Us</h2>
+                    <p>St. George Sports Club is a proud football institution built on heritage, unity, and enduring supporter passion.</p>
+                </section>
+                <section>
+                    <h2>Connect With Us</h2>
+                    <p>+251-11-555-5555</p>
+                    <p>info@stgeorgesportsclub.com</p>
+                    <p>Addis Ababa Stadium, Addis Ababa</p>
+                    <div class="sg-home-footer__social" aria-label="Social links">
+                        <a href="#" aria-label="Facebook placeholder"><i class="fa fa-facebook" aria-hidden="true"/></a>
+                        <a href="#" aria-label="X/Twitter placeholder"><i class="fa fa-twitter" aria-hidden="true"/></a>
+                        <a href="#" aria-label="YouTube placeholder"><i class="fa fa-youtube-play" aria-hidden="true"/></a>
+                        <a href="#" aria-label="Instagram placeholder"><i class="fa fa-instagram" aria-hidden="true"/></a>
+                    </div>
+                </section>
+            </div>
+            <div class="sg-home-footer__bottom">
+                <p>&#169; 2026 St. George Sports Club. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </template>
+
+    <template id="club_home" name="Football Club Portal">
+        <t t-set="body_classname" t-value="'sg-club-body'"/>
+        <t t-set="no_header" t-value="True"/>
+        <t t-set="no_footer" t-value="True"/>
+        <t t-call="website.layout">
+            <main id="wrap" class="sg-homepage sg-club-page">
+                <t t-call="football_club_portal.club_shell_header"/>
+
+                <section class="sg-home-hero" id="about-club">
+                    <div class="sg-home-hero__shade" aria-hidden="true"/>
+                    <div class="sg-home-hero__accent sg-home-hero__accent--top" aria-hidden="true"/>
+                    <div class="sg-home-hero__accent sg-home-hero__accent--bottom" aria-hidden="true"/>
+                    <div class="sg-home-container sg-home-hero__inner">
+                        <div class="sg-home-hero__copy">
+                            <img class="sg-home-hero__crest" src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                            <h1>ONE CLUB.<br/><span>ONE HEART.</span><br/>ONE LEGACY.</h1>
+                            <p class="sg-home-hero__intro">Welcome to the official website of<br/>St. George Sports Club.</p>
+                            <p class="sg-home-hero__text">A legacy of excellence. A future of greatness. Together we rise.</p>
+                            <a class="sg-home-primary-btn" href="#about-club">Explore Our Club</a>
+                        </div>
+                        <figure class="sg-home-hero__visual" aria-hidden="true">
+                            <img src="/football_club_portal/static/src/img/home_team_huddle.png" alt=""/>
+                        </figure>
+                    </div>
+                </section>
+
+                <section class="sg-home-legacy" aria-label="Club legacy highlights">
+                    <div class="sg-home-container sg-home-legacy__grid">
+                        <article>
+                            <i class="fa fa-trophy" aria-hidden="true"/>
+                            <h2>Historic Legacy</h2>
+                            <p>Since 1935</p>
+                        </article>
+                        <article>
+                            <i class="fa fa-users" aria-hidden="true"/>
+                            <h2>Strong Community</h2>
+                            <p>Thousands of Fans</p>
+                        </article>
+                        <article>
+                            <i class="fa fa-futbol-o" aria-hidden="true"/>
+                            <h2>Championship Spirit</h2>
+                            <p>Winning Tradition</p>
+                        </article>
+                        <article>
+                            <i class="fa fa-heart" aria-hidden="true"/>
+                            <h2>One Club. One Heart.</h2>
+                            <p>One Legacy.</p>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="sg-home-updates" id="latest-club-updates">
+                    <div class="sg-home-container">
+                        <div class="sg-home-section-heading">
+                            <div>
+                                <p>Club calendar</p>
+                                <h2>Latest News &amp; Events</h2>
+                            </div>
+                            <a href="/club/events">View All</a>
+                        </div>
+                        <div class="sg-home-updates__layout">
+                            <div class="sg-home-card-grid">
+                                <t t-foreach="events" t-as="event">
+                                    <article class="sg-home-news-card sg-home-news-card--event">
+                                        <a class="sg-home-news-card__media" t-att-href="event.website_url or ('/club/events/%s' % event.id)">
+                                            <img t-if="event.cover_image" t-att-src="'/web/image/football.club.event/%s/cover_image' % event.id" t-att-alt="event.name"/>
+                                            <img t-if="not event.cover_image" src="/football_club_portal/static/src/img/home_news_placeholder_1.jpg" alt=""/>
+                                        </a>
+                                        <div class="sg-home-news-card__body">
+                                            <span class="sg-home-badge"><t t-out="dict(event._fields['event_type'].selection).get(event.event_type)"/></span>
+                                            <h3><a t-att-href="event.website_url or ('/club/events/%s' % event.id)"><t t-out="event.name"/></a></h3>
+                                            <p class="sg-home-news-card__meta">
+                                                <span t-field="event.start_datetime" t-options='{"widget": "datetime"}'/>
+                                                <t t-if="event.venue"> - <t t-out="event.venue"/></t>
+                                            </p>
+                                            <p class="sg-home-news-card__summary" t-if="event.short_description"><t t-out="event.short_description"/></p>
+                                            <a class="sg-home-card-link" t-att-href="event.website_url or ('/club/events/%s' % event.id)">Read more</a>
+                                        </div>
+                                    </article>
+                                </t>
+                                <t t-if="len(events) &lt; 1">
+                                    <t t-call="football_club_portal.club_update_card">
+                                        <t t-set="image" t-value="'/football_club_portal/static/src/img/home_news_placeholder_1.jpg'"/>
+                                        <t t-set="title" t-value="'Matchday Spirit'"/>
+                                        <t t-set="text" t-value="'Club Update: Follow the latest moments from the St. George community and matchday culture.'"/>
+                                    </t>
+                                </t>
+                                <t t-if="len(events) &lt; 2">
+                                    <t t-call="football_club_portal.club_update_card">
+                                        <t t-set="image" t-value="'/football_club_portal/static/src/img/home_news_placeholder_2.jpg'"/>
+                                        <t t-set="title" t-value="'Community Connection'"/>
+                                        <t t-set="text" t-value="'Club Update: Supporters remain at the heart of the club story across every generation.'"/>
+                                    </t>
+                                </t>
+                                <t t-if="len(events) &lt; 3">
+                                    <t t-call="football_club_portal.club_update_card">
+                                        <t t-set="image" t-value="'/football_club_portal/static/src/img/home_news_placeholder_3.jpg'"/>
+                                        <t t-set="title" t-value="'Legacy Continues'"/>
+                                        <t t-set="text" t-value="'Club Update: A proud tradition continues as the club looks toward future achievements.'"/>
+                                    </t>
+                                </t>
+                            </div>
+
+                            <aside class="sg-home-fan-cta" aria-label="Fan registration">
+                                <img src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                                <h2>Join the St. George Family</h2>
+                                <p>Be part of our journey. Register as a fan and stay connected.</p>
+                                <a href="/club/fan/register">Register as Fan</a>
+                            </aside>
+                        </div>
+                    </div>
+                </section>
+
+                <t t-call="football_club_portal.club_shell_footer"/>
+            </main>
+        </t>
+    </template>
+
+    <template id="club_update_card" name="St. George Club Update Card">
+        <article class="sg-home-news-card sg-home-news-card--static">
+            <div class="sg-home-news-card__media">
+                <img t-att-src="image" alt=""/>
+            </div>
+            <div class="sg-home-news-card__body">
+                <span class="sg-home-badge">Club Update</span>
+                <h3><t t-out="title"/></h3>
+                <p class="sg-home-news-card__summary"><t t-out="text"/></p>
+                <a class="sg-home-card-link" href="/club">Explore club</a>
+            </div>
+        </article>
+    </template>
+
+    <template id="fan_registration_form" name="Fan Registration Form">
+        <t t-set="body_classname" t-value="'sg-club-body'"/>
+        <t t-set="no_header" t-value="True"/>
+        <t t-set="no_footer" t-value="True"/>
+        <t t-call="website.layout">
+            <div id="wrap" class="fc-page fc-page--form sg-club-page">
+                <t t-call="football_club_portal.club_shell_header"/>
+                <section class="fc-section">
+                    <div class="container">
+                        <div class="fc-form-shell">
+                            <h1>Fan registration</h1>
+                            <t t-if="errors.get('general')">
+                                <div class="fc-alert" role="alert"><t t-out="errors.get('general')"/></div>
+                            </t>
+                            <form class="fc-form js_fc_fan_registration" method="post" action="/club/fan/register">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div class="fc-form-grid">
+                                    <label>
+                                        <span>First name *</span>
+                                        <input name="first_name" required="required" t-att-value="values.get('first_name', '')"/>
+                                        <small t-if="errors.get('first_name')" class="fc-field-error"><t t-out="errors.get('first_name')"/></small>
+                                    </label>
+                                    <label>
+                                        <span>Middle name</span>
+                                        <input name="middle_name" t-att-value="values.get('middle_name', '')"/>
+                                    </label>
+                                    <label>
+                                        <span>Last name *</span>
+                                        <input name="last_name" required="required" t-att-value="values.get('last_name', '')"/>
+                                        <small t-if="errors.get('last_name')" class="fc-field-error"><t t-out="errors.get('last_name')"/></small>
+                                    </label>
+                                    <label>
+                                        <span>Email</span>
+                                        <input type="email" name="email" t-att-value="values.get('email', '')"/>
+                                    </label>
+                                    <label>
+                                        <span>Phone</span>
+                                        <input name="phone" t-att-value="values.get('phone', '')"/>
+                                    </label>
+                                    <label>
+                                        <span>Gender</span>
+                                        <select name="gender">
+                                            <option value="">Select gender</option>
+                                            <t t-foreach="gender_options" t-as="option">
+                                                <option t-att-value="option[0]" t-att-selected="'selected' if values.get('gender') == option[0] else None"><t t-out="option[1]"/></option>
+                                            </t>
+                                        </select>
+                                        <small t-if="errors.get('gender')" class="fc-field-error"><t t-out="errors.get('gender')"/></small>
+                                    </label>
+                                    <label>
+                                        <span>Date of birth</span>
+                                        <input type="date" name="date_of_birth" t-att-value="values.get('date_of_birth') or ''"/>
+                                        <small t-if="errors.get('date_of_birth')" class="fc-field-error"><t t-out="errors.get('date_of_birth')"/></small>
+                                    </label>
+                                    <label>
+                                        <span>City</span>
+                                        <input name="city" t-att-value="values.get('city', '')"/>
+                                    </label>
+                                    <label>
+                                        <span>Favorite player</span>
+                                        <input name="favorite_player" t-att-value="values.get('favorite_player', '')"/>
+                                    </label>
+                                    <label>
+                                        <span>Supporter since</span>
+                                        <input type="date" name="supporter_since" t-att-value="values.get('supporter_since') or ''"/>
+                                        <small t-if="errors.get('supporter_since')" class="fc-field-error"><t t-out="errors.get('supporter_since')"/></small>
+                                    </label>
+                                    <label>
+                                        <span>Preferred communication</span>
+                                        <select name="preferred_communication">
+                                            <t t-foreach="communication_options" t-as="option">
+                                                <option t-att-value="option[0]" t-att-selected="'selected' if values.get('preferred_communication', 'email') == option[0] else None"><t t-out="option[1]"/></option>
+                                            </t>
+                                        </select>
+                                        <small t-if="errors.get('preferred_communication')" class="fc-field-error"><t t-out="errors.get('preferred_communication')"/></small>
+                                    </label>
+                                </div>
+                                <t t-if="errors.get('contact')">
+                                    <div class="fc-field-error fc-field-error--wide"><t t-out="errors.get('contact')"/></div>
+                                </t>
+                                <label class="fc-consent">
+                                    <input type="checkbox" name="consent_accepted" required="required" t-att-checked="'checked' if values.get('consent_accepted') else None"/>
+                                    <span>I agree that the club may store my registration details for fan communication. *</span>
+                                </label>
+                                <small t-if="errors.get('consent_accepted')" class="fc-field-error"><t t-out="errors.get('consent_accepted')"/></small>
+                                <p class="fc-form-hint js_fc_form_hint d-none">Please review required fields before submitting.</p>
+                                <button class="btn btn-primary fc-submit" type="submit">Submit registration</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+                <t t-call="football_club_portal.club_shell_footer"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="fan_registration_success" name="Fan Registration Success">
+        <t t-set="body_classname" t-value="'sg-club-body'"/>
+        <t t-set="no_header" t-value="True"/>
+        <t t-set="no_footer" t-value="True"/>
+        <t t-call="website.layout">
+            <div id="wrap" class="fc-page fc-page--success sg-club-page">
+                <t t-call="football_club_portal.club_shell_header"/>
+                <section class="fc-section">
+                    <div class="container">
+                        <div class="fc-success-panel">
+                            <p class="fc-eyebrow">Registration received</p>
+                            <h1>Welcome to the club community</h1>
+                            <p>Your fan registration has been saved. If you provided an email address, a confirmation message will be sent shortly.</p>
+                            <a class="btn btn-primary" href="/club">Back to club portal</a>
+                        </div>
+                    </div>
+                </section>
+                <t t-call="football_club_portal.club_shell_footer"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="event_listing" name="Football Club Events">
+        <t t-set="body_classname" t-value="'sg-club-body'"/>
+        <t t-set="no_header" t-value="True"/>
+        <t t-set="no_footer" t-value="True"/>
+        <t t-call="website.layout">
+            <div id="wrap" class="fc-page sg-club-page">
+                <t t-call="football_club_portal.club_shell_header"/>
+                <main class="sg-events-page">
+                    <section class="sg-events-hero" aria-labelledby="sg_events_title">
+                        <div class="sg-events-hero__overlay" aria-hidden="true"/>
+                        <div class="sg-events-container sg-events-hero__content">
+                            <div class="sg-events-hero__copy">
+                                <img src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                                <p>CLUB CALENDAR</p>
+                                <h1 id="sg_events_title">Events</h1>
+                                <span aria-hidden="true"/>
+                                <strong>Discover matches, fan gatherings, and club activities.</strong>
+                            </div>
+                            <form class="sg-events-filters" method="get" action="/club/events">
+                                <div class="sg-events-field sg-events-field--search">
+                                    <label for="sg_event_search">Search events</label>
+                                    <i class="fa fa-search" aria-hidden="true"/>
+                                    <input id="sg_event_search" type="search" name="search" placeholder="Search events..." t-att-value="search or ''" maxlength="80"/>
+                                </div>
+                                <div class="sg-events-field">
+                                    <label for="sg_event_type">Event type</label>
+                                    <select id="sg_event_type" name="event_type" onchange="this.form.submit()">
+                                        <option value="">All event types</option>
+                                        <t t-foreach="event_types" t-as="option">
+                                            <option t-att-value="option[0]" t-att-selected="'selected' if event_type == option[0] else None"><t t-out="option[1]"/></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <button type="submit">Apply filters</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section class="sg-events-filter-pills" aria-label="Event type quick filters">
+                        <div class="sg-events-container">
+                            <nav>
+                                <t t-foreach="event_filter_links" t-as="filter_link">
+                                    <a t-att-href="filter_link['url']" t-att-class="'is-active' if (filter_link['value'] or False) == (event_type or False) else None">
+                                        <t t-out="filter_link['label']"/>
+                                    </a>
+                                </t>
+                            </nav>
+                        </div>
+                    </section>
+
+                    <section class="sg-events-listing" aria-label="Published club events">
+                        <div class="sg-events-container">
+                            <div class="sg-events-grid" t-if="events">
+                                <t t-foreach="events" t-as="event">
+                                    <t t-call="football_club_portal.event_card"/>
+                                </t>
+                            </div>
+                            <div class="sg-events-empty" t-if="not events">
+                                <i class="fa fa-calendar-o" aria-hidden="true"/>
+                                <h2>No events found</h2>
+                                <p>No published events match the current filters. Clear your search or choose another event type.</p>
+                                <a href="/club/events">Clear filters</a>
+                            </div>
+                            <div class="sg-events-pager" t-if="pager and pager.get('page_count', 0) &gt; 1">
+                                <t t-call="website.pager"/>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+                <t t-call="football_club_portal.club_shell_footer"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="event_card" name="Football Club Event Card">
+        <article class="sg-event-card">
+            <a class="sg-event-card__media" t-att-href="event.website_url or ('/club/events/%s' % event.id)" t-att-aria-label="'View details for %s' % event.name">
+                <img t-if="event.cover_image" t-att-src="'/web/image/football.club.event/%s/cover_image' % event.id" t-att-alt="event.name"/>
+                <div t-if="not event.cover_image" class="sg-event-card__fallback" aria-hidden="true">
+                    <img src="/football_club_portal/static/src/img/st_george_logo.png" alt=""/>
+                </div>
+            </a>
+            <div class="sg-event-card__body">
+                <span class="sg-event-card__badge"><t t-out="dict(event._fields['event_type'].selection).get(event.event_type)"/></span>
+                <h2><a t-att-href="event.website_url or ('/club/events/%s' % event.id)"><t t-out="event.name"/></a></h2>
+                <div class="sg-event-card__meta">
+                    <span><i class="fa fa-calendar" aria-hidden="true"/> <span t-field="event.start_datetime" t-options='{"widget": "datetime"}'/></span>
+                    <span t-if="event.venue"><i class="fa fa-map-marker" aria-hidden="true"/> <t t-out="event.venue"/></span>
+                </div>
+                <p t-if="event.short_description" class="sg-event-card__summary"><t t-out="event.short_description"/></p>
+                <a class="sg-event-card__link" t-att-href="event.website_url or ('/club/events/%s' % event.id)">View details <i class="fa fa-arrow-right" aria-hidden="true"/></a>
+            </div>
+        </article>
+    </template>
+
+    <template id="event_detail" name="Football Club Event Detail">
+        <t t-set="body_classname" t-value="'sg-club-body'"/>
+        <t t-set="no_header" t-value="True"/>
+        <t t-set="no_footer" t-value="True"/>
+        <t t-call="website.layout">
+            <div id="wrap" class="fc-page sg-club-page">
+                <t t-call="football_club_portal.club_shell_header"/>
+                <article class="fc-event-detail">
+                    <section class="club-event-hero" aria-label="Event cover image">
+                        <div class="container">
+                            <figure class="club-event-hero__frame">
+                                <img t-if="event.cover_image" t-att-src="'/web/image/football.club.event/%s/cover_image' % event.id" t-att-alt="event.name"/>
+                                <div t-if="not event.cover_image" class="fc-event-detail__fallback">FC</div>
+                            </figure>
+                        </div>
+                    </section>
+                    <section class="fc-section fc-event-detail__content">
+                        <div class="container">
+                            <span class="fc-status"><t t-out="dict(event._fields['event_type'].selection).get(event.event_type)"/></span>
+                            <h1><t t-out="event.name"/></h1>
+                            <div class="fc-detail-meta">
+                                <span><span t-field="event.start_datetime" t-options='{"widget": "datetime"}'/></span>
+                                <span t-if="event.end_datetime">Ends <span t-field="event.end_datetime" t-options='{"widget": "datetime"}'/></span>
+                                <span t-if="event.venue"><t t-out="event.venue"/></span>
+                            </div>
+                            <p t-if="event.short_description" class="fc-lead"><t t-out="event.short_description"/></p>
+                            <div t-if="event.address" class="fc-address">
+                                <h2>Address</h2>
+                                <p><t t-out="event.address"/></p>
+                            </div>
+                            <div t-if="event.description" class="fc-rich-text" t-field="event.description"/>
+                            <a class="btn btn-primary" href="/club/events">Back to events</a>
+                        </div>
+                    </section>
+                </article>
+                <t t-call="football_club_portal.club_shell_footer"/>
+            </div>
+        </t>
+    </template>
+</odoo>
+

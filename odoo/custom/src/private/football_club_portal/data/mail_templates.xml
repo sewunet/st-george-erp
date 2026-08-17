@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_template_fan_registration" model="mail.template">
+        <field name="name">Football Club Fan Registration Confirmation</field>
+        <field name="model_id" ref="model_football_club_fan"/>
+        <field name="subject">Your football club fan registration</field>
+        <field name="email_from">{{ user.email_formatted or '' }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <t t-out="object.name or 'Fan'"/>,</p>
+                <p>Thank you for joining the club community.</p>
+                <p>Your registration number is <strong><t t-out="object.registration_number"/></strong>.</p>
+                <p>We are glad to have you with us.</p>
+            </div>
+        </field>
+    </record>
+</odoo>
+

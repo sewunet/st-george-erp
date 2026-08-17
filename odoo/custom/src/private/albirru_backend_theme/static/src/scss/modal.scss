@@ -1,0 +1,207 @@
+// Albirru Backend Theme - Modal Styles
+// Compatible with Odoo 19
+
+.modal {
+    // Modal Dialog
+    .modal-dialog {
+        // Animation
+        &.modal-dialog-centered {
+            animation: albirruModalSlide 0.2s ease-out;
+        }
+    }
+
+    // Modal Content
+    .modal-content {
+        border: none;
+        border-radius: var(--albirru-radius-lg);
+        box-shadow: var(--albirru-shadow-lg);
+        overflow: hidden;
+    }
+
+    // Modal Header
+    .modal-header {
+        background: var(--albirru-light-bg-secondary);
+        border-bottom: 1px solid var(--albirru-light-border);
+        padding: var(--albirru-spacing-md) var(--albirru-spacing-lg);
+
+        .modal-title {
+            font-weight: 600;
+            font-size: var(--albirru-font-lg);
+            color: var(--albirru-light-text);
+        }
+
+        .btn-close {
+            opacity: 0.5;
+            transition: opacity var(--albirru-transition-fast);
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    // Modal Body
+    .modal-body {
+        padding: var(--albirru-spacing-lg);
+        background: var(--albirru-light-bg-secondary);
+    }
+
+    // Modal Footer
+    .modal-footer {
+        background: var(--albirru-light-bg);
+        border-top: 1px solid var(--albirru-light-border);
+        padding: var(--albirru-spacing-md) var(--albirru-spacing-lg);
+        gap: var(--albirru-spacing-sm);
+
+        .btn {
+            min-width: 80px;
+        }
+    }
+
+    // Full Modal (Form in Modal)
+    &.o_technical_modal,
+    &.o_modal_full {
+        .modal-dialog {
+            max-width: 90vw;
+            margin: 5vh auto;
+        }
+
+        .modal-content {
+            max-height: 90vh;
+        }
+
+        .modal-body {
+            overflow-y: auto;
+        }
+    }
+}
+
+// Modal Sizes
+.modal-sm {
+    .modal-dialog {
+        max-width: 400px;
+    }
+}
+
+.modal-lg {
+    .modal-dialog {
+        max-width: 800px;
+    }
+}
+
+.modal-xl {
+    .modal-dialog {
+        max-width: 1140px;
+    }
+}
+
+// Modal Animation
+@keyframes albirruModalSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Backdrop
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+// Confirmation Dialog
+.o_dialog {
+    .modal-body {
+        .fa-exclamation-triangle,
+        .fa-question-circle,
+        .fa-info-circle {
+            font-size: 48px;
+            margin-bottom: var(--albirru-spacing-md);
+        }
+
+        .fa-exclamation-triangle {
+            color: #f39c12;
+        }
+
+        .fa-question-circle {
+            color: var(--albirru-primary);
+        }
+
+        .fa-info-circle {
+            color: #3498db;
+        }
+    }
+}
+
+// Wizard Modal
+.o_wizard_modal {
+    .modal-body {
+        min-height: 200px;
+    }
+
+    .o_form_view {
+        background: transparent;
+
+        .o_form_sheet_bg {
+            background: transparent;
+            padding: 0;
+
+            .o_form_sheet {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    }
+}
+
+// Search Dialog
+.o_search_dialog {
+    .modal-body {
+        padding: 0;
+    }
+
+    .o_list_view {
+        border-radius: 0;
+    }
+}
+
+// Notification Dialogs
+.o_notification {
+    border-radius: var(--albirru-radius-lg);
+    box-shadow: var(--albirru-shadow-lg);
+    border: none;
+    overflow: hidden;
+
+    &.border-success {
+        border-left: 4px solid #27ae60;
+    }
+
+    &.border-warning {
+        border-left: 4px solid #f39c12;
+    }
+
+    &.border-danger {
+        border-left: 4px solid #e74c3c;
+    }
+
+    &.border-info {
+        border-left: 4px solid #3498db;
+    }
+
+    .o_notification_title {
+        font-weight: 600;
+    }
+
+    .o_notification_close {
+        opacity: 0.5;
+        transition: opacity var(--albirru-transition-fast);
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}

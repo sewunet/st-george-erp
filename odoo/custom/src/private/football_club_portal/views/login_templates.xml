@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="login_form_st_george" inherit_id="web.login" name="St. George Sports Club Login Form" priority="8">
+        <xpath expr="//t[@t-call='web.login_layout']" position="replace">
+            <t t-call="web.frontend_layout">
+                <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
+                <t t-set="body_classname" t-value="'sg-login-body'"/>
+                <t t-set="no_header" t-value="True"/>
+                <t t-set="no_footer" t-value="True"/>
+
+                <div class="sg-login-page">
+                    <section class="sg-login-brand-panel" aria-label="St. George Sports Club">
+                        <div class="sg-login-brand-panel__accent" aria-hidden="true"/>
+                        <div class="sg-login-brand-panel__content">
+                            <div class="sg-login-club-mark">
+                                <img src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                                <div>
+                                    <p class="sg-login-club-name"><span>ST. GEORGE</span><span>SPORTS CLUB</span></p>
+                                    <p class="sg-login-since">SINCE 1935</p>
+                                </div>
+                            </div>
+                            <div class="sg-login-brand-copy">
+                                <h1>ONE CLUB.<br/><span>ONE HEART.</span><br/>ONE LEGACY.</h1>
+                                <p>Welcome to the official portal of St. George Sports Club. Sign in to access authorized club services and stay connected with the club.</p>
+                            </div>
+                            <div class="sg-login-brand-footer">
+                                <span aria-hidden="true" class="sg-login-strokes"/>
+                                <p>Stronger Together.<br/><strong>Proud Forever.</strong></p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="sg-login-form-panel" aria-label="Sign in">
+                        <div class="sg-login-dot-pattern" aria-hidden="true"/>
+                        <div t-attf-class="sg-login-card {{login_card_classes}} o_database_list">
+                            <div class="sg-login-card__header">
+                                <img src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                                <h2>Welcome Back!</h2>
+                                <p>Please sign in to continue</p>
+                            </div>
+
+                            <owl-component t-if="not login" name="web.user_switch"/>
+                            <form t-attf-class="oe_login_form #{'' if login else 'd-none'}" role="form" t-attf-action="/web/login" method="post" onsubmit="this.action = '/web/login' + location.hash" data-captcha="login">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                <div class="mb-3" t-if="databases and len(databases) &gt; 1">
+                                    <label for="db" class="col-form-label">Database</label>
+                                    <div class="input-group">
+                                        <input type="text" name="db" t-att-value="request.db" id="db" class="form-control" required="required" readonly="readonly"/>
+                                        <a role="button" href="/web/database/selector" class="btn btn-secondary">Select <i class="fa fa-database" role="img" aria-label="Database" title="Database"/></a>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 field-login">
+                                    <label for="login" class="form-label d-flex justify-content-between">Email or Username</label>
+                                    <input type="text" placeholder="Email or username" name="login" t-att-value="login" id="login" class="form-control" required="required" autocapitalize="off" autocomplete="username"/>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label d-flex justify-content-between">Password</label>
+                                    <div class="sg-password-field">
+                                        <input type="password" placeholder="Password" name="password" id="password" class="form-control" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096"/>
+                                        <button type="button" class="sg-password-toggle" aria-label="Show password" data-show-label="Show password" data-hide-label="Hide password">Show password</button>
+                                    </div>
+                                </div>
+
+                                <p class="alert alert-danger" t-if="error" role="alert">
+                                    <t t-esc="error"/>
+                                </p>
+                                <p class="alert alert-success" t-if="message" role="status">
+                                    <t t-esc="message"/>
+                                </p>
+
+                                <div class="oe_login_buttons text-center gap-1 d-grid mb-1 pt-3">
+                                    <button type="submit" class="btn btn-primary sg-login-submit">Sign In</button>
+                                    <t t-if="debug">
+                                        <button type="submit" name="redirect" value="/web/become" class="btn btn-link btn-sm">Log in as superuser</button>
+                                    </t>
+                                    <t t-call="web.login_oauth"/>
+                                </div>
+
+                                <input type="hidden" name="type" value="password"/>
+                                <input type="hidden" name="redirect" t-att-value="redirect"/>
+                            </form>
+
+                            <div class="sg-login-card__actions" t-if="not disable_footer">
+                                <a class="sg-login-home-link" href="/club">Back to Home</a>
+                                <div class="sg-login-footer-links">
+                                    <t t-if="not disable_database_manager">
+                                        <a href="/web/database/manager">Manage Databases</a>
+                                    </t>
+                                    <a href="#" aria-label="Privacy Policy placeholder">Privacy Policy</a>
+                                    <a href="#" aria-label="Terms of Use placeholder">Terms of Use</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

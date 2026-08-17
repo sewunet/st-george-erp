@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Albirru Backend Theme - Search Modal Template -->
+<!-- Compatible with Odoo 19 -->
+<templates xml:space="preserve">
+
+    <!-- Global Search Modal -->
+    <t t-name="albirru_backend_theme.SearchModal">
+        <div t-if="state.isOpen" class="albirru-search-modal-backdrop" t-on-click="onBackdropClick">
+            <div class="albirru-search-modal"
+                 t-ref="dialog"
+                 role="dialog"
+                 aria-modal="true"
+                 aria-label="Global search"
+                 t-on-keydown="onKeyDown">
+                <!-- Search Header -->
+                <div class="albirru-search-header">
+                    <div class="search-input-wrapper">
+                        <i class="fa fa-search search-icon" aria-hidden="true"/>
+                        <input type="text"
+                               t-ref="searchInput"
+                               class="albirru-search-input"
+                               placeholder="Search menus, records..."
+                               aria-label="Search menus and records"
+                               role="combobox"
+                               aria-expanded="true"
+                               aria-controls="albirru_search_results"
+                               t-att-aria-activedescendant="state.results.length ? 'albirru_search_result_' + state.selectedIndex : undefined"
+                               t-att-value="state.query"
+                               t-on-input="onInputChange"
+                               autocomplete="off"/>
+                        <span class="search-shortcut">
+                            <kbd>ESC</kbd> to close
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Search Type Tabs -->
+                <div class="albirru-search-tabs">
+                    <button class="search-tab"
+                            t-att-class="{'active': state.searchType === 'menu'}"
+                            t-on-click="() => this.onSearchTypeChange('menu')">
+                        <i class="fa fa-bars me-1"/>
+                        Menus
+                    </button>
+                    <button class="search-tab"
+                            t-att-class="{'active': state.searchType === 'records'}"
+                            t-on-click="() => this.onSearchTypeChange('records')">
+                        <i class="fa fa-database me-1"/>
+                        Records
+                    </button>
+
+                    <!-- Model selector for records -->
+                    <select t-if="state.searchType === 'records'"
+                            class="search-model-select ms-auto"
+                            t-on-change="onModelChange">
+                        <option value="all">All Models</option>
+                        <t t-foreach="state.availableModels" t-as="model" t-key="model.id">
+                            <option t-att-value="model.model" t-esc="model.name"/>
+                        </t>
+                    </select>
+                </div>
+
+                <!-- Search Results -->
+                <div class="albirru-search-results">
+                    <t t-if="state.isLoading">
+                        <div class="search-loading">
+                            <i class="fa fa-spinner fa-spin"/>
+                            <span>Searching...</span>
+                        </div>
+                    </t>
+
+                    <t t-elif="state.results.length === 0 and state.query">
+                        <div class="search-no-results">
+                            <i class="fa fa-search fa-2x mb-2 opacity-50"/>
+                            <p>No results found for "<t t-esc="state.query"/>"</p>
+                        </div>
+                    </t>
+
+                    <t t-elif="state.results.length === 0">
+                        <div class="search-hint">
+                            <p>Start typing to search...</p>
+                            <div class="search-tips">
+                                <span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span>
+                                <span><kbd>Enter</kbd> to select</span>
+                                <span><kbd>Ctrl+K</kbd> to open search</span>
+                            </div>
+                        </div>
+                    </t>
+
+                    <t t-else="">
+                        <ul class="search-results-list" id="albirru_search_results" role="listbox">
+                            <t t-foreach="state.results" t-as="result" t-key="result_index">
+                                <li class="search-result-item"
+                                    role="option"
+                                    t-att-id="'albirru_search_result_' + result_index"
+                                    t-att-aria-selected="state.selectedIndex === result_index ? 'true' : 'false'"
+                                    t-att-class="{'selected': state.selectedIndex === result_index}"
+                                    t-on-click="() => this.selectResult(result)">
+
+                                    <t t-if="result.type === 'menu'">
+                                        <i class="fa fa-bars result-icon"/>
+                                        <div class="result-content">
+                                            <span class="result-name" t-esc="result.name"/>
+                                            <span class="result-type">Menu</span>
+                                        </div>
+                                    </t>
+
+                                    <t t-if="result.type === 'record'">
+                                        <i class="fa fa-file-o result-icon"/>
+                                        <div class="result-content">
+                                            <span class="result-name" t-esc="result.name"/>
+                                            <span class="result-type" t-esc="result.modelName or result.model"/>
+                                        </div>
+                                    </t>
+
+                                    <i class="fa fa-arrow-right result-arrow"/>
+                                </li>
+                            </t>
+                        </ul>
+                    </t>
+                </div>
+
+                <!-- Search Footer -->
+                <div class="albirru-search-footer">
+                    <span class="search-count" t-if="state.results.length">
+                        <t t-esc="state.results.length"/> results
+                    </span>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- User Form View Extension - Add Albirru Theme Settings (Admin View) -->
+    <record id="res_users_view_form_inherit_albirru" model="ir.ui.view">
+        <field name="name">res.users.form.inherit.albirru</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <!-- Add theme preferences in Preferences tab, using the correct group name -->
+            <xpath expr="//page[@name='preferences']//group[@name='other_preferences']" position="inside">
+                <field name="albirru_dark_mode"/>
+                <field name="albirru_sidebar_pinned"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- User Preferences Form Extension (My Profile dialog) -->
+    <record id="res_users_preferences_form_inherit_albirru" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.inherit.albirru</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <!-- Add theme preferences in user's own preferences form -->
+            <xpath expr="//page[@name='preferences_page']//group[@name='other_preferences']" position="inside">
+                <field name="albirru_dark_mode"/>
+                <field name="albirru_sidebar_pinned"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

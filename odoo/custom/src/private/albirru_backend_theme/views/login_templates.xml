@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Login Page Layout -->
+    <template id="login_layout_albirru" inherit_id="web.login_layout" name="Albirru Login Layout">
+        <!-- Add background div and gradient overlay before html_data is set -->
+        <xpath expr="//t[@t-set='html_data']" position="before">
+            <!-- Load the login stylesheet into <head> so the page never renders
+                 unstyled, without adding it to web.assets_frontend (which every
+                 public page would then have to download). -->
+            <t t-set="albirru_login_assets">
+                <t t-call-assets="albirru_backend_theme.assets_login" t-js="false"/>
+            </t>
+            <t t-set="head" t-value="albirru_login_assets + (head or '')"/>
+
+            <t t-set="albirru_company" t-value="request.env.company.sudo()"/>
+            <t t-set="albirru_style" t-value="albirru_company.albirru_login_style or 'glass'"/>
+
+            <!-- Get Theme Config for Colors.
+                 Read-only lookup: the login page is served to anonymous
+                 visitors and must not create records. -->
+            <t t-set="theme_config" t-value="request.env['albirru.theme.config'].sudo().get_display_config()"/>
+            <t t-set="active_scheme" t-value="theme_config.color_scheme or 'scheme_1'"/>
+            
+            <!-- Dynamic HTML Attributes for Theme and Style -->
+            <script type="text/javascript">
+                // Inject theme attributes immediately to prevent flash
+                document.documentElement.setAttribute('data-albirru-login-style', '<t t-esc="albirru_style"/>');
+                document.documentElement.setAttribute('data-albirru-scheme', '<t t-esc="active_scheme"/>');
+            </script>
+            
+            <!-- Branding Panel for Split View -->
+            <t t-if="albirru_style == 'split'">
+                <div class="albirru-split-branding">
+                    <div class="albirru-split-content">
+                        <!-- Branding Logo -->
+                        <div class="albirru-split-logo mb-4">
+                             <t t-if="albirru_company.albirru_backend_logo">
+                                 <span t-field="albirru_company.albirru_backend_logo"
+                                      t-options="{'widget': 'image', 'class': 'img-fluid', 'style': 'max-height: 80px;'}"/>
+                             </t>
+                             <t t-else="">
+                                <img src="/web/static/img/logo.png" alt="Logo" style="max-height: 80px;"/>
+                             </t>
+                        </div>
+                        <h1 class="text-white fw-bold mb-3">
+                            <span t-field="albirru_company.name"/>
+                        </h1>
+                        <p class="text-white-50 lead">
+                            Welcome to your workspace. Please sign in to continue.
+                        </p>
+                    </div>
+                    <!-- Background for Split View Left Side -->
+                    <div class="albirru-split-bg"
+                         t-attf-style="background-image: url(#{albirru_company.albirru_login_background and '/web/image/res.company/%s/albirru_login_background' % albirru_company.id or ''}); background-color: #{albirru_company.albirru_login_background_color or '#714B67'};"/>
+                    <div class="albirru-split-overlay"/>
+                </div>
+            </t>
+
+            <!-- Background Image for Non-Split Views -->
+            <t t-if="albirru_style != 'split'">
+                <t t-if="albirru_company.albirru_login_background">
+                    <div class="albirru-login-bg-overlay" 
+                         t-attf-style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; background-image:url(/web/image/res.company/#{albirru_company.id}/albirru_login_background); background-size:cover; background-position:center;"/>
+                    <div class="albirru-login-gradient-overlay" 
+                         style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%); pointer-events:none;"/>
+                </t>
+                <t t-elif="albirru_company.albirru_login_background_color">
+                    <div class="albirru-login-bg-overlay" 
+                         t-attf-style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; background-color:#{albirru_company.albirru_login_background_color};"/>
+                </t>
+                <t t-else="">
+                     <!-- Default Gradient if nothing is set -->
+                    <div class="albirru-login-pattern-overlay"
+                         style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: radial-gradient(circle at 50% 50%, #4b6cb7 0%, #182848 100%); pointer-events:none;"/>
+                </t>
+            </t>
+        </xpath>
+
+        <!-- Add Albirru class to body -->
+        <xpath expr="//t[@t-set='body_classname']" position="attributes">
+            <attribute name="t-value">'bg-100 albirru-login-page'</attribute>
+        </xpath>
+
+        <!-- Modify card-body styling -->
+        <xpath expr="//div[hasclass('card-body')]" position="attributes">
+            <attribute name="class">card-body albirru-login-card-body</attribute>
+        </xpath>
+        
+        <!-- Widen the login card.
+             Targets the semantic o_database_list class rather than the exact
+             inline style string, which changes with any upstream tweak. Note
+             the class lives in t-attf-class, so hasclass() (which only reads a
+             literal @class) cannot be used here. -->
+        <xpath expr="//div[contains(@t-attf-class, 'o_database_list')]" position="attributes">
+            <attribute name="style">max-width: 500px !important; border: none !important; background: transparent !important;</attribute>
+            <attribute name="class">card border-0 mx-auto bg-transparent o_database_list</attribute>
+        </xpath>
+    </template>
+
+    <!-- Hide default logo and replace with custom logo -->
+    <template id="login_layout_logo_albirru" inherit_id="web.login_layout" name="Albirru Login Layout Logo">
+        <!-- Replace the logo container.
+             Matched by its own classes instead of by position, so an extra
+             sibling added upstream cannot silently retarget this xpath. -->
+        <xpath expr="//div[hasclass('card-body')]/div[hasclass('border-bottom')]" position="replace">
+            <t t-set="albirru_company" t-value="request.env.company.sudo()"/>
+            <t t-set="albirru_style" t-value="albirru_company.albirru_login_style or 'glass'"/>
+            
+            <!-- Only show logo here if NOT in split mode (split mode has logo on left) -->
+            <div t-if="albirru_style != 'split'" class="text-center pb-3 mb-4 albirru-logo-container">
+                <t t-if="albirru_company.albirru_backend_logo">
+                     <span t-field="albirru_company.albirru_backend_logo"
+                          t-options="{'widget': 'image', 'class': 'albirru-login-logo-img', 'style': 'max-height: 80px; width: auto; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));'}"/>
+                </t>
+                <t t-else="">
+                    <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}" 
+                         alt="Logo" 
+                         style="max-height:100px; max-width: 100%; width:auto"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Extend Login Form - Hide user_switch component and show form always -->
+    <template id="login_albirru" inherit_id="web.login" name="Albirru Login">
+        <!-- Remove owl-component user_switch that shows 'Your logo' placeholder -->
+        <xpath expr="//owl-component[@name='web.user_switch']" position="replace"/>
+        
+        <!-- Force form to always show (remove d-none class) -->
+        <xpath expr="//form[@role='form']" position="attributes">
+            <attribute name="t-attf-class">oe_login_form</attribute>
+        </xpath>
+    </template>
+
+    <!-- Custom Favicon - Modify href attribute only, don't replace element -->
+    <template id="web_layout_albirru" inherit_id="web.layout" name="Albirru Web Layout">
+        <xpath expr="//head/link[@type='image/x-icon']" position="attributes">
+            <attribute name="t-att-href">(request.env.company.sudo().albirru_favicon and '/web/image/res.company/' + str(request.env.company.id) + '/albirru_favicon') or x_icon or '/web/static/img/favicon.ico'</attribute>
+        </xpath>
+
+        <!-- Mark the document as dark before the body is parsed.
+             The dark stylesheet is scoped to html.albirru-dark-mode, so waiting
+             for the theme service to add the class would show a flash of light
+             content on every page load. A blocking script in <head> runs before
+             the first paint. -->
+        <xpath expr="//head/script[@id='web.layout.odooscript']" position="after">
+            <script type="text/javascript"
+                    t-if="request.session.uid and request.env.user.albirru_dark_mode">
+                document.documentElement.classList.add('albirru-dark-mode');
+                document.documentElement.setAttribute('data-albirru-dark', 'true');
+            </script>
+        </xpath>
+    </template>
+</odoo>

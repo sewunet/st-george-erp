@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Albirru Backend Theme - App Drawer Template -->
+<!-- Compatible with Odoo 19 -->
+<templates xml:space="preserve">
+
+    <!-- App Drawer Component -->
+    <t t-name="albirru_backend_theme.AppDrawer">
+        <div t-if="state.isOpen"
+             class="albirru-app-drawer-backdrop"
+             t-on-click="onBackdropClick"
+             t-on-keydown="onKeyDown">
+            <div t-att-class="'albirru-app-drawer' + (hasBackgroundImage ? ' has-background-image' : '')"
+                 t-ref="dialog"
+                 role="dialog"
+                 aria-modal="true"
+                 tabindex="-1"
+                 aria-label="Applications">
+                <!-- Drawer Header -->
+                <div class="albirru-drawer-header">
+                    <!-- Back/Close Button -->
+                    <button class="drawer-back-btn"
+                            t-att-aria-label="state.isSearchExpanded ? 'Close search' : 'Close applications'"
+                            t-on-click="state.isSearchExpanded ? closeSearch : close">
+                        <i t-att-class="'fa ' + (state.isSearchExpanded ? 'fa-times' : 'fa-arrow-left')" aria-hidden="true"/>
+                    </button>
+                    
+                    <!-- Search Toggle (collapsed) -->
+                    <div t-if="!state.isSearchExpanded" class="drawer-title-area">
+                        <span class="drawer-title">Apps</span>
+                    </div>
+                    
+                    <!-- Search Input (expanded) -->
+                    <div t-if="state.isSearchExpanded" class="drawer-search expanded">
+                        <i class="fa fa-search"/>
+                        <input type="text"
+                               t-ref="searchInput"
+                               class="drawer-search-input"
+                               placeholder="Search apps and menus..."
+                               t-att-value="state.searchQuery"
+                               t-on-input="onSearchInput"
+                               autocomplete="off"/>
+                    </div>
+                    
+                    <!-- Search Icon Button -->
+                    <button t-if="!state.isSearchExpanded" class="drawer-search-btn" t-on-click="toggleSearch">
+                        <i class="fa fa-search"/>
+                    </button>
+                </div>
+
+                <!-- Apps Content -->
+                <div class="albirru-drawer-content">
+                    
+                    <!-- Search Results View Mode -->
+                    <t t-if="state.isSearchExpanded and state.searchQuery">
+                        <div class="albirru-search-results">
+                            <t t-if="state.searchResults.length > 0">
+                                <ul class="search-results-list">
+                                    <t t-foreach="state.searchResults" t-as="result" t-key="result.id">
+                                        <li class="search-result-item" t-att-class="{'is-app': result.type === 'app', 'is-submenu': result.type === 'submenu'}">
+                                            <a href="#" 
+                                               class="search-result-link"
+                                               t-on-click="(ev) => this.onSearchResultClick(result, ev)">
+                                                <div class="result-icon" t-if="result.type === 'app' and getAppIcon(result)">
+                                                    <img t-att-src="getAppIcon(result)" alt=""/>
+                                                </div>
+                                                <div class="result-icon placeholder" t-elif="result.type === 'app'" t-att-style="'background:' + getAppColor(result)">
+                                                    <span t-esc="getAppInitials(result)"/>
+                                                </div>
+                                                <i t-else="" class="fa fa-list-ul result-menu-icon"/>
+                                                <div class="result-info">
+                                                    <span class="result-name" t-esc="result.name"/>
+                                                    <span t-if="result.path" class="result-path" t-esc="result.path"/>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </t>
+                            <t t-else="">
+                                <div class="drawer-no-results">
+                                    <i class="fa fa-search fa-3x mb-3 opacity-25"/>
+                                    <p>No results for "<t t-esc="state.searchQuery"/>"</p>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                    
+                    <!-- Sub-Menu View Mode -->
+                    <t t-if="state.viewMode === 'submenus' and state.selectedApp">
+                        <div class="albirru-submenu-view">
+                            <!-- Sub-menu Header with Back Button -->
+                            <div class="submenu-header" t-on-click="onBackToApps">
+                                <i class="fa fa-arrow-left back-arrow"/>
+                                <div class="submenu-app-info">
+                                    <div class="app-icon-small" t-if="getAppIcon(state.selectedApp)">
+                                        <img t-att-src="getAppIcon(state.selectedApp)" alt=""/>
+                                    </div>
+                                    <div t-else="" class="app-icon-placeholder-small" t-att-style="'background:' + getAppColor(state.selectedApp)">
+                                        <span t-esc="getAppInitials(state.selectedApp)"/>
+                                    </div>
+                                    <span class="submenu-app-name" t-esc="state.selectedApp.name"/>
+                                </div>
+                            </div>
+                            
+                            <!-- Sub-menu List -->
+                            <ul class="albirru-submenu-list">
+                                <t t-foreach="state.currentAppSections" t-as="section" t-key="section.id">
+                                    <t t-call="albirru_backend_theme.DrawerMenuSection">
+                                        <t t-set="section" t-value="section"/>
+                                        <t t-set="depth" t-value="0"/>
+                                    </t>
+                                </t>
+                            </ul>
+                        </div>
+                    </t>
+                    
+                    <!-- Apps View Mode -->
+                    <t t-if="state.viewMode === 'apps'">
+                    <t t-if="state.hasGroups and !state.searchQuery">
+                        <!-- Render each group -->
+                        <t t-foreach="state.appGroups" t-as="group" t-key="group.id">
+                            <div class="albirru-app-group" t-if="groupHasVisibleApps(group)">
+                                <!-- Group Header -->
+                                <div class="albirru-group-header" 
+                                     t-on-click="() => this.toggleGroup(group.id)">
+                                    <div class="group-icon">
+                                        <t t-if="group.use_group_icon and group.group_icon_class_name">
+                                            <i t-att-class="'fa ' + group.group_icon_class_name"/>
+                                        </t>
+                                        <t t-elif="group.has_group_icon">
+                                            <img t-att-src="getGroupIconUrl(group)" 
+                                                 alt="" class="group-icon-img"/>
+                                        </t>
+                                        <t t-else="">
+                                            <i class="fa fa-folder"/>
+                                        </t>
+                                    </div>
+                                    <span class="group-name" t-esc="group.name"/>
+                                    <span class="group-badge" t-esc="group.menus.length"/>
+                                    <i t-att-class="'fa group-toggle-icon ' + (isGroupExpanded(group.id) ? 'fa-chevron-up' : 'fa-chevron-down')"/>
+                                </div>
+
+                                <!-- Group Apps -->
+                                <div t-att-class="'albirru-group-apps ' + (isGroupExpanded(group.id) ? 'expanded' : 'collapsed')">
+                                    <div class="albirru-apps-grid">
+                                        <t t-foreach="getFilteredGroupApps(group)" t-as="app" t-key="app.id">
+                                            <a href="#"
+                                               class="albirru-app-card"
+                                               t-on-click="(ev) => this.onAppClick(app, ev)">
+                                                <div class="app-card-icon">
+                                                    <img t-if="getAppIcon(app)"
+                                                         t-att-src="getAppIcon(app)"
+                                                         alt=""
+                                                         class="app-icon-img"/>
+                                                    <div t-else=""
+                                                         class="app-icon-placeholder"
+                                                         t-att-style="'background:' + getAppColor(app)">
+                                                        <span t-esc="getAppInitials(app)"/>
+                                                    </div>
+                                                </div>
+                                                <span class="app-card-name" t-esc="app.name"/>
+                                            </a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- Ungrouped Apps Section -->
+                        <t t-if="state.ungroupedApps.length > 0">
+                            <div class="albirru-app-group albirru-ungrouped">
+                                <div class="albirru-group-header"
+                                     t-on-click="() => this.toggleGroup('ungrouped')">
+                                    <div class="group-icon">
+                                        <i class="fa fa-th-large"/>
+                                    </div>
+                                    <span class="group-name">Other Apps</span>
+                                    <span class="group-badge" t-esc="getFilteredUngroupedApps().length"/>
+                                    <i t-att-class="'fa group-toggle-icon ' + (isGroupExpanded('ungrouped') ? 'fa-chevron-up' : 'fa-chevron-down')"/>
+                                </div>
+                                <div t-att-class="'albirru-group-apps ' + (isGroupExpanded('ungrouped') ? 'expanded' : 'collapsed')">
+                                    <div class="albirru-apps-grid">
+                                        <t t-foreach="getFilteredUngroupedApps()" t-as="app" t-key="app.id">
+                                            <a href="#"
+                                               class="albirru-app-card"
+                                               t-on-click="(ev) => this.onAppClick(app, ev)">
+                                                <div class="app-card-icon">
+                                                    <img t-if="getAppIcon(app)"
+                                                         t-att-src="getAppIcon(app)"
+                                                         alt=""
+                                                         class="app-icon-img"/>
+                                                    <div t-else=""
+                                                         class="app-icon-placeholder"
+                                                         t-att-style="'background:' + getAppColor(app)">
+                                                        <span t-esc="getAppInitials(app)"/>
+                                                    </div>
+                                                </div>
+                                                <span class="app-card-name" t-esc="app.name"/>
+                                            </a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+
+                    <!-- Flat List Mode (when searching or no groups) -->
+                    <t t-else="">
+                        <div class="albirru-apps-grid">
+                            <t t-foreach="state.filteredApps" t-as="app" t-key="app.id">
+                                <a href="#"
+                                   class="albirru-app-card"
+                                   t-on-click="(ev) => this.onAppClick(app, ev)">
+                                    <div class="app-card-icon">
+                                        <img t-if="getAppIcon(app)"
+                                             t-att-src="getAppIcon(app)"
+                                             alt=""
+                                             class="app-icon-img"/>
+                                        <div t-else=""
+                                             class="app-icon-placeholder"
+                                             t-att-style="'background:' + getAppColor(app)">
+                                            <span t-esc="getAppInitials(app)"/>
+                                        </div>
+                                    </div>
+                                    <span class="app-card-name" t-esc="app.name"/>
+                                </a>
+                            </t>
+                        </div>
+
+                        <!-- No results -->
+                        <div t-if="state.filteredApps.length === 0 and state.searchQuery" class="drawer-no-results">
+                            <i class="fa fa-search fa-3x mb-3 opacity-25"/>
+                            <p>No apps found for "<t t-esc="state.searchQuery"/>"</p>
+                        </div>
+                    </t>
+                    </t><!-- Close apps viewMode -->
+                </div>
+
+                <!-- Drawer Footer -->
+                <div class="albirru-drawer-footer" t-if="state.viewMode === 'apps'">
+                    <span class="text-muted">
+                        <t t-esc="getTotalVisibleApps()"/> apps available
+                    </span>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- Recursive template for sub-menu sections -->
+    <t t-name="albirru_backend_theme.DrawerMenuSection">
+        <li class="drawer-section-item" t-att-class="{'has-children': section.childrenTree and section.childrenTree.length}">
+            <!-- Section without children - direct link -->
+            <t t-if="!section.childrenTree or !section.childrenTree.length">
+                <a t-att-href="this.getMenuItemHref(section)"
+                   class="drawer-section-link"
+                   t-on-click="(ev) => this.onSectionClick(section, ev)">
+                    <span t-esc="section.name"/>
+                </a>
+            </t>
+            <!-- Section with children - expandable -->
+            <t t-else="">
+                <div class="drawer-section-header"
+                     t-att-class="{'expanded': this.isSectionExpanded(section.id)}"
+                     t-on-click="() => this.toggleSectionExpand(section.id)">
+                    <span t-esc="section.name"/>
+                    <i class="fa fa-chevron-right section-arrow"/>
+                </div>
+                <ul class="drawer-nested-menu" t-att-class="{'expanded': this.isSectionExpanded(section.id)}">
+                    <t t-foreach="section.childrenTree" t-as="subSection" t-key="subSection.id">
+                        <t t-call="albirru_backend_theme.DrawerMenuSection">
+                            <t t-set="section" t-value="subSection"/>
+                            <t t-set="depth" t-value="(depth || 0) + 1"/>
+                        </t>
+                    </t>
+                </ul>
+            </t>
+        </li>
+    </t>
+
+    <!-- App Drawer Button for Navbar -->
+    <t t-name="albirru_backend_theme.AppDrawerButton">
+        <button class="btn albirru-app-drawer-btn" t-on-click="onClick" title="App Drawer">
+            <i class="fa fa-th-large"/>
+        </button>
+    </t>
+
+</templates>

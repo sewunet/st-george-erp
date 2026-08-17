@@ -1,0 +1,221 @@
+// Albirru Backend Theme - List View Styles
+// Compatible with Odoo 19
+
+.o_list_view {
+    background: var(--albirru-light-bg);
+
+    // List Table
+    .o_list_table {
+        border-collapse: separate;
+        border-spacing: 0;
+
+        // Table Header
+        thead {
+            th {
+                background: var(--albirru-light-bg-secondary);
+                border-bottom: 2px solid var(--albirru-light-border);
+                padding: var(--albirru-spacing-md);
+                font-weight: 600;
+                font-size: var(--albirru-font-sm);
+                color: var(--albirru-light-text);
+                white-space: nowrap;
+
+                // Sortable headers
+                &.o_column_sortable {
+                    cursor: pointer;
+                    transition: background var(--albirru-transition-fast);
+
+                    &:hover {
+                        background: var(--albirru-light-hover);
+                    }
+                }
+            }
+        }
+
+        // Table Body
+        tbody {
+            tr {
+                transition: background var(--albirru-transition-fast);
+
+                td {
+                    padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+                    border-bottom: 1px solid var(--albirru-light-border);
+                    vertical-align: middle;
+                }
+
+                &:hover {
+                    background: var(--albirru-light-hover);
+                }
+
+                // Selected row
+                &.o_data_row_selected,
+                &.o_selected_row {
+                    background: rgba(var(--albirru-primary-rgb), 0.1);
+
+                    td {
+                        background: transparent;
+                    }
+                }
+
+                // Clicked/focused row
+                &:focus-within {
+                    background: var(--albirru-light-hover);
+                }
+            }
+        }
+
+        // Footer
+        tfoot {
+            tr {
+                background: var(--albirru-light-bg-secondary);
+
+                td {
+                    padding: var(--albirru-spacing-md);
+                    font-weight: 600;
+                    border-top: 2px solid var(--albirru-light-border);
+                }
+            }
+        }
+
+        // Checkbox column
+        .o_list_record_selector {
+            width: 40px;
+            text-align: center;
+
+            input[type="checkbox"] {
+                cursor: pointer;
+            }
+        }
+
+        // Actions column
+        .o_list_actions_header {
+            width: 32px;
+        }
+    }
+
+    // No records
+    .o_view_nocontent {
+        padding: var(--albirru-spacing-xl);
+        text-align: center;
+
+        .o_view_nocontent_smiling_face {
+            font-size: 64px;
+            opacity: 0.3;
+        }
+    }
+}
+
+// Comfortable Row Height (Default)
+.o_list_view {
+    .o_list_table tbody tr td {
+        height: var(--albirru-list-row-height-comfortable);
+    }
+}
+
+// Compact Row Height
+html[data-albirru-list="compact"] {
+    .o_list_view {
+        .o_list_table tbody tr td {
+            height: var(--albirru-list-row-height-compact);
+            padding: var(--albirru-spacing-xs) var(--albirru-spacing-md);
+            font-size: var(--albirru-font-sm);
+        }
+    }
+}
+
+// Sticky Header
+html[data-albirru-sticky="true"] {
+    .o_list_view {
+        .o_list_table thead {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+
+            th {
+                box-shadow: 0 1px 0 var(--albirru-light-border);
+            }
+        }
+    }
+}
+
+// Optional Row Styling
+.o_list_view {
+    // Striped rows
+    &.albirru-striped {
+        .o_list_table tbody tr:nth-child(even) {
+            background: var(--albirru-light-hover);
+        }
+    }
+
+    // Bordered
+    &.albirru-bordered {
+        .o_list_table {
+            border: 1px solid var(--albirru-light-border);
+            border-radius: var(--albirru-radius-lg);
+            overflow: hidden;
+
+            thead th:first-child {
+                border-top-left-radius: var(--albirru-radius-lg);
+            }
+
+            thead th:last-child {
+                border-top-right-radius: var(--albirru-radius-lg);
+            }
+        }
+    }
+}
+
+// Group Header
+.o_list_view .o_group_header {
+    background: var(--albirru-light-bg-secondary);
+    font-weight: 600;
+
+    td {
+        padding: var(--albirru-spacing-md);
+    }
+
+    .o_group_name {
+        color: var(--albirru-primary);
+    }
+}
+
+// Editable Row
+.o_list_view .o_selected_row {
+    .o_field_widget {
+        input,
+        select,
+        textarea {
+            border: 1px solid var(--albirru-primary);
+            border-radius: var(--albirru-radius-sm);
+        }
+    }
+}
+
+// Optional fields button
+.o_optional_columns_dropdown {
+    .dropdown-toggle {
+        background: transparent;
+        border: 1px solid var(--albirru-light-border);
+        border-radius: var(--albirru-radius-md);
+        padding: var(--albirru-spacing-xs) var(--albirru-spacing-sm);
+
+        &:hover {
+            background: var(--albirru-light-hover);
+        }
+    }
+
+    .dropdown-menu {
+        border-radius: var(--albirru-radius-lg);
+        box-shadow: var(--albirru-shadow-md);
+        padding: var(--albirru-spacing-sm);
+
+        .dropdown-item {
+            border-radius: var(--albirru-radius-sm);
+            padding: var(--albirru-spacing-xs) var(--albirru-spacing-md);
+
+            &:hover {
+                background: var(--albirru-light-hover);
+            }
+        }
+    }
+}

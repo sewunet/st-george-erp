@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_albirru_theme_config_user,albirru.theme.config.user,model_albirru_theme_config,base.group_user,1,0,0,0
+access_albirru_theme_config_admin,albirru.theme.config.admin,model_albirru_theme_config,base.group_system,1,1,1,1
+access_albirru_bookmark_user,albirru.bookmark.user,model_albirru_bookmark,base.group_user,1,1,1,1
+access_albirru_app_group_user,albirru.app.group.user,model_albirru_app_group,base.group_user,1,0,0,0
+access_albirru_app_group_admin,albirru.app.group.admin,model_albirru_app_group,base.group_system,1,1,1,1

@@ -1,0 +1,1176 @@
+// Albirru Backend Theme - Sidebar Styles
+// Compatible with Odoo 19
+
+// Ensure main-components-container doesn't block content
+// The sidebar is rendered inside this container as a main component
+.o-main-components-container {
+    // Don't block pointer events for elements behind
+    pointer-events: none;
+
+    > * {
+        pointer-events: auto;
+    }
+
+    // o_fullscreen_indication (added by website module) is a non-interactive
+    // overlay that invisibly covers the action manager and blocks button clicks.
+    > .o_fullscreen_indication {
+        pointer-events: none;
+    }
+}
+
+// Sidebar (for Left Menu Position)
+.o_web_client {
+    &.albirru-sidebar-left {
+
+        // Main content area needs margin-left to make room for fixed sidebar
+        .o_action_manager {
+            margin-left: var(--albirru-sidebar-width);
+            width: calc(100% - var(--albirru-sidebar-width));
+            transition: margin-left var(--albirru-transition-normal), width var(--albirru-transition-normal);
+        }
+
+        .albirru-sidebar {
+            position: fixed;
+            left: 0;
+            top: var(--albirru-navbar-height);
+            z-index: 1000;
+            pointer-events: auto;
+            width: var(--albirru-sidebar-width);
+            min-width: var(--albirru-sidebar-width);
+            height: calc(100vh - var(--albirru-navbar-height));
+            background: var(--albirru-sidebar-bg);
+            border-right: 1px solid var(--albirru-light-border);
+            overflow-y: auto;
+            overflow-x: hidden;
+            transition: all var(--albirru-transition-normal);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.02);
+
+            &::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.05);
+                border-radius: 10px;
+            }
+
+            // Sidebar Header
+            .albirru-sidebar-header {
+                padding: var(--albirru-spacing-md);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 70px;
+                position: relative;
+
+                .albirru-sidebar-logo {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    max-width: 180px;
+                    overflow: hidden;
+                    flex: 1;
+
+                    img {
+                        max-height: 50px;
+                        width: auto;
+                        object-fit: contain;
+                        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+                    }
+
+                    .sidebar-logo-img {
+                        max-height: 50px;
+                        width: auto;
+                        max-width: 100%;
+                    }
+
+                    .logo-text {
+                        font-size: 20px;
+                        font-weight: 800;
+                        color: var(--albirru-primary);
+                        letter-spacing: -0.5px;
+                        background: linear-gradient(135deg, var(--albirru-primary) 0%, var(--albirru-accent) 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+                }
+
+                .albirru-sidebar-toggle {
+                    position: absolute;
+                    right: var(--albirru-spacing-sm);
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(var(--albirru-primary-rgb), 0.05);
+                    border: none;
+                    color: var(--albirru-primary);
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: all var(--albirru-transition-fast);
+
+                    &:hover {
+                        background: var(--albirru-primary);
+                        color: white;
+                        transform: scale(1.1);
+                    }
+                }
+            }
+
+            // Sidebar App Info
+            .albirru-sidebar-app {
+                margin: 0 var(--albirru-spacing-md) var(--albirru-spacing-md);
+                padding: 12px;
+                background: rgba(var(--albirru-primary-rgb), 0.03);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                border: 1px solid rgba(var(--albirru-primary-rgb), 0.05);
+
+                .app-icon {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+
+                    &.app-icon-placeholder {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-weight: 700;
+                        font-size: 14px;
+                    }
+                }
+
+                .app-name {
+                    font-weight: 700;
+                    font-size: 14px;
+                    color: var(--albirru-light-text);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            // Current App Sub-Menu Section
+            .albirru-current-app-section {
+                padding: var(--albirru-spacing-md);
+                border-bottom: 1px solid var(--albirru-light-border);
+                background: rgba(var(--albirru-primary-rgb), 0.02);
+
+                .current-app-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding-bottom: var(--albirru-spacing-sm);
+                    margin-bottom: var(--albirru-spacing-sm);
+                    border-bottom: 1px solid var(--albirru-light-border);
+
+                    .back-icon {
+                        width: 28px;
+                        height: 28px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        border-radius: 50%;
+                        transition: all 0.2s ease;
+                        color: var(--albirru-light-text-muted);
+
+                        &:hover {
+                            background: var(--albirru-primary);
+                            color: white;
+                        }
+                    }
+
+                    .current-app-name {
+                        font-weight: 700;
+                        font-size: 15px;
+                        color: var(--albirru-light-text);
+                    }
+                }
+
+                .albirru-submenu-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .albirru-section-item {
+                    margin-bottom: 2px;
+
+                    .albirru-section-link,
+                    .albirru-section-header {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 10px 12px;
+                        color: var(--albirru-light-text);
+                        cursor: pointer;
+                        border-radius: 8px;
+                        text-decoration: none;
+                        transition: all 0.2s ease;
+                        font-size: 13px;
+
+                        &:hover {
+                            background: rgba(var(--albirru-primary-rgb), 0.08);
+                            color: var(--albirru-primary);
+                        }
+
+                        .section-arrow {
+                            font-size: 10px;
+                            transition: transform 0.2s ease;
+                        }
+
+                        &.expanded .section-arrow {
+                            transform: rotate(90deg);
+                        }
+                    }
+
+                    .albirru-nested-menu {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                        max-height: 0;
+                        overflow: hidden;
+                        transition: max-height 0.3s ease;
+                        padding-left: 16px;
+
+                        &.expanded {
+                            max-height: 500px;
+                        }
+
+                        .albirru-section-link,
+                        .albirru-section-header {
+                            padding: 8px 12px;
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+
+            // Menu Items
+            .albirru-sidebar-menu {
+                flex: 1;
+                padding: 0 var(--albirru-spacing-sm) var(--albirru-spacing-md);
+                overflow-y: auto;
+
+                .albirru-menu-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .albirru-menu-item-wrapper {
+                    margin-bottom: 4px;
+                }
+
+                .albirru-menu-item {
+                    display: flex;
+                    align-items: center;
+                    padding: 10px 14px;
+                    border-radius: 10px;
+                    color: var(--albirru-light-text);
+                    text-decoration: none;
+                    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                    cursor: pointer;
+                    position: relative;
+                    border: 1px solid transparent;
+
+                    .albirru-menu-icon {
+                        width: 24px;
+                        margin-right: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 18px;
+                        color: var(--albirru-light-text-muted);
+                        transition: all 0.2s ease;
+                    }
+
+                    .albirru-menu-label {
+                        flex: 1;
+                        font-weight: 500;
+                        font-size: 14px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        transition: all 0.2s ease;
+                    }
+
+                    .albirru-menu-arrow {
+                        font-size: 10px;
+                        color: var(--albirru-light-text-muted);
+                        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+
+                    &:hover {
+                        background: rgba(var(--albirru-primary-rgb), 0.04);
+                        color: var(--albirru-primary);
+                        transform: translateX(4px);
+
+                        .albirru-menu-icon {
+                            color: var(--albirru-primary);
+                            transform: scale(1.1);
+                        }
+                    }
+
+                    &.active {
+                        background: linear-gradient(90deg, var(--albirru-primary) 0%, var(--albirru-accent) 100%);
+                        color: white;
+                        box-shadow: 0 4px 12px rgba(var(--albirru-primary-rgb), 0.25);
+                        border-color: rgba(255, 255, 255, 0.1);
+
+                        .albirru-menu-icon,
+                        .albirru-menu-label,
+                        .albirru-menu-arrow {
+                            color: white;
+                        }
+
+                        &::after {
+                            content: '';
+                            position: absolute;
+                            left: -8px;
+                            top: 20%;
+                            bottom: 20%;
+                            width: 4px;
+                            background: white;
+                            border-radius: 0 4px 4px 0;
+                        }
+                    }
+
+                    &.expanded {
+                        background: rgba(var(--albirru-primary-rgb), 0.02);
+
+                        .albirru-menu-arrow {
+                            transform: rotate(90deg);
+                        }
+                    }
+                }
+
+                // Submenu
+                .albirru-submenu {
+                    list-style: none;
+                    padding: 0;
+                    margin: 4px 0 8px 0;
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    opacity: 0;
+                    position: relative;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        left: 25px;
+                        top: 0;
+                        bottom: 0;
+                        width: 1px;
+                        background: rgba(var(--albirru-primary-rgb), 0.1);
+                    }
+
+                    &.expanded {
+                        max-height: 3000px;
+                        opacity: 1;
+                    }
+
+                    .albirru-menu-item {
+                        padding: 8px 14px 8px 44px;
+                        font-size: 13px;
+
+                        .albirru-menu-icon {
+                            width: 24px;
+                            height: 24px;
+                            margin-right: 12px;
+                            border-radius: 6px;
+                            overflow: hidden;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+
+                            .app-icon-placeholder {
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: white;
+                                font-size: 10px;
+                                font-weight: 700;
+                            }
+                        }
+
+                        &::before {
+                            content: '';
+                            position: absolute;
+                            left: 25px;
+                            top: 50%;
+                            width: 10px;
+                            height: 1px;
+                            background: rgba(var(--albirru-primary-rgb), 0.1);
+                        }
+
+                        &:hover::before {
+                            background: var(--albirru-primary);
+                            width: 14px;
+                        }
+
+                        &.active {
+                            &::before {
+                                background: white;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Group styling in sidebar
+            .albirru-group-item {
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 11px;
+                letter-spacing: 0.5px;
+                color: var(--albirru-light-text-muted);
+                padding-top: 12px;
+                padding-bottom: 12px;
+
+                .albirru-group-icon {
+                    background: var(--albirru-primary);
+                    color: white;
+                    border-radius: 8px;
+                    width: 28px;
+                    height: 28px;
+                    box-shadow: 0 2px 6px rgba(var(--albirru-primary-rgb), 0.2);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    i {
+                        color: white;
+                        font-size: 14px;
+                        margin: 0;
+                    }
+
+                    .group-icon-img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: inherit;
+                    }
+                }
+
+                .albirru-menu-label {
+                    margin-left: 4px;
+                }
+
+                &:hover {
+                    background: transparent;
+                    color: var(--albirru-primary);
+                    transform: none;
+
+                    .albirru-group-icon {
+                        transform: scale(1.1);
+                    }
+                }
+
+                &.expanded {
+                    background: transparent;
+
+                    .albirru-menu-arrow {
+                        transform: rotate(90deg);
+                    }
+                }
+            }
+
+            .albirru-app-item {
+                &.active {
+                    background: var(--albirru-primary);
+                    color: white;
+
+                    .albirru-menu-label {
+                        color: white;
+                        font-weight: 600;
+                    }
+
+                    .albirru-menu-icon {
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                    }
+                }
+            }
+
+            // Sidebar Style: Collapsed behavior for header
+            &.collapsed {
+                .albirru-sidebar-header {
+                    justify-content: center;
+                    padding: var(--albirru-spacing-md) 0;
+
+                    .albirru-sidebar-toggle {
+                        position: static;
+                        margin: 0;
+                    }
+                }
+
+                .albirru-group-item {
+                    justify-content: center;
+                    padding-left: 0;
+                    padding-right: 0;
+
+                    .albirru-menu-icon {
+                        margin: 0;
+                    }
+                }
+
+                .albirru-app-item {
+                    padding-left: 0;
+                    padding-right: 0;
+                    justify-content: center;
+
+                    .albirru-menu-icon {
+                        margin: 0;
+                    }
+                }
+            }
+
+            // Sidebar Footer
+            .albirru-sidebar-footer {
+                padding: var(--albirru-spacing-md);
+                border-top: 1px solid var(--albirru-light-border);
+            }
+        }
+
+        // Sidebar Style: Mini
+        &[data-albirru-sidebar-style="mini"] {
+            .albirru-sidebar {
+                width: var(--albirru-sidebar-collapsed-width);
+                min-width: var(--albirru-sidebar-collapsed-width);
+
+                .albirru-sidebar-header {
+                    justify-content: center;
+                    padding: var(--albirru-spacing-lg) 0;
+
+                    .albirru-sidebar-logo {
+                        display: none;
+                    }
+                }
+
+                .albirru-sidebar-app {
+                    margin: 0 10px var(--albirru-spacing-md);
+                    padding: 8px;
+                    justify-content: center;
+
+                    .app-name {
+                        display: none;
+                    }
+
+                    .app-icon {
+                        margin: 0;
+                    }
+                }
+
+                .albirru-sidebar-menu {
+                    padding: 0 8px;
+
+                    .albirru-menu-item {
+                        justify-content: center;
+                        padding: 12px 0;
+                        margin-bottom: 8px;
+
+                        .albirru-menu-label,
+                        .albirru-menu-arrow {
+                            display: none;
+                        }
+
+                        .albirru-menu-icon {
+                            margin-right: 0;
+                            width: 100%;
+                        }
+
+                        &:hover {
+                            transform: scale(1.1);
+                        }
+                    }
+
+                    .albirru-submenu {
+                        display: none;
+                    }
+                }
+
+                .albirru-sidebar-footer {
+                    display: none;
+                }
+
+                // NO expansion on hover for mini style
+                &:hover {
+                    width: var(--albirru-sidebar-collapsed-width);
+                }
+            }
+
+            .o_action_manager {
+                margin-left: var(--albirru-sidebar-collapsed-width);
+                width: calc(100% - var(--albirru-sidebar-collapsed-width));
+            }
+        }
+
+        // Collapsed State (Internal toggle via Pin)
+        &.albirru-sidebar-collapsed:not([data-albirru-sidebar-style="mini"]) {
+            .o_action_manager {
+                margin-left: var(--albirru-sidebar-collapsed-width);
+                width: calc(100% - var(--albirru-sidebar-collapsed-width));
+            }
+
+            .albirru-sidebar {
+                width: var(--albirru-sidebar-collapsed-width);
+                min-width: var(--albirru-sidebar-collapsed-width);
+
+                .albirru-sidebar-header {
+                    justify-content: center;
+                    padding: var(--albirru-spacing-lg) 0;
+
+                    .albirru-sidebar-logo {
+                        display: none;
+                    }
+                }
+
+                .albirru-sidebar-app {
+                    margin: 0 10px var(--albirru-spacing-md);
+                    padding: 8px;
+                    justify-content: center;
+
+                    .app-name {
+                        display: none;
+                    }
+                }
+
+                .albirru-sidebar-menu {
+                    padding: 0 8px;
+
+                    .albirru-menu-item {
+                        justify-content: center;
+                        padding: 12px 0;
+
+                        .albirru-menu-label,
+                        .albirru-menu-arrow {
+                            display: none;
+                        }
+
+                        .albirru-menu-icon {
+                            margin-right: 0;
+                            width: 100%;
+                        }
+                    }
+
+                    .albirru-submenu {
+                        display: none;
+                    }
+                }
+
+                .albirru-sidebar-footer {
+                    display: none;
+                }
+
+                // Hover expansion
+                &:hover {
+                    width: var(--albirru-sidebar-width);
+                    min-width: var(--albirru-sidebar-width);
+                    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+                    z-index: 1001;
+
+                    .albirru-sidebar-header {
+                        justify-content: space-between;
+                        padding: var(--albirru-spacing-lg) var(--albirru-spacing-md);
+
+                        .albirru-sidebar-logo {
+                            display: flex;
+                        }
+                    }
+
+                    .albirru-sidebar-app {
+                        margin: 0 var(--albirru-spacing-md) var(--albirru-spacing-md);
+                        padding: 12px;
+                        justify-content: flex-start;
+
+                        .app-name {
+                            display: block;
+                        }
+                    }
+
+                    .albirru-sidebar-menu {
+                        padding: 0 var(--albirru-spacing-sm) var(--albirru-spacing-md);
+
+                        .albirru-menu-item {
+                            justify-content: flex-start;
+                            padding: 10px 14px;
+
+                            .albirru-menu-label,
+                            .albirru-menu-arrow {
+                                display: block;
+                            }
+
+                            .albirru-menu-icon {
+                                margin-right: 12px;
+                                width: 24px;
+                            }
+                        }
+
+                        .albirru-submenu {
+                            display: block;
+                        }
+                    }
+
+                    .albirru-sidebar-footer {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Top sidebar position (no left sidebar)
+.o_web_client {
+    &.albirru-sidebar-top {
+
+        // No margin adjustment needed - content takes full width
+        .o_action_manager {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        // Hide sidebar if accidentally rendered
+        .albirru-sidebar {
+            display: none;
+        }
+    }
+}
+
+// Menu Section Separator
+.albirru-menu-separator {
+    height: 1px;
+    background: var(--albirru-light-border);
+    margin: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+}
+
+// Menu Group Title
+.albirru-menu-group-title {
+    padding: var(--albirru-spacing-md) var(--albirru-spacing-md) var(--albirru-spacing-xs);
+    font-size: var(--albirru-font-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--albirru-light-text-muted);
+}
+
+// Dark Mode Adjustments
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+    .o_web_client.albirru-sidebar-left {
+        .albirru-sidebar {
+            background: var(--albirru-dark-bg-secondary);
+            border-right-color: var(--albirru-dark-border);
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .albirru-sidebar-header {
+                .albirru-sidebar-logo .logo-text {
+                    background: linear-gradient(135deg, #ffffff 0%, var(--albirru-primary) 100%);
+                    -webkit-background-clip: text;
+                }
+
+                .albirru-sidebar-toggle {
+                    background: rgba(255, 255, 255, 0.05);
+                    color: white;
+
+                    &:hover {
+                        background: var(--albirru-primary);
+                    }
+                }
+            }
+
+            .albirru-sidebar-app {
+                background: rgba(255, 255, 255, 0.03);
+                border-color: rgba(255, 255, 255, 0.05);
+
+                .app-name {
+                    color: var(--albirru-dark-text);
+                }
+            }
+
+            .albirru-sidebar-menu {
+                .albirru-menu-item {
+                    color: var(--albirru-dark-text-muted);
+
+                    .albirru-menu-icon {
+                        color: var(--albirru-dark-text-muted);
+                    }
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.05);
+                        color: white;
+
+                        .albirru-menu-icon {
+                            color: white;
+                        }
+                    }
+
+                    &.active {
+                        background: linear-gradient(90deg, var(--albirru-primary) 0%, var(--albirru-accent) 100%);
+                        color: white;
+
+                        .albirru-menu-icon {
+                            color: white;
+                        }
+                    }
+
+                    &.expanded {
+                        background: rgba(255, 255, 255, 0.02);
+                    }
+                }
+
+                .albirru-submenu {
+                    &::before {
+                        background: rgba(255, 255, 255, 0.05);
+                    }
+
+                    .albirru-menu-item {
+                        &::before {
+                            background: rgba(255, 255, 255, 0.05);
+                        }
+                    }
+                }
+            }
+
+            .albirru-sidebar-footer {
+                border-top-color: var(--albirru-dark-border);
+            }
+        }
+    }
+}
+
+// =============================================
+// Mobile Responsive Styles
+// =============================================
+
+// Mobile Sidebar Backdrop (overlay when sidebar is open)
+.albirru-sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+
+    &.visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+// Hamburger Menu Toggle Button (for mobile - Left Sidebar only)
+.albirru-mobile-menu-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: var(--albirru-navbar-text);
+    border-radius: var(--albirru-radius-md);
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    i {
+        font-size: 20px;
+    }
+
+    // Favicon image styling
+    .albirru-mobile-favicon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        border-radius: 4px;
+    }
+}
+
+// Hide mobile close button on desktop
+.albirru-mobile-close-btn {
+    display: none;
+}
+
+// Mobile Breakpoint: < 768px
+@media (max-width: #{$breakpoint-md-max}) {
+
+    // ===========================================
+    // LEFT SIDEBAR POSITION - Mobile Behavior
+    // ===========================================
+    .o_web_client.albirru-sidebar-left {
+
+        // Hide Odoo's native burger menu when using left sidebar
+        .o_menu_toggle {
+            display: none;
+        }
+
+        // Show Albirru hamburger toggle
+        .albirru-mobile-menu-toggle {
+            display: flex;
+        }
+
+        // Show backdrop when mobile sidebar is open
+        .albirru-sidebar-backdrop {
+            display: block;
+        }
+
+        // Remove margin from action manager - full width on mobile
+        .o_action_manager {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        // Mobile sidebar styles
+        .albirru-sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            min-width: 280px;
+            height: 100vh;
+            z-index: 1001;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: none;
+
+            // When mobile sidebar is open
+            &.mobile-open {
+                transform: translateX(0);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+            }
+
+            // Hide pin button on mobile
+            .albirru-sidebar-toggle {
+                display: none;
+            }
+
+            // Mobile close button
+            .albirru-mobile-close-btn {
+                display: flex;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 36px;
+                height: 36px;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 0, 0, 0.1);
+                border: none;
+                border-radius: 50%;
+                color: var(--albirru-light-text);
+                cursor: pointer;
+                transition: all 0.2s ease;
+                z-index: 10;
+
+                &:hover {
+                    background: var(--albirru-primary);
+                    color: white;
+                }
+
+                i {
+                    font-size: 16px;
+                }
+            }
+
+            // Always show expanded content on mobile (no collapsed state)
+            .albirru-sidebar-header {
+                padding-top: 20px;
+
+                .albirru-sidebar-logo {
+                    display: flex;
+                }
+            }
+
+            .albirru-sidebar-menu {
+                .albirru-menu-item {
+                    padding: 12px 16px;
+
+                    .albirru-menu-label,
+                    .albirru-menu-arrow {
+                        display: block;
+                    }
+
+                    .albirru-menu-icon {
+                        margin-right: 12px;
+                        width: 24px;
+                    }
+                }
+            }
+        }
+
+        // Override collapsed styles on mobile
+        &.albirru-sidebar-collapsed,
+        &[data-albirru-sidebar-style="mini"] {
+            .o_action_manager {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .albirru-sidebar {
+                width: 280px;
+                min-width: 280px;
+
+                &:not(.mobile-open) {
+                    transform: translateX(-100%);
+                }
+            }
+        }
+
+        // Adjust navbar for mobile - Left Sidebar mode
+        .o_main_navbar {
+
+            // Hide menu sections on mobile
+            .o_menu_sections {
+                display: none;
+            }
+
+            // Center brand name
+            .o_menu_brand {
+                flex: 1;
+                max-width: none;
+                text-align: center;
+            }
+        }
+    }
+
+    // ===========================================
+    // TOP MENU POSITION - Mobile Behavior
+    // ===========================================
+    .o_web_client.albirru-sidebar-top {
+
+        // Show Albirru App Switcher toggle (opens App Drawer)
+        .albirru-mobile-menu-toggle {
+            display: flex;
+        }
+
+        // Hide Odoo's native burger menu (we use our own App Switcher)
+        .o_menu_toggle {
+            display: none;
+        }
+
+        // Full width content
+        .o_action_manager {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        // Adjust navbar for mobile - Top Menu mode
+        .o_main_navbar {
+
+            // Hide menu sections on mobile
+            .o_menu_sections {
+                display: none;
+            }
+        }
+    }
+
+    // ===========================================
+    // Common Mobile Navbar Adjustments
+    // ===========================================
+    .o_main_navbar {
+        padding: 0 8px;
+        gap: 4px;
+
+        // Ensure proper navbar height
+        min-height: var(--albirru-navbar-height, 46px);
+
+        // Systray adjustments for mobile
+        .o_menu_systray {
+            gap: 2px;
+
+            >div {
+
+                .dropdown-toggle,
+                button {
+                    padding: 8px;
+                }
+            }
+
+            // Hide some systray items on very small screens
+            .o_web_studio_navbar_item,
+            .o_debug_manager {
+                display: none;
+            }
+        }
+    }
+}
+
+// Tablet Breakpoint: 768px - 991px
+@media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg-max}) {
+
+    // Hide mobile toggles on tablet
+    .albirru-mobile-menu-toggle {
+        display: none;
+    }
+
+    .o_web_client.albirru-sidebar-left {
+        .albirru-sidebar {
+            width: var(--albirru-sidebar-collapsed-width);
+            min-width: var(--albirru-sidebar-collapsed-width);
+
+            &:hover {
+                width: var(--albirru-sidebar-width);
+                min-width: var(--albirru-sidebar-width);
+            }
+        }
+
+        .o_action_manager {
+            margin-left: var(--albirru-sidebar-collapsed-width);
+            width: calc(100% - var(--albirru-sidebar-collapsed-width));
+        }
+    }
+}
+
+// Desktop and up: Ensure proper behavior
+@media (min-width: #{$breakpoint-lg}) {
+
+    // Hide all mobile elements
+    .albirru-mobile-menu-toggle {
+        display: none;
+    }
+
+    .albirru-mobile-close-btn {
+        display: none;
+    }
+
+    .albirru-sidebar-backdrop {
+        display: none;
+    }
+}

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Albirru Backend Theme - Quick Settings Template -->
+<!-- Compatible with Odoo 19 -->
+<!-- Using CSS classes for styling to prevent jumping on mode switch -->
+<templates xml:space="preserve">
+
+    <!-- Quick Settings Panel -->
+    <t t-name="albirru_backend_theme.QuickSettings">
+        <div class="albirru-quick-settings dropdown">
+            <button class="btn btn-link o_nav_entry dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    title="Theme Settings">
+                <i class="fa fa-paint-brush"/>
+            </button>
+
+            <!-- Dropdown uses CSS for dark/light mode styling -->
+            <div class="dropdown-menu dropdown-menu-end albirru-settings-dropdown">
+                
+                <!-- Header -->
+                <div class="settings-header">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h6 class="mb-0">
+                            <i class="fa fa-sliders me-2"/>Theme Settings
+                        </h6>
+                        <div class="form-check form-switch mb-0" t-on-click="(ev) => ev.stopPropagation()">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   role="switch"
+                                   id="darkModeSwitch"
+                                   t-att-checked="state.isDarkMode"
+                                   t-on-change="(ev) => this.onToggleDarkMode(ev)"/>
+                            <label class="form-check-label small" for="darkModeSwitch">
+                                <i t-att-class="'fa ' + (state.isDarkMode ? 'fa-moon-o' : 'fa-sun-o')"/>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Only administrators reach this panel while the theme is
+                     locked, so the warning is addressed to them. -->
+                <div t-if="isLocked" class="settings-locked-note">
+                    <i class="fa fa-lock me-1" aria-hidden="true"/>
+                    The theme is company-wide. Changes here apply to every user.
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="settings-tabs">
+                    <button t-att-class="'tab-btn ' + (state.activeTab === 'appearance' ? 'active' : '')"
+                            t-on-click="() => this.setActiveTab('appearance')">
+                        <i class="fa fa-paint-brush me-1"/>Appearance
+                    </button>
+                    <button t-att-class="'tab-btn ' + (state.activeTab === 'layout' ? 'active' : '')"
+                            t-on-click="() => this.setActiveTab('layout')">
+                        <i class="fa fa-columns me-1"/>Layout
+                    </button>
+                    <button t-att-class="'tab-btn ' + (state.activeTab === 'typography' ? 'active' : '')"
+                            t-on-click="() => this.setActiveTab('typography')">
+                        <i class="fa fa-font me-1"/>Font
+                    </button>
+                    <button t-att-class="'tab-btn ' + (state.activeTab === 'ui_elements' ? 'active' : '')"
+                            t-on-click="() => this.setActiveTab('ui_elements')">
+                        <i class="fa fa-cubes me-1"/>UI
+                    </button>
+                </div>
+
+                <div class="settings-body" t-ref="settingsBody">
+                    <!-- Appearance Tab -->
+                    <div t-if="state.activeTab === 'appearance'" class="tab-content">
+                        <!-- Color Scheme -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Color Scheme</div>
+                            <div class="color-options mb-3">
+                                <t t-foreach="colorSchemes" t-as="scheme" t-key="scheme.id">
+                                    <button class="color-option"
+                                            t-att-class="{'active': state.colorScheme === scheme.id and !state.useCustomColors}"
+                                            t-att-style="'background-color:' + scheme.color + ' !important;'"
+                                            t-att-title="scheme.name"
+                                            t-on-click="() => this.onSelectColorScheme(scheme.id)">
+                                        <i t-if="state.colorScheme === scheme.id and !state.useCustomColors" class="fa fa-check"/>
+                                    </button>
+                                </t>
+                            </div>
+
+                            <!-- Custom Colors Toggle -->
+                            <div class="setting-item-row mb-2">
+                                <div class="setting-label small">Use Custom Colors</div>
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           role="switch"
+                                           t-att-checked="state.useCustomColors"
+                                           t-on-change="onToggleCustomColors"/>
+                                </div>
+                            </div>
+
+                            <!-- Custom Color Pickers -->
+                            <div t-if="state.useCustomColors" class="custom-color-pickers p-2 rounded bg-light border">
+                                <div class="row g-2">
+                                    <div class="col-4 text-center">
+                                        <label class="d-block small mb-1">Primary</label>
+                                        <input type="color" class="form-control form-control-color w-100" 
+                                               t-att-value="state.primaryColor"
+                                               t-on-change="(ev) => this.onUpdateCustomColor('primaryColor', ev.target.value)"/>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <label class="d-block small mb-1">Secondary</label>
+                                        <input type="color" class="form-control form-control-color w-100" 
+                                               t-att-value="state.secondaryColor"
+                                               t-on-change="(ev) => this.onUpdateCustomColor('secondaryColor', ev.target.value)"/>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <label class="d-block small mb-1">Accent</label>
+                                        <input type="color" class="form-control form-control-color w-100" 
+                                               t-att-value="state.accentColor"
+                                               t-on-change="(ev) => this.onUpdateCustomColor('accentColor', ev.target.value)"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Theme Style -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Theme Style</div>
+                            <div class="style-options">
+                                <t t-foreach="themeStyles" t-as="style" t-key="style.id">
+                                    <button class="style-option"
+                                            t-att-class="{'active': state.themeStyle === style.id}"
+                                            t-att-title="style.name"
+                                            t-on-click="() => this.onSelectThemeStyle(style.id)">
+                                        <i t-att-class="'fa ' + style.icon"/>
+                                        <span t-esc="style.name"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layout Tab -->
+                    <div t-if="state.activeTab === 'layout'" class="tab-content">
+                        <!-- Sidebar Position -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Menu Position</div>
+                            <div class="layout-options">
+                                <t t-foreach="sidebarPositions" t-as="pos" t-key="pos.id">
+                                    <button class="layout-option"
+                                            t-att-class="{'active': state.sidebarPosition === pos.id}"
+                                            t-on-click="() => this.onSelectSidebarPosition(pos.id)">
+                                        <div class="layout-preview" t-att-data-layout="pos.id">
+                                            <div class="preview-navbar"/>
+                                            <div t-if="pos.id === 'left'" class="preview-sidebar"/>
+                                            <div class="preview-content"/>
+                                        </div>
+                                        <span t-esc="pos.name"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Style -->
+
+
+                        <!-- Sidebar Pinned -->
+                        <div class="setting-group" t-if="state.sidebarPosition === 'left'">
+                            <div class="setting-item-row">
+                                <div class="setting-label">
+                                    <i class="fa fa-thumb-tack me-2"/>Pin Sidebar
+                                </div>
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           role="switch"
+                                           t-att-checked="state.sidebarPinned"
+                                           t-on-change="onToggleSidebarPinned"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Menu Background Settings.
+                             The background is a shared company asset, not a
+                             personal preference, so only administrators see it. -->
+                        <div class="setting-group" t-if="isAdmin">
+                            <div class="setting-group-title">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fa fa-image me-1"/>Menu Background</span>
+                                    <div t-if="state.hasMenuBackground">
+                                        <button class="btn btn-sm btn-link text-danger p-0" 
+                                                title="Remove Background"
+                                                t-on-click="onRemoveMenuBackground">
+                                            <i class="fa fa-trash"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Upload Control -->
+                            <div class="setting-item-row mb-2">
+                                <input type="file" 
+                                       class="d-none" 
+                                       accept="image/*"
+                                       t-ref="fileInput"
+                                       t-on-change="onUploadMenuBackground"/>
+                                
+                                <button class="btn btn-outline-secondary btn-sm w-100" 
+                                        t-on-click="() => this.fileInputRef.el.click()">
+                                    <i t-att-class="'fa ' + (state.hasMenuBackground ? 'fa-upload' : 'fa-plus') + ' me-1'"/>
+                                    <t t-esc="state.hasMenuBackground ? 'Change Image' : 'Upload Image'"/>
+                                </button>
+                            </div>
+
+                            <!-- Opacity Slider (Only if background exists) -->
+                            <div t-if="state.hasMenuBackground">
+                                <div class="setting-item-row">
+                                    <div class="setting-label small">Opacity</div>
+                                    <div class="d-flex align-items-center flex-grow-1 ms-2">
+                                        <input type="range" 
+                                               class="form-range flex-grow-1"
+                                               min="0" max="100" step="5"
+                                               t-att-value="state.menuBgOpacity"
+                                               t-on-input="onMenuBgOpacityChange"/>
+                                        <span class="ms-2 small text-muted" style="min-width: 35px;" 
+                                              t-esc="state.menuBgOpacity + '%'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chatter Position -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Chatter Position</div>
+                            <div class="btn-group w-100">
+                                <t t-foreach="chatterPositions" t-as="pos" t-key="pos.id">
+                                    <button class="btn btn-chatter"
+                                            t-att-class="{'active': state.chatterPosition === pos.id}"
+                                            t-on-click="() => this.onSelectChatterPosition(pos.id)">
+                                        <i t-att-class="'fa ' + pos.icon + ' me-1'"/>
+                                        <t t-esc="pos.name"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- List View Settings -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">List View</div>
+                            <div class="setting-item-row mb-2">
+                                <div class="setting-label small">Row Height</div>
+                                <select class="form-select form-select-sm w-auto" 
+                                        t-on-change="(ev) => this.onSelectListRowHeight(ev.target.value)">
+                                    <t t-foreach="listRowHeights" t-as="h" t-key="h.id">
+                                        <option t-att-value="h.id" t-att-selected="state.listRowHeight === h.id">
+                                            <t t-esc="h.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="setting-item-row">
+                                <div class="setting-label small">Sticky Header</div>
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           role="switch"
+                                           t-att-checked="state.listStickyHeader"
+                                           t-on-change="onToggleStickyHeader"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typography Tab -->
+                    <div t-if="state.activeTab === 'typography'" class="tab-content">
+                        <!-- Font Family -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Font Family</div>
+                            <div class="font-options">
+                                <t t-foreach="fontFamilies" t-as="font" t-key="font.id">
+                                    <button class="font-option"
+                                            t-att-class="{'active': state.fontFamily === font.id}"
+                                            t-att-style="'font-family:' + font.name + ';'"
+                                            t-on-click="() => this.onSelectFontFamily(font.id)">
+                                        <span t-esc="font.name"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Font Size -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Font Size</div>
+                            <div class="btn-group w-100">
+                                <t t-foreach="fontSizes" t-as="size" t-key="size.id">
+                                    <button class="btn btn-outline-secondary btn-sm"
+                                            t-att-class="{'active': state.fontSize === size.id}"
+                                            t-on-click="() => this.onSelectFontSize(size.id)">
+                                        <t t-esc="size.name"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UI Elements Tab -->
+                    <div t-if="state.activeTab === 'ui_elements'" class="tab-content">
+                        <!-- Button Style -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Button Style</div>
+                            <div class="btn-group w-100">
+                                <t t-foreach="buttonStyles" t-as="s" t-key="s.id">
+                                    <button class="btn btn-outline-secondary btn-sm"
+                                            t-att-class="{'active': state.buttonStyle === s.id}"
+                                            t-on-click="() => this.onSelectButtonStyle(s.id)">
+                                        <t t-esc="s.name"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Input Style -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Input Style</div>
+                            <div class="btn-group w-100">
+                                <t t-foreach="inputStyles" t-as="s" t-key="s.id">
+                                    <button class="btn btn-outline-secondary btn-sm"
+                                            t-att-class="{'active': state.inputStyle === s.id}"
+                                            t-on-click="() => this.onSelectInputStyle(s.id)">
+                                        <t t-esc="s.name"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Loader Style -->
+                        <div class="setting-group">
+                            <div class="setting-group-title">Loader Style</div>
+                            <select class="form-select form-select-sm" 
+                                    t-on-change="(ev) => this.onSelectLoaderStyle(ev.target.value)">
+                                <t t-foreach="loaderStyles" t-as="s" t-key="s.id">
+                                    <option t-att-value="s.id" t-att-selected="state.loaderStyle === s.id">
+                                        <t t-esc="s.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="settings-footer">
+                    <!-- Shown only once something differs from the company
+                         theme, so the panel stays quiet by default. -->
+                    <button t-if="hasOverrides"
+                            class="btn btn-sm btn-link w-100 text-muted mb-1"
+                            title="Discard your personal theme settings and follow the company defaults again"
+                            t-on-click="onResetToCompanyDefaults">
+                        <i class="fa fa-undo me-1" aria-hidden="true"/>
+                        Reset to company defaults
+                    </button>
+                    <!-- General Settings is administrator territory; offering
+                         the shortcut to everyone only leads to an access
+                         error, and a locked panel would show nothing else. -->
+                    <button t-if="isAdmin"
+                            class="btn btn-sm btn-primary w-100"
+                            t-on-click="onOpenFullSettings">
+                        <i class="fa fa-cog me-1" aria-hidden="true"/>
+                        All Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

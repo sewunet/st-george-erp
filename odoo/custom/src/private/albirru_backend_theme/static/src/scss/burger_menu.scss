@@ -1,0 +1,327 @@
+// Albirru Backend Theme - Burger Menu Styles
+// Mobile menu styling for Odoo 19
+
+// Main Burger Menu Container
+.o_burger_menu,
+.o_app_menu_sidebar {
+    background-color: var(--albirru-primary);
+    padding: 10px;
+    max-width: 300px;
+
+    // Default text color for the whole menu structure
+    color: var(--albirru-primary-text);
+
+    // Force all internal text elements to inherit or use primary-text
+    a,
+    span,
+    i,
+    div,
+    li,
+    .text-body,
+    .text-reset {
+        color: var(--albirru-primary-text);
+    }
+
+    // Top bar with user info
+    .o_sidebar_topbar,
+    .o_burger_menu_topbar {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--albirru-primary-text);
+        box-shadow: none;
+        border-radius: var(--albirru-radius-lg);
+        margin-bottom: 1rem;
+        padding: 10px;
+
+        .dropdown-toggle {
+            color: var(--albirru-primary-text);
+
+            &.active {
+                background: transparent;
+                color: var(--albirru-primary-text);
+                border: none;
+            }
+        }
+
+        // Ensure close button and other controls are visible
+        .o_sidebar_close,
+        button {
+            color: var(--albirru-primary-text);
+        }
+
+        .o_burger_menu_username {
+            font-size: 0.875rem;
+            color: var(--albirru-primary-text);
+        }
+    }
+
+    // Menu content
+    .o_burger_menu_content {
+        background-color: transparent;
+        color: var(--albirru-primary-text);
+
+        // User menu mobile
+        .o_user_menu_mobile {
+            margin-top: 0;
+            border-radius: var(--albirru-radius-lg);
+            padding: 10px;
+
+            // Override bootstrap text utilities inside user menu
+            .text-body {
+                color: var(--albirru-primary-text);
+            }
+
+            .dropdown-item {
+                padding: 7px 0 7px 10px;
+                color: var(--albirru-primary-text);
+                min-height: unset;
+                font-size: inherit;
+                line-height: unset;
+                border-radius: var(--albirru-radius-sm);
+                transition: background var(--albirru-transition-fast);
+
+                span,
+                i {
+                    color: var(--albirru-primary-text);
+                }
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    color: var(--albirru-primary-text);
+                }
+            }
+
+            // Specific fix for links in user menu
+            a {
+                color: var(--albirru-primary-text);
+            }
+
+            .dropdown-divider {
+                border-color: rgba(255, 255, 255, 0.2);
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            // Hide dark mode toggle in mobile menu (already in systray)
+            .form-switch {
+                display: none;
+            }
+        }
+
+        // App menu items
+        ul {
+            background-color: transparent;
+            box-shadow: none;
+
+            li {
+                color: var(--albirru-primary-text);
+
+                a,
+                span {
+                    color: var(--albirru-primary-text);
+                }
+
+                &.ps-0 {
+
+                    .text-900.bg-transparent.fw-bold,
+                    .bg-transparent {
+                        height: 35px;
+                        line-height: 35px;
+                        min-height: 35px;
+                        font-size: inherit;
+                        background-color: rgba(255, 255, 255, 0.1);
+                        color: var(--albirru-primary-text);
+                        border-radius: var(--albirru-radius-lg);
+                        padding: 0;
+                        padding-left: 16px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        border: none;
+                    }
+
+                    ul.ps-0 li.py-2 {
+                        padding: 7px 20px;
+                        color: var(--albirru-primary-text);
+                        min-height: unset;
+
+                        a {
+                            color: var(--albirru-primary-text);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Menu buttons and links
+        li,
+        button {
+            color: var(--albirru-primary-text);
+        }
+
+        // Force links to white
+        a {
+            color: var(--albirru-primary-text);
+        }
+
+        // Restore semantic colors for icons
+        .text-success {
+            color: var(--albirru-success);
+        }
+
+        .text-warning {
+            color: var(--albirru-warning);
+        }
+
+        .text-danger {
+            color: var(--albirru-danger);
+        }
+
+        .text-info {
+            color: var(--albirru-info);
+        }
+
+        .text-muted {
+            color: var(--albirru-light-text-muted);
+        }
+
+        // Muted might need adjustment
+
+        &.o_burger_menu_app {
+            background-color: var(--albirru-primary);
+            color: var(--albirru-primary-text);
+        }
+    }
+}
+
+// Touch device specific adjustments - remove dark mode toggle display
+body.o_web_client.o_touch_device {
+    .o_user_menu_mobile .form-switch {
+        display: none;
+    }
+}
+
+// Dark mode adjustments for burger menu
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+
+    .o_burger_menu,
+    .o_app_menu_sidebar {
+        background-color: var(--albirru-dark-bg-secondary);
+        color: var(--albirru-dark-text);
+
+        // Force inheritance for dark mode too including Bootstrap utilities
+        a,
+        span,
+        i,
+        div,
+        li,
+        .text-body,
+        .text-reset {
+            color: var(--albirru-dark-text);
+        }
+
+        .o_sidebar_topbar,
+        .o_burger_menu_topbar {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--albirru-dark-text);
+
+            .dropdown-toggle {
+                color: var(--albirru-dark-text);
+            }
+
+            .dropdown-toggle.active {
+                color: var(--albirru-dark-text);
+            }
+
+            .o_sidebar_close,
+            button {
+                color: var(--albirru-dark-text);
+            }
+
+            .o_burger_menu_username {
+                color: var(--albirru-dark-text);
+            }
+        }
+
+        .o_burger_menu_content {
+            .o_user_menu_mobile {
+                .text-body {
+                    color: var(--albirru-dark-text);
+                }
+
+                .dropdown-item {
+                    color: var(--albirru-dark-text);
+
+                    span,
+                    i {
+                        color: var(--albirru-dark-text);
+                    }
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.05);
+                        color: var(--albirru-dark-text);
+                    }
+                }
+
+                a {
+                    color: var(--albirru-dark-text);
+                }
+
+                .dropdown-divider {
+                    border-color: var(--albirru-dark-border);
+                }
+            }
+
+            ul li {
+                color: var(--albirru-dark-text);
+
+                a,
+                span {
+                    color: var(--albirru-dark-text);
+                }
+
+                &.ps-0 {
+
+                    .text-900.bg-transparent.fw-bold,
+                    .bg-transparent {
+                        background-color: rgba(255, 255, 255, 0.05);
+                        color: var(--albirru-dark-text);
+                    }
+
+                    ul.ps-0 li.py-2 {
+                        color: var(--albirru-dark-text);
+
+                        a {
+                            color: var(--albirru-dark-text);
+                        }
+                    }
+                }
+            }
+
+            &.o_burger_menu_app {
+                background-color: var(--albirru-dark-bg-secondary);
+                color: var(--albirru-dark-text);
+            }
+
+            // Restore semantic colors for icons in dark mode
+            .text-success {
+                color: var(--albirru-dark-success);
+            }
+
+            .text-warning {
+                color: var(--albirru-dark-warning);
+            }
+
+            .text-danger {
+                color: var(--albirru-dark-danger);
+            }
+
+            .text-info {
+                color: var(--albirru-dark-info);
+            }
+
+            .text-muted {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+    }
+}

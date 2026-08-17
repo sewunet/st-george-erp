@@ -1,0 +1,886 @@
+// Albirru Backend Theme - App Drawer Styles
+// Compatible with Odoo 19
+
+// App Drawer Backdrop
+.albirru-app-drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+// App Drawer Container - Fullscreen
+.albirru-app-drawer {
+    // Frosted panel colours for everything that floats inside the drawer.
+    // Declared once here and remapped for dark mode at the bottom of this
+    // file, so each property has exactly one declaration site and the two
+    // modes never compete on specificity.
+    //
+    // Picking the alpha means accounting for two layers, not one. A panel does
+    // not sit on the wallpaper directly: the drawer keeps its own solid
+    // background and menu_backgrounds.scss paints the image over it at
+    // --albirru-menu-bg-opacity. With a dark image at the default-ish 0.45
+    // that backdrop already lands near #9b9b9b, so a high alpha here washes
+    // straight back out to near-white and the panel reads as opaque.
+    //
+    // 0.25 keeps the image clearly visible through the row while the drawer's
+    // own light background acts as a luminance floor, holding the row title
+    // above 5:1 contrast even over the darkest part of an image. Raise it if
+    // you push the menu background opacity far higher than 0.5, where that
+    // floor stops protecting the text.
+    --albirru-drawer-glass: rgba(255, 255, 255, 0.25);
+    --albirru-drawer-glass-hover: rgba(255, 255, 255, 0.45);
+    // At this fill the edge is what defines the panel, so it carries more
+    // weight than the fill does.
+    --albirru-drawer-glass-border: rgba(255, 255, 255, 0.45);
+    // Darker than the theme's muted grey, which would sit near 3:1 here.
+    --albirru-drawer-glass-muted: #33383d;
+
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    background: var(--albirru-light-bg, #f8f9fa);
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Drawer Header
+.albirru-drawer-header {
+    display: flex;
+    align-items: center;
+    gap: var(--albirru-spacing-md, 16px);
+    padding: var(--albirru-spacing-lg, 24px) var(--albirru-spacing-xl, 32px);
+    border-bottom: none;
+    background: transparent;
+
+    .drawer-title-area {
+        flex: 1;
+
+        .drawer-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--albirru-light-text, #212529);
+        }
+    }
+
+    .drawer-search-btn {
+        width: 44px;
+        height: 44px;
+        border: none;
+        background: var(--albirru-drawer-glass);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-radius: 50%;
+        color: var(--albirru-primary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        border: 1px solid var(--albirru-drawer-glass-border);
+        transition: all 0.3s ease;
+        font-size: 16px;
+
+        &:hover {
+            background: var(--albirru-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+    }
+
+    .drawer-search {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: var(--albirru-spacing-md, 16px);
+        background: var(--albirru-drawer-glass);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-radius: 100px;
+        padding: 12px 24px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        border: 1px solid var(--albirru-drawer-glass-border);
+        transition: all 0.3s ease;
+
+        &:focus-within {
+            box-shadow: 0 4px 20px rgba(var(--albirru-primary-rgb), 0.15);
+            border-color: var(--albirru-primary);
+            transform: translateY(-1px);
+        }
+
+        i {
+            color: var(--albirru-primary);
+            font-size: 18px;
+        }
+
+        .drawer-search-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            color: var(--albirru-light-text, #212529);
+            outline: none;
+            font-weight: 500;
+
+            &::placeholder {
+                color: var(--albirru-light-text-muted, #6c757d);
+                font-weight: 400;
+            }
+        }
+    }
+
+    .drawer-back-btn {
+        width: 44px;
+        height: 44px;
+        border: none;
+        background: var(--albirru-drawer-glass);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-radius: 50%;
+        color: var(--albirru-light-text, #212529);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        border: 1px solid var(--albirru-drawer-glass-border);
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: var(--albirru-primary);
+            color: white;
+            transform: translateX(-4px);
+        }
+    }
+}
+
+// Search Results
+.albirru-search-results {
+    padding: 0;
+    width: 100%;
+
+    .search-results-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .search-result-item {
+        margin-bottom: 8px;
+        width: 100%;
+
+        .search-result-link {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--albirru-drawer-glass);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--albirru-drawer-glass-border);
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            // A 0.03 shadow is invisible against a background image; the row
+            // needs a real edge to separate it from whatever sits behind it.
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            width: 100%;
+
+            &:hover {
+                background: var(--albirru-drawer-glass-hover);
+                transform: translateX(4px);
+            }
+        }
+
+        .result-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            &.placeholder {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 14px;
+                font-weight: 700;
+            }
+        }
+
+        .result-menu-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .result-info {
+            flex: 1;
+            min-width: 0;
+
+            .result-name {
+                display: block;
+                font-weight: 600;
+                font-size: 15px;
+                color: var(--albirru-light-text, #212529);
+                margin-bottom: 2px;
+            }
+
+            .result-path {
+                display: block;
+                font-size: 12px;
+                color: var(--albirru-drawer-glass-muted);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}
+
+// Drawer Content
+.albirru-drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--albirru-spacing-md, 16px) var(--albirru-spacing-xl, 32px);
+
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+}
+
+// App Groups
+.albirru-app-group {
+    margin-bottom: var(--albirru-spacing-xl, 32px);
+    background: var(--albirru-light-bg-secondary, #ffffff);
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    }
+}
+
+// Group Header
+.albirru-group-header {
+    display: flex;
+    align-items: center;
+    gap: var(--albirru-spacing-md, 16px);
+    padding: 20px 24px;
+    background: transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+
+    &:hover {
+        background: rgba(var(--albirru-primary-rgb), 0.02);
+    }
+
+    .group-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--albirru-primary) 0%, var(--albirru-accent) 100%);
+        color: white;
+        border-radius: 12px;
+        font-size: 18px;
+        box-shadow: 0 4px 10px rgba(var(--albirru-primary-rgb), 0.2);
+
+        .group-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+        }
+    }
+
+    .group-name {
+        flex: 1;
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--albirru-light-text, #212529);
+        letter-spacing: -0.3px;
+    }
+
+    .group-badge {
+        background: #f1f3f5;
+        color: #495057;
+        padding: 4px 12px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .group-toggle-icon {
+        color: var(--albirru-light-text-muted, #6c757d);
+        font-size: 14px;
+        transition: transform 0.3s ease;
+    }
+}
+
+// Group Apps Container
+.albirru-group-apps {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+
+    &.expanded {
+        max-height: 2000px;
+        opacity: 1;
+        background: #f7f5f540;
+    }
+
+    &.collapsed {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+// Ungrouped section styling
+.albirru-ungrouped {
+    .albirru-group-header {
+        .group-icon {
+            background: linear-gradient(135deg, #495057 0%, #212529 100%);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+    }
+}
+
+// Apps Grid
+.albirru-apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 120px);
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+}
+
+// App Card
+.albirru-app-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 12px;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    background: #f7f5f540;
+;
+
+    &:hover {
+        background: var(--albirru-light-bg, #f8f9fa);
+        transform: translateY(-6px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+
+        .app-card-icon {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-card-name {
+            color: var(--albirru-primary);
+        }
+    }
+
+    .app-card-icon {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 12px;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+        .app-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-icon-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+
+    .app-card-name {
+        text-align: center;
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--albirru-light-text, #212529);
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 1.2;
+        transition: color 0.3s ease;
+    }
+}
+
+// No Results
+.drawer-no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    color: var(--albirru-light-text-muted, #6c757d);
+
+    i {
+        margin-bottom: 16px;
+        opacity: 0.2;
+    }
+
+    p {
+        font-size: 18px;
+        font-weight: 500;
+    }
+}
+
+// Drawer Footer
+.albirru-drawer-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    background: transparent;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--albirru-light-text-muted);
+}
+
+// Sub-Menu View Styles
+.albirru-submenu-view {
+    padding: 0;
+
+    .submenu-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px 24px;
+        background: var(--albirru-light-bg-secondary, #ffffff);
+        border-radius: 16px;
+        margin: 0 24px 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+
+        &:hover {
+            background: rgba(var(--albirru-primary-rgb), 0.05);
+        }
+
+        .back-arrow {
+            font-size: 18px;
+            color: var(--albirru-primary);
+        }
+
+        .submenu-app-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .app-icon-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .app-icon-placeholder-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .submenu-app-name {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--albirru-light-text, #212529);
+        }
+    }
+
+    .albirru-submenu-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 24px;
+    }
+
+    .drawer-section-item {
+        margin-bottom: 4px;
+
+        .drawer-section-link,
+        .drawer-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: var(--albirru-light-bg-secondary, #ffffff);
+            border-radius: 12px;
+            color: var(--albirru-light-text, #212529);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            font-weight: 500;
+
+            &:hover {
+                background: rgba(var(--albirru-primary-rgb), 0.08);
+                color: var(--albirru-primary);
+            }
+
+            .section-arrow {
+                font-size: 12px;
+                transition: transform 0.3s ease;
+                color: var(--albirru-light-text-muted);
+            }
+
+            &.expanded .section-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        .drawer-nested-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 20px;
+
+            &.expanded {
+                max-height: 1000px;
+            }
+
+            .drawer-section-link,
+            .drawer-section-header {
+                padding: 12px 16px;
+                font-size: 14px;
+                background: transparent;
+            }
+        }
+    }
+}
+
+// Animations
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Dark Mode Styles
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+    .albirru-app-drawer {
+        background: var(--albirru-dark-bg, #1a1a2e);
+
+        // Remapping these is all dark mode needs. The rules above read them,
+        // so there is no second copy of a background colour to keep in sync
+        // and no specificity contest between the two modes.
+        //
+        // A translucent white rather than a dark fill: dark mode halves the
+        // wallpaper opacity, so the backdrop is already close to the drawer's
+        // own #1a1a2e and a dark panel would disappear into it. Lifting the
+        // row slightly keeps it a distinct surface, and white text is safe
+        // against anything this dark.
+        --albirru-drawer-glass: rgba(255, 255, 255, 0.1);
+        --albirru-drawer-glass-hover: rgba(255, 255, 255, 0.18);
+        --albirru-drawer-glass-border: rgba(255, 255, 255, 0.18);
+        --albirru-drawer-glass-muted: rgba(255, 255, 255, 0.7);
+    }
+
+    .albirru-drawer-header {
+        .drawer-title-area {
+            .drawer-title {
+                color: var(--albirru-dark-text, #ffffff);
+            }
+        }
+
+        .drawer-search-btn {
+            color: var(--albirru-primary);
+
+            &:hover {
+                background: var(--albirru-primary);
+                color: white;
+            }
+        }
+
+        .drawer-search {
+
+            &:focus-within {
+                box-shadow: 0 4px 20px rgba(var(--albirru-primary-rgb), 0.3);
+                border-color: var(--albirru-primary);
+            }
+
+            i {
+                color: var(--albirru-primary);
+            }
+
+            .drawer-search-input {
+                color: var(--albirru-dark-text, #ffffff);
+
+                &::placeholder {
+                    color: var(--albirru-dark-text-muted, #a0a0a0);
+                }
+            }
+        }
+
+        .drawer-back-btn {
+            color: var(--albirru-dark-text, #ffffff);
+
+            &:hover {
+                background: var(--albirru-primary);
+                color: white;
+            }
+        }
+    }
+
+    // Search Results Dark Mode - only the text needs a dark variant; the panel
+    // itself follows the glass variables remapped above.
+    .albirru-search-results {
+        .search-result-item {
+            .result-info {
+                .result-name {
+                    color: var(--albirru-dark-text, #ffffff);
+                }
+            }
+        }
+    }
+
+    .albirru-app-group {
+        background: var(--albirru-dark-bg-secondary, #16213e);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .albirru-group-header {
+        border-bottom-color: rgba(255, 255, 255, 0.05);
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .group-name {
+            color: var(--albirru-dark-text, #ffffff);
+        }
+
+        .group-badge {
+            background: var(--albirru-dark-bg, #1a1a2e);
+            color: var(--albirru-dark-text, #ffffff);
+        }
+
+        .group-toggle-icon {
+            color: var(--albirru-dark-text-muted, #a0a0a0);
+        }
+    }
+
+    .albirru-app-card {
+        &:hover {
+            background: rgba(255, 255, 255, 0.03);
+
+            .app-card-name {
+                color: var(--albirru-primary);
+            }
+        }
+
+        .app-card-name {
+            color: var(--albirru-dark-text, #ffffff);
+        }
+
+        .app-card-icon {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+    }
+
+    // No Results Dark Mode
+    .drawer-no-results {
+        color: var(--albirru-dark-text-muted, #a0a0a0);
+
+        i {
+            opacity: 0.2;
+        }
+    }
+
+    // Drawer Content Scrollbar
+    .albirru-drawer-content {
+        &::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    }
+
+    // Sub-Menu View Dark Mode
+    .albirru-submenu-view {
+        .submenu-header {
+            background: var(--albirru-dark-bg-secondary, #16213e);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+            &:hover {
+                background: rgba(var(--albirru-primary-rgb), 0.1);
+            }
+
+            .back-arrow {
+                color: var(--albirru-primary);
+            }
+
+            .submenu-app-name {
+                color: var(--albirru-dark-text, #ffffff);
+            }
+        }
+
+        .drawer-section-item {
+
+            .drawer-section-link,
+            .drawer-section-header {
+                background: var(--albirru-dark-bg-secondary, #16213e);
+                color: var(--albirru-dark-text, #ffffff);
+
+                &:hover {
+                    background: rgba(var(--albirru-primary-rgb), 0.15);
+                    color: var(--albirru-primary);
+                }
+
+                .section-arrow {
+                    color: var(--albirru-dark-text-muted, #a0a0a0);
+                }
+            }
+
+            .drawer-nested-menu {
+
+                .drawer-section-link,
+                .drawer-section-header {
+                    background: transparent;
+
+                    &:hover {
+                        background: rgba(var(--albirru-primary-rgb), 0.1);
+                    }
+                }
+            }
+        }
+    }
+
+    .albirru-drawer-footer {
+        border-top-color: rgba(255, 255, 255, 0.05);
+        color: var(--albirru-dark-text-muted);
+    }
+}
+
+// Responsive
+@media (max-width: #{$breakpoint-md-max}) {
+    .albirru-app-drawer {
+        max-width: 100%;
+        max-height: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+
+    .albirru-apps-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .albirru-app-card {
+        padding: var(--albirru-spacing-sm, 8px);
+
+        .app-card-icon {
+            width: 48px;
+            height: 48px;
+        }
+    }
+
+    .albirru-group-header {
+        padding: var(--albirru-spacing-sm, 12px) var(--albirru-spacing-md, 16px);
+
+        .group-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: #{$albirru-breakpoint-phone}) {
+    .albirru-apps-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--albirru-spacing-sm, 8px);
+    }
+
+    .albirru-app-card {
+        .app-card-icon {
+            width: 44px;
+            height: 44px;
+        }
+
+        .app-card-name {
+            font-size: 11px;
+        }
+    }
+}

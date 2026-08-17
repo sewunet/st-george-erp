@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_football_club_fan_list" model="ir.ui.view">
+        <field name="name">football.club.fan.list</field>
+        <field name="model">football.club.fan</field>
+        <field name="arch" type="xml">
+            <list string="Fans" decoration-success="state == 'active'" decoration-warning="state == 'draft'" decoration-muted="not active" decoration-danger="state in ('suspended', 'rejected')">
+                <field name="registration_number"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="city"/>
+                <field name="registration_date"/>
+                <field name="state" widget="badge"/>
+                <field name="website_registration" widget="boolean_toggle"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_football_club_fan_form" model="ir.ui.view">
+        <field name="name">football.club.fan.form</field>
+        <field name="model">football.club.fan</field>
+        <field name="arch" type="xml">
+            <form string="Fan">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_activate" string="Activate" type="object" class="btn-primary" invisible="state not in ('draft', 'confirmed', 'suspended')"/>
+                    <button name="action_suspend" string="Suspend" type="object" groups="football_club_portal.group_football_club_manager" invisible="state not in ('confirmed', 'active')"/>
+                    <button name="action_reject" string="Reject" type="object" groups="football_club_portal.group_football_club_manager" invisible="state not in ('draft', 'confirmed')"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" groups="football_club_portal.group_football_club_manager" invisible="state not in ('confirmed', 'active', 'suspended', 'rejected')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,active,suspended,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identity">
+                            <field name="registration_number" readonly="1"/>
+                            <field name="first_name"/>
+                            <field name="middle_name"/>
+                            <field name="last_name"/>
+                            <field name="gender"/>
+                            <field name="date_of_birth"/>
+                            <field name="profile_image" widget="image"/>
+                        </group>
+                        <group string="Contact">
+                            <field name="partner_id" readonly="1"/>
+                            <field name="email"/>
+                            <field name="normalized_email" readonly="1"/>
+                            <field name="phone"/>
+                            <field name="normalized_phone" readonly="1"/>
+                            <field name="city"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Supporter Details">
+                            <field name="favorite_player"/>
+                            <field name="supporter_since"/>
+                            <field name="preferred_communication"/>
+                        </group>
+                        <group string="Registration Metadata">
+                            <field name="registration_date" readonly="1"/>
+                            <field name="website_registration" readonly="1"/>
+                            <field name="consent_accepted"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_football_club_fan_search" model="ir.ui.view">
+        <field name="name">football.club.fan.search</field>
+        <field name="model">football.club.fan</field>
+        <field name="arch" type="xml">
+            <search string="Search Fans">
+                <field name="registration_number"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Active" name="active_state" domain="[('state', '=', 'active')]"/>
+                <filter string="Suspended" name="suspended" domain="[('state', '=', 'suspended')]"/>
+                <filter string="Rejected" name="rejected" domain="[('state', '=', 'rejected')]"/>
+                <filter string="Website Registrations" name="website_registration" domain="[('website_registration', '=', True)]"/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="City" name="group_city" context="{'group_by': 'city'}"/>
+                    <filter string="Registration Month" name="group_registration_month" context="{'group_by': 'registration_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_football_club_fans" model="ir.actions.act_window">
+        <field name="name">Fans</field>
+        <field name="res_model">football.club.fan</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="football_club_portal.view_football_club_fan_search"/>
+        <field name="context">{'search_default_active_state': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first football club fan registration.</p>
+        </field>
+    </record>
+</odoo>

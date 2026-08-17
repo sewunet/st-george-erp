@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Albirru Backend Theme - Systray Component Templates -->
+<!-- Compatible with Odoo 19 -->
+<templates xml:space="preserve">
+
+    <!-- Dark Mode Toggle Template -->
+    <t t-name="albirru_backend_theme.DarkModeToggle">
+        <div class="albirru-dark-mode-toggle">
+            <button class="btn btn-link o_nav_entry"
+                    t-att-title="tooltipText"
+                    t-att-aria-label="tooltipText"
+                    t-on-click="onToggle">
+                <i t-att-class="'fa ' + iconClass" aria-hidden="true"/>
+            </button>
+        </div>
+    </t>
+
+    <!-- Bookmark Button Template -->
+    <t t-name="albirru_backend_theme.BookmarkButton">
+        <div class="albirru-bookmark-btn dropdown">
+            <button class="btn btn-link o_nav_entry dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    title="Bookmarks"
+                    aria-label="Bookmarks"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                <i class="fa fa-bookmark-o" aria-hidden="true"/>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end albirru-bookmark-dropdown">
+                <div class="dropdown-header d-flex justify-content-between align-items-center">
+                    <span>Bookmarks</span>
+                    <button class="btn btn-sm btn-primary" t-on-click="onAddBookmark" title="Add current page">
+                        <i class="fa fa-plus me-1" aria-hidden="true"/>Add
+                    </button>
+                </div>
+                <div class="dropdown-divider"/>
+                <t t-if="state.bookmarks.length">
+                    <t t-foreach="state.bookmarks" t-as="bookmark" t-key="bookmark.id">
+                        <a class="dropdown-item d-flex align-items-center justify-content-between"
+                           href="#"
+                           t-on-click="() => this.onBookmarkClick(bookmark)">
+                            <span class="d-flex align-items-center">
+                                <i t-att-class="'fa ' + (bookmark.icon || 'fa-bookmark') + ' me-2'"/>
+                                <span class="text-truncate" style="max-width: 180px;">
+                                    <t t-esc="bookmark.name"/>
+                                </span>
+                            </span>
+                            <button class="btn btn-link btn-sm p-0 text-muted"
+                                    t-on-click="(ev) => this.onRemoveBookmark(bookmark.id, ev)"
+                                    title="Remove" aria-label="Remove bookmark">
+                                <i class="fa fa-times" aria-hidden="true"/>
+                            </button>
+                        </a>
+                    </t>
+                </t>
+                <t t-else="">
+                    <div class="dropdown-item text-muted text-center py-3">
+                        <i class="fa fa-bookmark-o fa-2x mb-2 d-block opacity-50" aria-hidden="true"/>
+                        <small>No bookmarks yet</small>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <!-- Sidebar Toggle Template -->
+    <t t-name="albirru_backend_theme.SidebarToggle">
+        <div class="albirru-sidebar-toggle">
+            <button class="btn btn-link o_nav_entry"
+                    t-att-title="tooltipText"
+                    t-att-aria-label="tooltipText"
+                    t-on-click="onToggle">
+                <i t-att-class="'fa ' + iconClass" aria-hidden="true"/>
+            </button>
+        </div>
+    </t>
+
+    <!-- Fullscreen Toggle Template -->
+    <t t-name="albirru_backend_theme.FullscreenToggle">
+        <div class="albirru-fullscreen-toggle">
+            <button class="btn btn-link o_nav_entry"
+                    t-att-title="tooltipText"
+                    t-att-aria-label="tooltipText"
+                    t-on-click="onToggle">
+                <i t-att-class="'fa ' + (state.isFullscreen ? 'fa-compress' : 'fa-expand')"/>
+            </button>
+        </div>
+    </t>
+
+    <!-- Search Systray Template -->
+    <t t-name="albirru_backend_theme.SearchSystrayItem">
+        <div class="albirru-search-systray">
+            <button class="btn btn-link o_nav_entry"
+                    title="Search (Ctrl+K)"
+                    aria-label="Search (Ctrl+K)"
+                    t-on-click="onClick">
+                <i class="fa fa-search" aria-hidden="true"/>
+            </button>
+        </div>
+    </t>
+
+    <!-- NOTE: Theme Quick Settings functionality is implemented in quick_settings.js -->
+    <!-- which uses albirru_backend_theme.QuickSettings template in quick_settings.xml -->
+
+</templates>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default Theme Configuration -->
+        <record id="albirru_theme_config_default" model="albirru.theme.config">
+            <field name="name">Default Theme</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="theme_style">rounded</field>
+            <field name="color_scheme">scheme_1</field>
+            <field name="sidebar_position">left</field>
+
+            <field name="chatter_position">right</field>
+            <field name="list_row_height">comfortable</field>
+            <field name="list_sticky_header" eval="True"/>
+            <field name="font_family">inter</field>
+            <field name="font_size">medium</field>
+            <field name="button_style">filled</field>
+            <field name="input_style">bordered</field>
+            <field name="loader_style">spinner</field>
+            <field name="use_custom_colors" eval="False"/>
+            <field name="primary_color">#714B67</field>
+            <field name="secondary_color">#ffffff</field>
+            <field name="accent_color">#017e84</field>
+        </record>
+
+        <!-- Hide Tests Menu -->
+        <record id="base.menu_tests" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+    </data>
+</odoo>

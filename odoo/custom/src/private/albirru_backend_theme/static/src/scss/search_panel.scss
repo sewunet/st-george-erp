@@ -1,0 +1,341 @@
+// Albirru Backend Theme - Search Panel Styles
+// Compatible with Odoo 19
+
+// =============================================
+// Explicit Light Mode (when dark mode is NOT active)
+// =============================================
+html:not(.albirru-dark-mode):not([data-albirru-dark="true"]) {
+    .o_search_panel {
+        background-color: #ffffff;
+        border-right-color: #dee2e6;
+
+        .o_search_panel_section_header {
+            color: var(--albirru-primary);
+            border-bottom-color: #dee2e6;
+        }
+
+        .o_search_panel_category_value,
+        .o_search_panel_category_value .o_search_panel_label,
+        .o_search_panel_category_value .o_search_panel_label_title {
+            color: #212529;
+        }
+
+        .o_search_panel_filter_value label,
+        .o_search_panel_filter_value .o_search_panel_label_title {
+            color: #212529;
+        }
+
+        .o_search_panel_filter_value .o_search_panel_counter {
+            color: #6c757d;
+        }
+
+        // Active category keeps white text
+        .o_search_panel_category_value.active>.o_search_panel_label,
+        .o_search_panel_category_value>.o_search_panel_label.active {
+            background-color: var(--albirru-primary);
+            color: #ffffff;
+
+            .o_search_panel_label_title {
+                color: #ffffff;
+            }
+        }
+    }
+}
+
+// =============================================
+// Base Styles
+// =============================================
+.o_controller_with_searchpanel {
+    display: flex;
+    align-items: stretch;
+
+    .o_search_panel {
+        background-color: var(--albirru-light-bg-secondary);
+        border-right: 1px solid var(--albirru-light-border);
+        padding: 15px;
+        width: 260px;
+        flex: 0 0 260px;
+
+        .o_search_panel_section_header {
+            background-color: transparent;
+            color: var(--albirru-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--albirru-light-border);
+            margin-bottom: 10px;
+
+            i {
+                margin-right: 8px;
+                color: var(--albirru-primary);
+            }
+        }
+
+        // Category section
+        .o_search_panel_category {
+            .o_search_panel_section_icon {
+                color: var(--albirru-primary);
+            }
+
+            // Category items (All, Official Apps, Industries)
+            .o_search_panel_category_value {
+                color: var(--albirru-light-text);
+
+                .o_search_panel_label {
+                    color: var(--albirru-light-text);
+                    padding: 6px 10px;
+                    border-radius: var(--albirru-radius-sm);
+                    transition: all var(--albirru-transition-fast);
+
+                    &:hover {
+                        background-color: var(--albirru-light-hover);
+                    }
+
+                    .o_search_panel_label_title {
+                        color: inherit;
+                    }
+                }
+
+                // Selected/active category
+                &.active>.o_search_panel_label,
+                >.o_search_panel_label.active {
+                    background-color: var(--albirru-primary);
+                    color: #ffffff;
+
+                    .o_search_panel_label_title {
+                        color: #ffffff;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+        // Filter section (CATEGORIES filter with checkboxes)
+        .o_search_panel_filter {
+            .o_search_panel_filter_group {
+                .o_search_panel_group_header {
+                    color: var(--albirru-light-text);
+                }
+
+                // Filter values (All, Sales, Website, etc.)
+                .o_search_panel_filter_value {
+                    padding: 4px 0;
+
+                    label {
+                        color: var(--albirru-light-text);
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        padding: 4px 8px;
+                        border-radius: var(--albirru-radius-sm);
+                        transition: background-color 0.15s;
+
+                        &:hover {
+                            background-color: var(--albirru-light-hover);
+                        }
+
+                        // Checkbox styling
+                        input[type="checkbox"] {
+                            margin-right: 8px;
+                            accent-color: var(--albirru-primary);
+                        }
+
+                        // Label text
+                        .o_search_panel_label_title {
+                            color: inherit;
+                        }
+
+                        // Counter badge
+                        .o_search_panel_counter {
+                            color: var(--albirru-light-text-muted);
+                            margin-left: auto;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Legacy list-group styles
+        .o_search_panel_field {
+            .list-group-item {
+                background-color: transparent;
+                border: none;
+                padding: 2px 0;
+                margin-bottom: 2px;
+
+                .list-group-item-action {
+                    border-radius: var(--albirru-radius-md);
+                    padding: 8px 12px;
+                    transition: all var(--albirru-transition-fast);
+                    color: var(--albirru-light-text);
+                    border: none;
+
+                    &:hover:not(.active) {
+                        background-color: var(--albirru-light-hover);
+                    }
+
+                    &.active {
+                        background-color: var(--albirru-primary);
+                        color: #ffffff;
+                        box-shadow: var(--albirru-shadow-sm);
+
+                        .o_search_panel_label_title {
+                            font-weight: 600;
+                            color: #ffffff;
+                        }
+
+                        // `.text-muted` is a Bootstrap utility, so it carries
+                        // !important. Without matching it the sub-text stays
+                        // grey on this item's coloured background.
+                        .text-muted {
+                            color: rgba(255, 255, 255, 0.8) !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// =============================================
+// Dark Mode Support for Search Panel
+// =============================================
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+
+    // Search Panel Dark Mode - Applied globally regardless of container
+    //
+    // The background is not set here on purpose: web.SearchPanel carries
+    // `bg-view` on both the panel and its collapsed sidebar, and that utility
+    // is !important. The global bg-* override in dark_mode.scss is what paints
+    // it; a plain background-color here would silently lose.
+    .o_search_panel {
+        border-right-color: var(--albirru-dark-border);
+
+        // Section headers
+        .o_search_panel_section_header {
+            color: var(--albirru-primary);
+            border-bottom-color: var(--albirru-dark-border);
+
+            i {
+                color: var(--albirru-primary);
+            }
+        }
+
+        // Category section - dark mode
+        .o_search_panel_category {
+            .o_search_panel_category_value {
+                color: var(--albirru-dark-text);
+
+                .o_search_panel_label {
+                    color: var(--albirru-dark-text);
+
+                    &:hover {
+                        background-color: var(--albirru-dark-hover);
+                    }
+
+                    .o_search_panel_label_title {
+                        color: var(--albirru-dark-text);
+                    }
+                }
+
+                // Selected/active category - dark mode
+                &.active>.o_search_panel_label,
+                >.o_search_panel_label.active {
+                    background-color: var(--albirru-primary);
+                    color: #ffffff;
+
+                    .o_search_panel_label_title {
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+
+        // Filter section - dark mode
+        .o_search_panel_filter {
+            .o_search_panel_filter_group {
+                .o_search_panel_group_header {
+                    color: var(--albirru-dark-text);
+                }
+
+                .o_search_panel_filter_value {
+                    label {
+                        color: var(--albirru-dark-text);
+
+                        &:hover {
+                            background-color: var(--albirru-dark-hover);
+                        }
+
+                        .o_search_panel_label_title {
+                            color: var(--albirru-dark-text);
+                        }
+
+                        .o_search_panel_counter {
+                            color: var(--albirru-dark-text-muted);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Legacy list-group - dark mode
+        .o_search_panel_field {
+            .list-group-item {
+                background-color: transparent;
+                border: none;
+
+                .list-group-item-action {
+                    color: var(--albirru-dark-text);
+
+                    &:hover:not(.active) {
+                        background-color: var(--albirru-dark-hover);
+                    }
+
+                    &.active {
+                        background-color: var(--albirru-primary);
+                        color: #ffffff;
+
+                        .o_search_panel_label_title {
+                            color: #ffffff;
+                        }
+
+                        // `.text-muted` is a Bootstrap utility, so it carries
+                        // !important. Without matching it the sub-text stays
+                        // grey on this item's coloured background.
+                        .text-muted {
+                            color: rgba(255, 255, 255, 0.8) !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// =============================================
+// Mobile support
+// =============================================
+@media (max-width: #{$breakpoint-md-max}) {
+    .o_controller_with_searchpanel {
+        flex-direction: column;
+
+        .o_search_panel {
+            width: 100%;
+            flex: 0 0 auto;
+            border-right: none;
+            border-bottom: 1px solid var(--albirru-light-border);
+            padding: 10px;
+        }
+    }
+
+    html.albirru-dark-mode,
+    html[data-albirru-dark="true"] {
+        .o_controller_with_searchpanel {
+            .o_search_panel {
+                border-bottom-color: var(--albirru-dark-border);
+            }
+        }
+    }
+}

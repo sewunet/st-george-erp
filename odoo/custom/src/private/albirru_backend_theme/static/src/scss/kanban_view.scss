@@ -1,0 +1,262 @@
+// Albirru Backend Theme - Kanban View Styles
+// Compatible with Odoo 19
+
+.o_kanban_renderer {
+    --KanbanRecord-margin-v: 4px;
+    --KanbanRecord-margin-h: 4px;
+    --Kanban-gap: 10px;
+    // Core paints the columns with this variable, so recolouring them here
+    // avoids having to out-specify core's own rule. dark_mode.scss overrides
+    // the same variable from `html.albirru-dark-mode`, which still wins.
+    --KanbanGroup-background: var(--albirru-light-bg-secondary);
+}
+
+.o_kanban_view {
+    background: var(--albirru-light-bg);
+    padding: var(--albirru-spacing-sm);
+
+    // Ghost records used for alignment in flexbox
+    // We make them invisible but keep them in layout if needed
+    .o_kanban_ghost {
+        visibility: hidden;
+        height: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+        pointer-events: none;
+    }
+
+    // In CSS Grid mode, ghosts should be completely removed from layout
+    .o_kanban_renderer.o_kanban_ungrouped {
+        .o_kanban_ghost {
+            display: none;
+        }
+    }
+
+    .o_kanban_renderer {
+        gap: 10px;
+        
+        &.o_kanban_grouped {
+            background-color: transparent;
+            padding: 0 10px;
+            align-items: flex-start;
+        }
+
+        &.o_kanban_ungrouped {
+            padding: 12px;
+            // web.KanbanRenderer puts `d-flex` on this element, and Bootstrap
+            // utilities are generated with !important ($enable-important-utilities).
+            // Specificity cannot beat that, so switching to grid needs !important.
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 12px;
+            // align-content / justify-content are already supplied by the
+            // template's `align-content-start justify-content-start` utilities.
+
+            @media (max-width: #{$breakpoint-sm-max}) {
+                grid-template-columns: 1fr;
+            }
+
+            .o_kanban_record:not(.o_kanban_ghost) {
+                width: 100%;
+                margin: 0;
+                height: 100%;
+                grid-column: auto;
+            }
+        }
+    }
+
+    // Kanban Groups (Columns)
+    //
+    // Only the properties core does not already own are set here; the rest is
+    // handled below, at core's own selector depth. Folded columns keep core's
+    // styling: they are thin vertical strips with a rotated title, and the card
+    // padding and border below would stop them collapsing.
+    .o_kanban_group:not(.o_column_folded) {
+        border-radius: var(--albirru-radius-lg);
+        padding: var(--albirru-spacing-md);
+        margin-right: 12px;
+        border: 1px solid var(--albirru-light-border);
+        box-shadow: var(--albirru-shadow-sm);
+    }
+
+    // Kanban Record (Card)
+    .o_kanban_record:not(.o_kanban_ghost) {
+        background: var(--albirru-light-bg-secondary);
+        border: 1px solid transparent;
+        border-radius: var(--albirru-radius-lg);
+        padding: var(--albirru-spacing-md);
+        transition: all var(--albirru-transition-normal);
+        cursor: pointer;
+        box-shadow: var(--albirru-shadow-sm);
+        position: relative;
+        margin-bottom: 0px;
+
+        &:hover {
+            box-shadow: var(--albirru-shadow-md);
+            border-color: var(--albirru-primary);
+            transform: translateY(-2px);
+        }
+
+        // The card box-shadow above out-specifies core's
+        // `.o_kanban_record:focus-visible` ring, so keyboard focus would leave
+        // no visible mark. Restored here, after :hover, so focus wins the tie.
+        &:focus-visible {
+            box-shadow: inset 0 0 0 3px var(--albirru-primary);
+            outline: none;
+        }
+
+        // Image handling
+        .o_kanban_image {
+            border-radius: var(--albirru-radius-md);
+            overflow: hidden;
+            
+            img {
+                border-radius: var(--albirru-radius-md);
+                object-fit: cover;
+            }
+        }
+
+        // Edge-to-edge card image. Odoo 19 renders it as `aside.o_kanban_aside_full`
+        // holding `.o_kanban_image_fill`; the pre-19 `.o_kanban_image_fill_left`
+        // wrapper no longer exists.
+        aside.o_kanban_aside_full {
+            border-top-left-radius: var(--albirru-radius-lg);
+            border-bottom-left-radius: var(--albirru-radius-lg);
+            overflow: hidden;
+            border-right: 1px solid var(--albirru-light-border);
+
+            .o_kanban_image_fill {
+                border-radius: 0;
+            }
+        }
+
+        // Tags come from the many2many_tags widget, which renders bare `.o_tag`
+        // elements. Odoo 19 cards have no `.o_kanban_tags` wrapper to hook on.
+        .o_tag {
+            border-radius: var(--albirru-radius-xl);
+            padding: 1px 10px;
+            font-weight: 500;
+            font-size: var(--albirru-font-xs);
+            border: 1px solid transparent;
+            background: var(--albirru-light-hover);
+            color: var(--albirru-light-text);
+        }
+
+        // Card footer. Odoo 19 arch uses a plain <footer>; the old
+        // `.o_kanban_record_bottom` div is gone.
+        footer {
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px solid var(--albirru-light-border);
+        }
+
+        .progress {
+            height: 6px;
+            border-radius: var(--albirru-radius-xl);
+            background-color: var(--albirru-light-hover);
+
+            .progress-bar {
+                background-color: var(--albirru-primary);
+            }
+        }
+    }
+
+    // Quick create
+    .o_kanban_quick_create {
+        background: var(--albirru-light-bg-secondary);
+        border-radius: var(--albirru-radius-lg);
+        box-shadow: var(--albirru-shadow-sm);
+        padding: 15px;
+        border: 1px solid var(--albirru-light-border);
+        
+        input {
+            border-radius: var(--albirru-radius-md);
+            border: 1px solid var(--albirru-light-border);
+            padding: 8px 12px;
+            
+            &:focus {
+                border-color: var(--albirru-primary);
+                box-shadow: 0 0 0 2px rgba(var(--albirru-primary-rgb), 0.1);
+                outline: none;
+            }
+        }
+    }
+
+    // Dropdown fix
+    //
+    // web.KanbanRecordMenu already carries `position-absolute end-0 top-0`, and
+    // Bootstrap utilities are !important - `position`, `top` and `right` here
+    // never applied. Margin is not utility-controlled on this element, so that
+    // is what actually insets the button from the card corner.
+    .o_dropdown_kanban {
+        margin: 8px 8px 0 0;
+        z-index: 1;
+
+        .dropdown-toggle {
+            background: transparent;
+            border: none;
+            color: var(--albirru-light-text-muted);
+            padding: 4px 8px;
+            border-radius: var(--albirru-radius-sm);
+            
+            &:hover {
+                background: var(--albirru-light-hover);
+                color: var(--albirru-light-text);
+            }
+            
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Rules that compete with core kanban styling.
+//
+// These deliberately mirror core's selectors character for character instead
+// of nesting under `.o_kanban_view`. Matching the specificity exactly means the
+// theme wins purely on source order, which keeps dark_mode.scss - whose
+// `html.albirru-dark-mode` prefix adds one element to the specificity - able to
+// override them in turn. Nesting these under `.o_kanban_view` would out-specify
+// dark mode and leave dark kanban columns painted with the light palette.
+// ---------------------------------------------------------------------------
+
+// Core: `flex: 1 1` plus a min-width derived from --KanbanRecord-width, which
+// lets columns stretch. The theme wants fixed-width, horizontally scrolling
+// columns. Folded columns are excluded so they can still collapse.
+.o_kanban_renderer.o_kanban_grouped .o_kanban_group:not(.o_column_folded) {
+    min-width: 300px;
+    flex: 0 0 auto;
+}
+
+// Cards are plain blocks stacked inside the column and core collapses their
+// borders with a negative margin. This restores the intended vertical gap.
+.o_kanban_renderer.o_kanban_grouped .o_kanban_record:not(.o_kanban_ghost) {
+    margin-bottom: 10px;
+}
+
+// The column header. `background` is left to core's `inherit`: the header is
+// position:sticky, so it has to stay opaque or records scroll through it.
+.o_kanban_renderer .o_kanban_group:not(.o_column_folded) .o_kanban_header {
+    // The header carries Bootstrap's `py-2` utility, and Bootstrap generates
+    // utilities with !important, so specificity alone cannot change its padding.
+    padding-bottom: var(--albirru-spacing-sm) !important;
+    margin-bottom: var(--albirru-spacing-sm);
+    border-bottom: 1px solid var(--albirru-light-border);
+
+    .o_kanban_header_title {
+        font-weight: 600;
+        font-size: var(--albirru-font-md);
+        color: var(--albirru-primary);
+
+        .o_column_title {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+}

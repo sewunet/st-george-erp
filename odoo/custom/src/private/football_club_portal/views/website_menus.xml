@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="website.default_website" model="website">
+        <field name="homepage_url">/club</field>
+    </record>
+
+    <record id="website.menu_home" model="website.menu">
+        <field name="name">Home</field>
+        <field name="url">/</field>
+        <field name="sequence" eval="10"/>
+    </record>
+
+    <record id="website_menu_club_events" model="website.menu">
+        <field name="name">Events</field>
+        <field name="url">/club/events</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" eval="20"/>
+    </record>
+
+    <record id="website_menu_club_fan_register" model="website.menu">
+        <field name="name">Join as a Fan</field>
+        <field name="url">/club/fan/register</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" eval="30"/>
+    </record>
+
+    <record id="website_menu_club_home" model="website.menu">
+        <field name="name">News</field>
+        <field name="url">/club#latest-club-updates</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" eval="40"/>
+    </record>
+
+    <record id="website_menu_club_about" model="website.menu">
+        <field name="name">About Us</field>
+        <field name="url">/club#about-club</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" eval="50"/>
+    </record>
+
+    <record id="website.menu_contactus" model="website.menu">
+        <field name="sequence" eval="60"/>
+    </record>
+    <function model="website" name="_football_club_portal_configure_website"/>
+</odoo>

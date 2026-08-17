@@ -1,0 +1,487 @@
+# Indonesian translation for Albirru Backend Theme.
+# This file is distributed under the same license as the module.
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: code:addons/albirru_backend_theme/models/theme_config.py:200
+msgid "A theme configuration already exists for this company. Only one configuration per company is allowed."
+msgstr "Konfigurasi tema untuk perusahaan ini sudah ada. Hanya satu konfigurasi per perusahaan yang diizinkan."
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:113
+msgid "Accent"
+msgstr "Aksen"
+
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:34
+msgid "Add"
+msgstr "Tambah"
+
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:33
+msgid "Add current page"
+msgstr "Tambahkan halaman ini"
+
+#: code:addons/albirru_backend_theme/static/src/xml/sidebar.xml:43
+msgid "Albirru"
+msgstr ""
+
+#: code:addons/albirru_backend_theme/static/src/xml/sidebar.xml:169
+msgid "Albirru Theme"
+msgstr ""
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:56
+msgid "All Models"
+msgstr "Semua Model"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:364
+msgid "All Settings"
+msgstr "Semua Pengaturan"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:22
+msgid "Amber"
+msgstr "Kuning Sawo"
+
+#: code:addons/albirru_backend_theme/static/src/xml/app_drawer.xml:282
+msgid "App Drawer"
+msgstr "Laci Aplikasi"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:51
+msgid "Appearance"
+msgstr "Tampilan"
+
+#: code:addons/albirru_backend_theme/static/src/xml/app_drawer.xml:17
+msgid "Applications"
+msgstr "Aplikasi"
+
+#: code:addons/albirru_backend_theme/models/albirru_app_group.py:72
+msgid "Applications moved"
+msgstr "Aplikasi dipindahkan"
+
+#: code:addons/albirru_backend_theme/static/src/xml/app_drawer.xml:29
+#: code:addons/albirru_backend_theme/static/src/xml/navbar.xml:19
+#: code:addons/albirru_backend_theme/static/src/xml/navbar.xml:19
+#: code:addons/albirru_backend_theme/static/src/xml/navbar.xml:28
+msgid "Apps"
+msgstr "Aplikasi"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:25
+msgid "Black"
+msgstr "Hitam"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:20
+msgid "Blue"
+msgstr "Biru"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:30
+msgid "Blue Grey"
+msgstr "Abu-abu Kebiruan"
+
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:27
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:27
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:32
+msgid "Bookmarks"
+msgstr "Markah"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:78
+msgid "Bordered"
+msgstr "Bergaris Tepi"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:63
+msgid "Bottom"
+msgstr "Bawah"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:24
+msgid "Brown"
+msgstr "Cokelat"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:306
+msgid "Button Style"
+msgstr "Gaya Tombol"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:230
+msgid "Chatter Position"
+msgstr "Posisi Chatter"
+
+#: code:addons/albirru_backend_theme/static/src/xml/sidebar.xml:34
+msgid "Close Menu"
+msgstr "Tutup Menu"
+
+#: code:addons/albirru_backend_theme/static/src/js/dark_mode_toggle.js:167
+msgid "Collapse Sidebar"
+msgstr "Ciutkan Bilah Sisi"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:72
+msgid "Color Scheme"
+msgstr "Skema Warna"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:68
+msgid "Comfortable"
+msgstr "Lega"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:67
+msgid "Compact"
+msgstr "Ringkas"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:85
+msgid "Ctrl+K"
+msgstr ""
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:23
+msgid "Cyan"
+msgstr "Biru Kehijauan"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:27
+msgid "Deep Purple"
+msgstr "Ungu Tua"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:354
+msgid "Discard your personal theme settings and follow the company defaults again"
+msgstr "Buang pengaturan tema pribadi Anda dan ikuti kembali default perusahaan"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:85
+msgid "Dots"
+msgstr "Titik"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:32
+msgid "ESC"
+msgstr ""
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:84
+msgid "Enter"
+msgstr ""
+
+#: code:addons/albirru_backend_theme/static/src/js/fullscreen.js:101
+msgid "Enter Fullscreen"
+msgstr "Masuk Layar Penuh"
+
+#: code:addons/albirru_backend_theme/static/src/js/fullscreen.js:101
+msgid "Exit Fullscreen"
+msgstr "Keluar Layar Penuh"
+
+#: code:addons/albirru_backend_theme/static/src/xml/navbar.xml:47
+msgid "Favicon"
+msgstr "Favicon"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:72
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:80
+msgid "Filled"
+msgstr "Terisi"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:59
+msgid "Font"
+msgstr "Huruf"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:274
+msgid "Font Family"
+msgstr "Jenis Huruf"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:289
+msgid "Font Size"
+msgstr "Ukuran Huruf"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:14
+msgid "Global search"
+msgstr "Pencarian Global"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:14
+msgid "Green"
+msgstr "Hijau"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:29
+msgid "Grey"
+msgstr "Abu-abu"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:21
+msgid "Indigo"
+msgstr "Nila"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:320
+msgid "Input Style"
+msgstr "Gaya Isian"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:58
+msgid "Large"
+msgstr "Besar"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:55
+msgid "Layout"
+msgstr "Tata Letak"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:40
+msgid "Left Sidebar"
+msgstr "Bilah Sisi Kiri"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:28
+msgid "Light Blue"
+msgstr "Biru Muda"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:26
+msgid "Lime"
+msgstr "Hijau Limau"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:245
+msgid "List View"
+msgstr "Tampilan Daftar"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:334
+msgid "Loader Style"
+msgstr "Gaya Pemuat"
+
+#: code:addons/albirru_backend_theme/static/src/xml/sidebar.xml:41
+msgid "Logo"
+msgstr "Logo"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:57
+msgid "Medium"
+msgstr "Sedang"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:104
+msgid "Menu"
+msgstr "Menu"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:185
+msgid "Menu Background"
+msgstr "Latar Menu"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:143
+msgid "Menu Position"
+msgstr "Posisi Menu"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:42
+msgid "Menus"
+msgstr "Menu"
+
+#: code:addons/albirru_backend_theme/static/src/xml/app_drawer.xml:233
+msgid "No apps found for \""
+msgstr "Tidak ada aplikasi untuk \""
+
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:60
+msgid "No bookmarks yet"
+msgstr "Belum ada markah"
+
+#: code:addons/albirru_backend_theme/static/src/xml/app_drawer.xml:82
+msgid "No results for \""
+msgstr "Tidak ada hasil untuk \""
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:75
+msgid "No results found for \""
+msgstr "Tidak ditemukan hasil untuk \""
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:13
+msgid "Odoo Purple"
+msgstr "Ungu Odoo"
+
+#: code:addons/albirru_backend_theme/models/res_config_settings.py:48
+msgid "Only administrators can change the theme scope."
+msgstr "Hanya administrator yang dapat mengubah cakupan tema."
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:214
+msgid "Opacity"
+msgstr "Keburaman"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:16
+msgid "Orange"
+msgstr "Oranye"
+
+#: code:addons/albirru_backend_theme/static/src/xml/app_drawer.xml:177
+#: code:addons/albirru_backend_theme/static/src/xml/sidebar.xml:137
+msgid "Other Apps"
+msgstr "Aplikasi Lain"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:73
+msgid "Outlined"
+msgstr "Bergaris"
+
+#: code:addons/albirru_backend_theme/static/src/js/dark_mode_toggle.js:167
+#: code:addons/albirru_backend_theme/static/src/js/sidebar.js:211
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:167
+msgid "Pin Sidebar"
+msgstr "Sematkan Bilah Sisi"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:19
+msgid "Pink"
+msgstr "Merah Muda"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:101
+msgid "Primary"
+msgstr "Utama"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:86
+msgid "Progress Bar"
+msgstr "Bilah Kemajuan"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:15
+msgid "Purple"
+msgstr "Ungu"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:48
+msgid "Records"
+msgstr "Data"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:17
+msgid "Red"
+msgstr "Merah"
+
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:51
+msgid "Remove"
+msgstr "Hapus"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:189
+msgid "Remove Background"
+msgstr "Hapus Latar"
+
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:51
+msgid "Remove bookmark"
+msgstr "Hapus markah"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:355
+msgid "Reset to company defaults"
+msgstr "Kembalikan ke default perusahaan"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:62
+msgid "Right"
+msgstr "Kanan"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:34
+msgid "Rounded"
+msgstr "Membulat"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:247
+msgid "Row Height"
+msgstr "Tinggi Baris"
+
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:97
+#: code:addons/albirru_backend_theme/static/src/xml/systray.xml:97
+msgid "Search (Ctrl+K)"
+msgstr "Cari (Ctrl+K)"
+
+#: code:addons/albirru_backend_theme/static/src/xml/app_drawer.xml:41
+msgid "Search apps and menus..."
+msgstr "Cari aplikasi dan menu..."
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:30
+msgid "Search menus and records"
+msgstr "Cari menu dan data"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:30
+msgid "Search menus, records..."
+msgstr "Cari menu, data..."
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:68
+msgid "Searching..."
+msgstr "Mencari..."
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:107
+msgid "Secondary"
+msgstr "Sekunder"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:56
+msgid "Small"
+msgstr "Kecil"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:74
+msgid "Soft"
+msgstr "Lembut"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:84
+msgid "Spinner"
+msgstr "Pemutar"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:36
+msgid "Square"
+msgstr "Persegi"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:35
+msgid "Standard"
+msgstr "Standar"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:81
+msgid "Start typing to search..."
+msgstr "Ketik untuk mulai mencari..."
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:258
+msgid "Sticky Header"
+msgstr "Kepala Tabel Melekat"
+
+#: code:addons/albirru_backend_theme/static/src/js/dark_mode_toggle.js:54
+msgid "Switch to Dark Mode"
+msgstr "Beralih ke Mode Gelap"
+
+#: code:addons/albirru_backend_theme/static/src/js/dark_mode_toggle.js:54
+msgid "Switch to Light Mode"
+msgstr "Beralih ke Mode Terang"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:18
+msgid "Teal"
+msgstr "Tosca"
+
+#: code:addons/albirru_backend_theme/models/albirru_app_group.py:74
+msgid "The following applications will be moved out of their current group (%(groups)s): %(apps)s"
+msgstr "Aplikasi berikut akan dipindahkan dari grupnya saat ini (%(groups)s): %(apps)s"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:43
+msgid "The theme is company-wide. Changes here apply to every user."
+msgstr "Tema berlaku untuk seluruh perusahaan. Perubahan di sini berlaku bagi semua pengguna."
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:13
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:24
+msgid "Theme Settings"
+msgstr "Pengaturan Tema"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:124
+msgid "Theme Style"
+msgstr "Gaya Tema"
+
+#: code:addons/albirru_backend_theme/models/theme_config.py:211
+msgid "Theme configuration cannot be deleted. It is required for the theme to work properly."
+msgstr "Konfigurasi tema tidak dapat dihapus. Konfigurasi ini diperlukan agar tema berfungsi dengan benar."
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:41
+msgid "Top Menu"
+msgstr "Menu Atas"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:63
+msgid "UI"
+msgstr "Antarmuka"
+
+#: code:addons/albirru_backend_theme/static/src/js/quick_settings.js:79
+msgid "Underlined"
+msgstr "Bergaris Bawah"
+
+#: code:addons/albirru_backend_theme/static/src/js/sidebar.js:211
+msgid "Unpin Sidebar"
+msgstr "Lepas Sematan Bilah Sisi"
+
+#: code:addons/albirru_backend_theme/static/src/xml/quick_settings.xml:87
+msgid "Use Custom Colors"
+msgstr "Gunakan Warna Kustom"
+
+#: code:addons/albirru_backend_theme/static/src/xml/app_drawer.xml:242
+msgid "apps available"
+msgstr "aplikasi tersedia"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:126
+msgid "results"
+msgstr "hasil"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:32
+msgid "to close"
+msgstr "untuk menutup"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:83
+msgid "to navigate"
+msgstr "untuk berpindah"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:85
+msgid "to open search"
+msgstr "untuk membuka pencarian"
+
+#: code:addons/albirru_backend_theme/static/src/xml/search_modal.xml:84
+msgid "to select"
+msgstr "untuk memilih"
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- App groups may be scoped to a company, or shared by leaving the
+             company empty. Without this rule, a group defined for company A
+             would show up in the app drawer of company B. -->
+        <record id="albirru_app_group_company_rule" model="ir.rule">
+            <field name="name">Albirru App Group: multi-company</field>
+            <field name="model_id" ref="model_albirru_app_group"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', 'parent_of', company_ids), ('company_id', '=', False)]</field>
+        </record>
+
+        <!-- The theme configuration is strictly per company. -->
+        <record id="albirru_theme_config_company_rule" model="ir.rule">
+            <field name="name">Albirru Theme Config: multi-company</field>
+            <field name="model_id" ref="model_albirru_theme_config"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'parent_of', company_ids)]</field>
+        </record>
+
+        <!-- Bookmarks are private to their owner. -->
+        <record id="albirru_bookmark_own_rule" model="ir.rule">
+            <field name="name">Albirru Bookmark: own records only</field>
+            <field name="model_id" ref="model_albirru_bookmark"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+
+    </data>
+</odoo>

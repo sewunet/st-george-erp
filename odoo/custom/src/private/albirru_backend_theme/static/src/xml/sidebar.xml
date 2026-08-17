@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Albirru Backend Theme - Sidebar Template -->
+<!-- Compatible with Odoo 19 -->
+<templates xml:space="preserve">
+
+    <!-- Main Sidebar Component -->
+    <t t-name="albirru_backend_theme.Sidebar">
+        <!-- Mobile Backdrop (click to close sidebar) -->
+        <div t-if="isVisible and state.isMobileOpen"
+             class="albirru-sidebar-backdrop visible"
+             t-on-click="onBackdropClick"/>
+
+        <!-- Rendered only in the "left" menu layout; switching to the top menu
+             hides it without needing a page reload. -->
+        <aside t-if="isVisible"
+               class="albirru-sidebar"
+               t-ref="sidebar"
+               t-att-class="{
+                   'collapsed': isCollapsed,
+                   'pinned': state.isPinned,
+                   'hovered': state.isHovered,
+                   'loading': state.loading,
+                   'mobile-open': state.isMobileOpen,
+                   'has-background-image': hasBackgroundImage
+               }"
+               t-on-mouseenter="onMouseEnter"
+               t-on-mouseleave="onMouseLeave">
+
+            <!-- Sidebar Header -->
+            <div class="albirru-sidebar-header">
+                <!-- Mobile Close Button -->
+                <button class="albirru-mobile-close-btn"
+                        t-on-click="closeMobileSidebar"
+                        title="Close Menu">
+                    <i class="fa fa-times"/>
+                </button>
+                
+                <div class="albirru-sidebar-logo" t-if="!isCollapsed">
+                    <t t-if="branding.has_logo">
+                        <img t-attf-src="/web/image/res.company/{{branding.company_id}}/albirru_backend_logo" 
+                             class="sidebar-logo-img" alt="Logo"/>
+                    </t>
+                    <span t-else="" class="logo-text">Albirru</span>
+                </div>
+                <button class="albirru-sidebar-toggle btn btn-link"
+                        t-on-click="onTogglePin"
+                        t-att-title="pinTooltip"
+                        t-att-aria-label="pinTooltip"
+                        t-att-aria-pressed="state.isPinned ? 'true' : 'false'">
+                    <i t-att-class="'fa ' + (state.isPinned ? 'fa-thumb-tack' : 'fa-thumb-tack fa-rotate-90')"/>
+                </button>
+            </div>
+
+            <!-- Current App Sub-Menu Section (Mobile Only - desktop uses navbar) -->
+            <div t-if="state.isMobileOpen and state.currentAppId and state.currentAppSections.length > 0"
+                 class="albirru-current-app-section">
+                <div class="current-app-header">
+                    <i class="fa fa-chevron-left back-icon" t-on-click="() => this.state.currentAppSections = []"/>
+                    <span class="current-app-name" t-esc="currentApp?.name"/>
+                </div>
+                <ul class="albirru-submenu-list">
+                    <t t-foreach="state.currentAppSections" t-as="section" t-key="section.id">
+                        <t t-call="albirru_backend_theme.MenuSection">
+                            <t t-set="section" t-value="section"/>
+                        </t>
+                    </t>
+                </ul>
+            </div>
+
+            <!-- Menu Items (App Groups & Apps) -->
+            <nav class="albirru-sidebar-menu">
+                <ul class="albirru-menu-list">
+                    <!-- Loading state -->
+                    <t t-if="state.loading">
+                        <li class="text-center p-3">
+                            <i class="fa fa-spinner fa-spin text-muted"/>
+                        </li>
+                    </t>
+
+                    <!-- App Groups -->
+                    <t t-foreach="state.appGroups" t-as="group" t-key="group.id">
+                        <li class="albirru-menu-item-wrapper albirru-group-wrapper">
+                            <div class="albirru-menu-item albirru-group-item"
+                                 t-att-class="{'expanded': isGroupExpanded(group.id)}"
+                                 t-on-click="() => this.toggleGroup(group.id)">
+                                <span class="albirru-menu-icon albirru-group-icon">
+                                    <t t-if="group.use_group_icon and group.group_icon_class_name">
+                                        <i t-att-class="'fa ' + group.group_icon_class_name"/>
+                                    </t>
+                                    <t t-elif="group.has_group_icon">
+                                        <img t-att-src="getGroupIconUrl(group)" alt="" class="group-icon-img"/>
+                                    </t>
+                                    <t t-else="">
+                                        <i class="fa fa-folder"/>
+                                    </t>
+                                </span>
+                                <span class="albirru-menu-label" t-if="!isCollapsed">
+                                    <t t-esc="group.name"/>
+                                </span>
+                                <span class="albirru-menu-arrow" t-if="!isCollapsed">
+                                    <i class="fa fa-chevron-right"/>
+                                </span>
+                            </div>
+                            
+                            <!-- Apps in Group -->
+                            <ul class="albirru-submenu" t-att-class="{'expanded': isGroupExpanded(group.id)}">
+                                <t t-foreach="group.menus" t-as="app" t-key="app.id">
+                                    <li class="albirru-submenu-item">
+                                        <a href="#" class="albirru-menu-item albirru-app-item"
+                                           t-att-class="{'active': isAppActive(app.id)}"
+                                           t-on-click="(ev) => this.onAppClick(app, ev)">
+                                            <span class="albirru-menu-icon">
+                                                <img t-if="getAppIcon(app)" t-att-src="getAppIcon(app)" alt=""/>
+                                                <div t-else="" class="app-icon-placeholder" t-att-style="'background:' + getAppColor(app)">
+                                                    <span t-esc="getAppInitials(app)"/>
+                                                </div>
+                                            </span>
+                                            <span class="albirru-menu-label" t-if="!isCollapsed">
+                                                <t t-esc="app.name"/>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </t>
+                            </ul>
+                        </li>
+                    </t>
+
+                    <!-- Ungrouped Apps -->
+                    <t t-if="state.ungroupedApps.length > 0">
+                        <li class="albirru-menu-item-wrapper albirru-group-wrapper">
+                            <div class="albirru-menu-item albirru-group-item"
+                                 t-att-class="{'expanded': isGroupExpanded('ungrouped')}"
+                                 t-on-click="() => this.toggleGroup('ungrouped')">
+                                <span class="albirru-menu-icon albirru-group-icon">
+                                    <i class="fa fa-th-large"/>
+                                </span>
+                                <span class="albirru-menu-label" t-if="!isCollapsed">Other Apps</span>
+                                <span class="albirru-menu-arrow" t-if="!isCollapsed">
+                                    <i class="fa fa-chevron-right"/>
+                                </span>
+                            </div>
+                            <ul class="albirru-submenu" t-att-class="{'expanded': isGroupExpanded('ungrouped')}">
+                                <t t-foreach="state.ungroupedApps" t-as="app" t-key="app.id">
+                                    <li class="albirru-submenu-item">
+                                        <a href="#" class="albirru-menu-item albirru-app-item"
+                                           t-att-class="{'active': isAppActive(app.id)}"
+                                           t-on-click="(ev) => this.onAppClick(app, ev)">
+                                            <span class="albirru-menu-icon">
+                                                <img t-if="getAppIcon(app)" t-att-src="getAppIcon(app)" alt=""/>
+                                                <div t-else="" class="app-icon-placeholder" t-att-style="'background:' + getAppColor(app)">
+                                                    <span t-esc="getAppInitials(app)"/>
+                                                </div>
+                                            </span>
+                                            <span class="albirru-menu-label" t-if="!isCollapsed">
+                                                <t t-esc="app.name"/>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </t>
+                            </ul>
+                        </li>
+                    </t>
+                </ul>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="albirru-sidebar-footer" t-if="!isCollapsed">
+                <div class="sidebar-footer-content text-center">
+                    <small class="text-muted">Albirru Theme</small>
+                </div>
+            </div>
+        </aside>
+    </t>
+
+    <!-- Recursive Menu Section Template for Sub-Menus -->
+    <t t-name="albirru_backend_theme.MenuSection">
+        <li class="albirru-section-item">
+            <!-- Menu item without children - direct link -->
+            <t t-if="!section.childrenTree or !section.childrenTree.length">
+                <a t-att-href="this.getMenuItemHref(section)"
+                   class="albirru-section-link"
+                   t-on-click="(ev) => this.onSectionClick(section, ev)">
+                    <span t-esc="section.name"/>
+                </a>
+            </t>
+            <!-- Menu item with children - expandable -->
+            <t t-else="">
+                <div class="albirru-section-header"
+                     t-att-class="{'expanded': this.isSectionExpanded(section.id)}"
+                     t-on-click="() => this.toggleSection(section.id)">
+                    <span t-esc="section.name"/>
+                    <i class="fa fa-chevron-right section-arrow"/>
+                </div>
+                <ul class="albirru-nested-menu" t-att-class="{'expanded': this.isSectionExpanded(section.id)}">
+                    <t t-foreach="section.childrenTree" t-as="subSection" t-key="subSection.id">
+                        <t t-call="albirru_backend_theme.MenuSection">
+                            <t t-set="section" t-value="subSection"/>
+                        </t>
+                    </t>
+                </ul>
+            </t>
+        </li>
+    </t>
+
+</templates>

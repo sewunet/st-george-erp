@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Settings View - Add Albirru Theme branding settings to General Settings -->
+    <record id="res_config_settings_view_form_albirru" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.albirru</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <!-- Add Albirru Theme section after companies div -->
+            <xpath expr="//form" position="inside">
+                <app data-string="Backend Settings" string="Backend Settings" name="albirru_backend_theme" groups="base.group_system" logo="/albirru_backend_theme/static/description/icon.png">
+                    <div id="albirru_theme_settings">
+                        <block title="Albirru Theme Branding" name="albirru_theme_setting_container">
+                            <setting id="albirru_logo_setting" string="Backend Logo" help="Logo displayed in the backend navbar">
+                                <field name="albirru_backend_logo" widget="image" class="oe_avatar"/>
+                            </setting>
+                            <setting id="albirru_favicon_setting" string="Favicon" help="Browser tab icon">
+                                <field name="albirru_favicon" widget="image" class="oe_avatar"/>
+                            </setting>
+                            <setting id="albirru_tab_name_setting" string="Browser Tab Name" help="Text shown in browser tab">
+                                <field name="albirru_tab_name" placeholder="e.g. My Company"/>
+                            </setting>
+                            <setting id="albirru_theme_scope_setting" string="Theme Personalization"
+                                     help="Decide whether each user may adjust the theme, or whether everyone shares the company look">
+                                <field name="albirru_theme_scope" widget="radio"/>
+                                <div class="text-muted small mt-1">
+                                    <b>Each user can personalize:</b> the settings below act as defaults, and every user may change colors, fonts and layout for themselves.<br/>
+                                    <b>Company-wide (locked):</b> everyone sees the company theme and the personalization panel is hidden. Dark mode stays a personal choice.<br/>
+                                    Settings a user already personalized are kept, and apply again if you switch back.
+                                </div>
+                            </setting>
+                            <setting id="albirru_theme_settings_link" string="Theme Customization">
+                                <div class="text-muted">
+                                    Customize theme appearance, layout, and UI elements
+                                </div>
+                                <div class="mt-2">
+                                    <button name="%(albirru_theme_config_action)d"
+                                            type="action"
+                                            string="Open Theme Settings"
+                                            class="btn-link"
+                                            icon="fa-paint-brush"/>
+                                </div>
+                            </setting>
+                        </block>
+
+
+
+                        <block title="Login Page Customization" name="albirru_login_setting_container">
+                            <setting id="albirru_login_style_setting" string="Login Style" help="Choose the visual layout of the login page">
+                                <field name="albirru_login_style" widget="selection" class="w-75"/>
+                                <div class="text-muted small mt-1">
+                                    <b>Glass:</b> Modern, centered card with blur effect.<br/>
+                                    <b>Split:</b> Image on left, form on right.<br/>
+                                    <b>Minimal:</b> Minimalist transparent form.
+                                </div>
+                            </setting>
+
+                            <setting id="albirru_login_color_setting" string="Login Background Color" help="Fallback color if no image is set">
+                                <field name="albirru_login_background_color" widget="color"/>
+                            </setting>
+
+                            <setting id="albirru_login_bg_setting" string="Login Background" help="Background image for login page">
+                                <field name="albirru_login_background" widget="image" class="w-50"/>
+                            </setting>
+                        </block>
+                    </div>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

@@ -1,0 +1,2307 @@
+// Albirru Backend Theme - Dark Mode Styles
+// Compatible with Odoo 19
+
+// Dark Mode Root Variables
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+    // Override light theme colors with dark theme
+    --albirru-light-bg: var(--albirru-dark-bg);
+    --albirru-light-bg-secondary: var(--albirru-dark-bg-secondary);
+    --albirru-light-text: var(--albirru-dark-text);
+    --albirru-light-text-muted: var(--albirru-dark-text-muted);
+    --albirru-light-border: var(--albirru-dark-border);
+    --albirru-light-hover: var(--albirru-dark-hover);
+
+    // Sidebar colors for dark mode
+    --albirru-sidebar-bg: var(--albirru-dark-bg-secondary);
+    --albirru-sidebar-text: var(--albirru-dark-text);
+    --albirru-sidebar-hover: var(--albirru-dark-hover);
+
+    // Bootstrap overrides
+    --bs-body-bg: var(--albirru-dark-bg);
+    --bs-body-color: var(--albirru-dark-text);
+    --bs-border-color: var(--albirru-dark-border);
+}
+
+// Dark Mode Specific Styles
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+
+    // Body with higher specificity
+    body,
+    body.o_web_client {
+        background: var(--albirru-dark-bg);
+        background-color: var(--albirru-dark-bg);
+        color: var(--albirru-dark-text);
+    }
+
+    // Web Client with higher specificity
+    .o_web_client,
+    body.o_web_client {
+        background: var(--albirru-dark-bg);
+        background-color: var(--albirru-dark-bg);
+    }
+
+    // Action Manager
+    .o_action_manager {
+        background: var(--albirru-dark-bg);
+
+        .o_content {
+            background: var(--albirru-dark-bg);
+        }
+
+        .o_view_controller {
+            background: var(--albirru-dark-bg);
+        }
+    }
+
+    // Control Panel
+    .o_control_panel {
+        background: var(--albirru-dark-bg-secondary);
+        border-bottom-color: var(--albirru-dark-border);
+    }
+
+    // Breadcrumb
+    .o_breadcrumb {
+        background: transparent;
+
+        .breadcrumb {
+            background: transparent;
+        }
+
+        .breadcrumb-item {
+            color: var(--albirru-dark-text-muted);
+
+            &::before {
+                color: var(--albirru-dark-text-muted);
+            }
+
+            &.active {
+                color: var(--albirru-dark-text);
+            }
+
+            a {
+                color: var(--albirru-dark-text-muted);
+
+                &:hover {
+                    color: var(--albirru-primary);
+                }
+            }
+        }
+
+        // Editable breadcrumb input
+        .o_breadcrumb_item_editable input {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+            border-color: var(--albirru-dark-border);
+        }
+    }
+
+    // Form View
+    .o_form_view {
+        background: var(--albirru-dark-bg);
+
+        .o_form_sheet_bg {
+            background: var(--albirru-dark-bg);
+
+            .o_form_sheet {
+                background: var(--albirru-dark-bg-secondary);
+                border-color: var(--albirru-dark-border);
+            }
+        }
+
+        .o_form_statusbar {
+            background: var(--albirru-dark-bg-secondary);
+            border-bottom-color: var(--albirru-dark-border);
+        }
+
+        .o_field_widget {
+
+            input.o_input,
+            textarea.o_input,
+            select.o_input,
+            .o_input {
+                background: var(--albirru-dark-bg);
+                border-color: var(--albirru-dark-border);
+                color: var(--albirru-dark-text);
+
+                &:focus {
+                    background: var(--albirru-dark-bg-secondary);
+                }
+
+                &::placeholder {
+                    color: var(--albirru-dark-text-muted);
+                }
+            }
+        }
+
+        // Notebook tabs
+        .o_notebook {
+
+            // Notebook headers container
+            .o_notebook_headers {
+                background: var(--albirru-dark-bg-secondary);
+                border-bottom: 1px solid var(--albirru-dark-border);
+            }
+
+            .nav-tabs {
+                background: var(--albirru-dark-bg-secondary);
+                border-bottom-color: var(--albirru-dark-border);
+
+                .nav-item {
+                    .nav-link {
+                        color: var(--albirru-dark-text-muted);
+                        background: transparent;
+                        border-color: transparent;
+
+                        &:hover {
+                            color: var(--albirru-dark-text);
+                            background: var(--albirru-dark-hover);
+                        }
+
+                        &.active {
+                            color: var(--albirru-primary);
+                            background: transparent;
+                            border-bottom-color: var(--albirru-primary);
+                        }
+                    }
+                }
+            }
+
+            .tab-content {
+                background: var(--albirru-dark-bg-secondary);
+            }
+        }
+
+        .o_horizontal_separator {
+            color: var(--albirru-dark-text);
+            border-bottom-color: var(--albirru-primary);
+        }
+
+        // Chatter
+        .o-mail-Form-chatter {
+            background: var(--albirru-dark-bg);
+            border-left-color: var(--albirru-dark-border);
+
+            .o-mail-Chatter {
+                background: var(--albirru-dark-bg-secondary);
+                border-color: var(--albirru-dark-border);
+
+                .o-mail-Chatter-top {
+                    background: var(--albirru-dark-bg-secondary);
+                    border-bottom-color: var(--albirru-dark-border);
+                }
+            }
+        }
+    }
+
+    // List View
+    .o_list_view {
+        background: var(--albirru-dark-bg);
+
+        .o_list_table {
+            background: var(--albirru-dark-bg);
+
+            thead th {
+                background: var(--albirru-dark-bg-secondary);
+                color: var(--albirru-dark-text);
+                border-bottom-color: var(--albirru-dark-border);
+            }
+
+            tbody {
+                background: var(--albirru-dark-bg);
+
+                tr {
+                    background: var(--albirru-dark-bg);
+
+                    td {
+                        background: var(--albirru-dark-bg);
+                        border-bottom-color: var(--albirru-dark-border);
+                        color: var(--albirru-dark-text);
+
+                        // Ensure all text elements are properly colored (except tags)
+                        span:not(.o_tag):not(.o_tag_badge):not(.badge),
+                        a:not(.o_tag):not(.o_tag_badge):not(.badge),
+                        div:not(.o_tag):not(.o_tag_badge):not(.badge),
+                        p:not(.o_tag):not(.o_tag_badge):not(.badge) {
+                            color: var(--albirru-dark-text);
+                        }
+
+                        // Keep tags with dark text (they have colored backgrounds)
+                        .o_tag,
+                        .o_tag_badge,
+                        .badge {
+                            color: #212529;
+
+                            span {
+                                color: #212529;
+                            }
+                        }
+
+                        a:hover {
+                            color: var(--albirru-primary);
+                        }
+                    }
+
+                    &:hover {
+                        td {
+                            background: var(--albirru-dark-hover);
+                        }
+                    }
+
+                    &.o_data_row_selected,
+                    &.o_selected_row {
+                        td {
+                            background: rgba(var(--albirru-primary-rgb), 0.2);
+                        }
+                    }
+
+                    // Zebra striping for better readability
+                    &:nth-child(even) {
+                        td {
+                            background: rgba(255, 255, 255, 0.02);
+                        }
+
+                        &:hover td {
+                            background: var(--albirru-dark-hover);
+                        }
+                    }
+                }
+            }
+
+            tfoot tr {
+                background: var(--albirru-dark-bg-secondary);
+
+                td {
+                    background: var(--albirru-dark-bg-secondary);
+                    border-top-color: var(--albirru-dark-border);
+                    color: var(--albirru-dark-text);
+                }
+            }
+        }
+
+        // Group header in dark mode
+        .o_group_header {
+            background: var(--albirru-dark-bg-secondary);
+
+            td {
+                background: var(--albirru-dark-bg-secondary);
+                color: var(--albirru-dark-text);
+            }
+
+            .o_group_name {
+                color: var(--albirru-primary);
+            }
+        }
+
+        // Optional fields button
+        .o_optional_columns_dropdown .dropdown-toggle {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-dark-text);
+        }
+
+        // No content view
+        .o_view_nocontent {
+            color: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // Global Tags styling - keep text dark since tags have colored backgrounds
+    .o_tag,
+    .o_tag_badge,
+    .badge,
+    .o_badge {
+        color: #212529;
+
+        span {
+            color: #212529;
+        }
+    }
+
+    // Kanban View
+    .o_kanban_renderer {
+        --Kanban-background: var(--albirru-dark-bg);
+        --KanbanGroup-background: var(--albirru-dark-bg-secondary);
+        --KanbanColumn__highlight-background: rgba(255, 255, 255, 0.05);
+        --KanbanColumn__highlight-border: var(--albirru-primary);
+        --KanbanColumn__highlight-selected: rgba(var(--albirru-primary-rgb), 0.2);
+        --KanbanColumn__highlight-selected-border: var(--albirru-primary);
+        background: var(--albirru-dark-bg);
+        border-top-color: var(--albirru-dark-border);
+    }
+
+    .o_kanban_view {
+        background: var(--albirru-dark-bg);
+
+        .o_kanban_group {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+
+            .o_kanban_header {
+                border-bottom-color: var(--albirru-dark-border);
+                background: var(--albirru-dark-bg-secondary);
+
+                .o_column_title {
+                    color: var(--albirru-dark-text);
+                }
+
+                .o_kanban_quick_add {
+                    color: var(--albirru-dark-text);
+                }
+            }
+        }
+
+        .o_kanban_record {
+            background: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-dark-text);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+            // All text elements inside kanban card (except tags)
+            span:not(.o_tag):not(.o_tag_badge):not(.badge):not(.o_badge),
+            div:not(.o_tag):not(.o_tag_badge):not(.badge):not(.o_badge),
+            p:not(.o_tag):not(.o_tag_badge):not(.badge):not(.o_badge),
+            a:not(.o_tag):not(.o_tag_badge):not(.badge):not(.o_badge),
+            strong:not(.o_tag):not(.o_tag_badge):not(.badge):not(.o_badge),
+            small:not(.o_tag):not(.o_tag_badge):not(.badge):not(.o_badge) {
+                color: var(--albirru-dark-text);
+            }
+
+            // Muted text
+            .text-muted,
+            .text-secondary {
+                color: var(--albirru-dark-text-muted) !important;
+            }
+
+            // Links hover
+            a:hover {
+                color: var(--albirru-primary);
+            }
+
+            .o_kanban_record_title {
+                color: var(--albirru-dark-text);
+
+                a {
+                    color: var(--albirru-dark-text);
+
+                    &:hover {
+                        color: var(--albirru-primary);
+                    }
+                }
+            }
+
+            .o_kanban_record_body {
+                color: var(--albirru-dark-text-muted);
+            }
+
+            // Odoo 19 cards use a plain <footer>. The `:not(.o_kanban_ghost)`
+            // guard is not decorative: kanban_view.scss styles the footer from
+            // `.o_kanban_record:not(.o_kanban_ghost) footer`, and without a
+            // matching guard here that light-mode rule would out-specify this one.
+            &:not(.o_kanban_ghost) footer {
+                border-top-color: var(--albirru-dark-border);
+            }
+
+            // Kanban card details
+            .o_kanban_record_details {
+                color: var(--albirru-dark-text);
+            }
+
+            // Email and phone fields
+            .o_kanban_primary_left,
+            .o_kanban_primary_right {
+
+                span,
+                a {
+                    color: var(--albirru-dark-text);
+                }
+            }
+
+            // Tags - keep text dark since tags have colored backgrounds.
+            // Same guard as the footer above: kanban_view.scss now styles tags
+            // from `.o_kanban_record:not(.o_kanban_ghost) .o_tag`.
+            &:not(.o_kanban_ghost) .o_tag {
+                color: #212529;
+
+                span {
+                    color: #212529;
+                }
+            }
+
+            // Image container
+            .oe_kanban_avatar {
+                border-color: var(--albirru-dark-border);
+            }
+
+            // Hover state
+            &:hover {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        // Quick create
+        .o_kanban_quick_create {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+
+            input {
+                background: var(--albirru-dark-bg);
+                border-color: var(--albirru-dark-border);
+                color: var(--albirru-dark-text);
+
+                &::placeholder {
+                    color: var(--albirru-dark-text-muted);
+                }
+            }
+        }
+
+        // No content message
+        .o_view_nocontent {
+            color: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // Modal
+    .modal {
+        .modal-content {
+            background: var(--albirru-dark-bg-secondary);
+            color: var(--albirru-dark-text);
+        }
+
+        .modal-header {
+            background: var(--albirru-dark-bg);
+            border-bottom-color: var(--albirru-dark-border);
+
+            .modal-title {
+                color: var(--albirru-dark-text);
+            }
+        }
+
+        .modal-body {
+            background: var(--albirru-dark-bg-secondary);
+        }
+
+        .modal-footer {
+            background: var(--albirru-dark-bg);
+            border-top-color: var(--albirru-dark-border);
+        }
+    }
+
+    // Dropdowns
+    .dropdown-menu {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        .dropdown-item {
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+        }
+
+        .dropdown-divider {
+            border-top-color: var(--albirru-dark-border);
+        }
+    }
+
+    // Buttons
+    .btn-secondary {
+        background: var(--albirru-dark-bg);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+
+        &:hover {
+            background: var(--albirru-dark-hover);
+        }
+    }
+
+    .btn-outline-secondary {
+        background-color: rgba(var(--albirru-primary-rgb), 0.15);
+        color: var(--albirru-dark-text);
+        border-color: var(--albirru-dark-border);
+
+        &:hover {
+            background-color: var(--albirru-primary);
+            color: var(--albirru-primary-text);
+            border-color: var(--albirru-primary);
+        }
+
+        &:active,
+        &.active,
+        &.show {
+            background-color: rgba(var(--albirru-primary-rgb), 0.3);
+            color: var(--albirru-dark-text);
+            border-color: var(--albirru-primary);
+        }
+    }
+
+    .btn-light {
+        background: var(--albirru-dark-bg);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+
+    // Navbar in dark mode (keep primary color)
+    .o_main_navbar {
+        background: var(--albirru-navbar-bg);
+    }
+
+    // Cards
+    .card {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+
+    // Tables
+    .table {
+        color: var(--albirru-dark-text);
+
+        th,
+        td {
+            border-color: var(--albirru-dark-border);
+        }
+
+        thead th {
+            background: var(--albirru-dark-bg-secondary);
+        }
+    }
+
+    // Alerts
+    .alert {
+        border-color: var(--albirru-dark-border);
+    }
+
+    // Scrollbar
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--albirru-dark-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--albirru-dark-border);
+        border-radius: 4px;
+
+        &:hover {
+            background: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // =============================================
+    // Discuss / Mail Module Dark Mode
+    // =============================================
+
+    // Discuss main container
+    .o_Discuss {
+        background: var(--albirru-dark-bg);
+    }
+
+    // Discuss sidebar (left panel)
+    .o-mail-DiscussSidebar {
+        background: var(--albirru-dark-bg-secondary);
+        border-right-color: var(--albirru-dark-border);
+
+        .o-mail-DiscussSidebarCategory {
+            .o-mail-DiscussSidebarCategory-header {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+
+        .o-mail-DiscussSidebarChannel {
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+
+            &.o-active {
+                background: rgba(var(--albirru-primary-rgb), 0.2);
+                color: var(--albirru-primary);
+            }
+        }
+    }
+
+    // Search bar in Discuss
+    .o-mail-DiscussSearch,
+    .o-mail-SearchView {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        input {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+            border-color: var(--albirru-dark-border);
+
+            &::placeholder {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+
+        .o-mail-DiscussSearch-input {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+        }
+    }
+
+    // Discuss Content Header (channel name banner)
+    .o-mail-DiscussContent-header,
+    .o-mail-Discuss-header {
+        background: var(--albirru-dark-bg-secondary);
+        border-bottom-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+
+        span,
+        div,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: var(--albirru-dark-text);
+        }
+
+        .text-muted {
+            color: var(--albirru-dark-text-muted) !important;
+        }
+    }
+
+    // Panel container (right sidebar with members)
+    .o-mail-DiscussContent-panelContainer,
+    .o-mail-Discuss-panelContainer {
+        background: var(--albirru-dark-bg-secondary);
+        border-left-color: var(--albirru-dark-border);
+
+        // Member header
+        .o-mail-MemberList-header,
+        .o-mail-ChannelMemberList-header {
+            color: var(--albirru-dark-text-muted);
+            border-bottom-color: var(--albirru-dark-border);
+        }
+
+        // Member items
+        .o-mail-MemberList-item,
+        .o-mail-ChannelMember {
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+        }
+
+        // Invite button and other buttons
+        .btn {
+            color: var(--albirru-dark-text);
+
+            &.btn-primary {
+                color: var(--albirru-primary-text);
+            }
+        }
+
+        // Text elements
+        span,
+        div {
+            color: var(--albirru-dark-text);
+        }
+
+        .text-muted {
+            color: var(--albirru-dark-text-muted) !important;
+        }
+    }
+
+    // Discuss content (main chat area)
+    .o-mail-Discuss-content,
+    .o-mail-Thread {
+        background: var(--albirru-dark-bg);
+    }
+
+    // Thread header
+    .o-mail-Discuss-threadHeader,
+    .o-mail-Thread-header {
+        background: var(--albirru-dark-bg-secondary);
+        border-bottom-color: var(--albirru-dark-border);
+
+        .o-mail-Discuss-threadName,
+        .o-mail-Thread-name {
+            color: var(--albirru-dark-text);
+        }
+
+        .o-mail-Discuss-threadDescription,
+        .o-mail-Thread-description {
+            color: var(--albirru-dark-text-muted);
+        }
+
+        // Thread header icons and buttons
+        .btn,
+        button {
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+        }
+    }
+
+    // Welcome banner in channels
+    .o-mail-ThreadWelcome,
+    .o-mail-WelcomeBanner {
+        background: transparent;
+        color: var(--albirru-dark-text);
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        span {
+            color: var(--albirru-dark-text);
+        }
+
+        .text-muted {
+            color: var(--albirru-dark-text-muted) !important;
+        }
+    }
+
+    // Messages container
+    .o-mail-Thread-content {
+        background: var(--albirru-dark-bg);
+    }
+
+    // Individual messages
+    .o-mail-Message {
+        background: transparent;
+
+        .o-mail-Message-header {
+            .o-mail-Message-author {
+                color: var(--albirru-dark-text);
+            }
+
+            .o-mail-Message-date {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+
+        .o-mail-Message-content {
+            color: var(--albirru-dark-text);
+
+            // Message body text
+            .o-mail-Message-body {
+                color: var(--albirru-dark-text);
+
+                p,
+                span,
+                div {
+                    color: var(--albirru-dark-text);
+                }
+
+                a {
+                    color: var(--albirru-primary);
+                }
+            }
+        }
+
+        // Notification messages
+        &.o-mail-Message-notification {
+            .o-mail-Message-content {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+    }
+
+    // Message bubbles (quoted/reply messages)
+    .o-mail-MessageInReply,
+    .o-mail-Message-bubble,
+    .o-mail-LinkPreview,
+    .o-mail-LinkPreviewCard,
+    .o-mail-MessageReply,
+    [class*="o-mail-Link"],
+    .o_mail_Discuss_MessageInReply {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+
+        // Text inside bubbles
+        span,
+        div,
+        p,
+        a {
+            color: var(--albirru-dark-text);
+        }
+
+        .o-mail-MessageInReply-content,
+        .o-mail-LinkPreview-content {
+            color: var(--albirru-dark-text);
+        }
+    }
+
+    // Link previews in messages (the gray card for links)
+    .o-mail-UrlPreview {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        .o-mail-UrlPreview-title {
+            color: var(--albirru-dark-text);
+        }
+
+        .o-mail-UrlPreview-description {
+            color: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // Message subject/title
+    .o-mail-Message-subject {
+        color: var(--albirru-primary);
+    }
+
+    // All cards inside mail/discuss
+    .o-mail-Card,
+    .o_mail_card,
+    .card {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+
+    // Composer (message input area)
+    .o-mail-Composer,
+    .o-mail-Composer-main,
+    .o-mail-Composer-coreFooter {
+        background: var(--albirru-dark-bg-secondary);
+        border-top-color: var(--albirru-dark-border);
+        border-color: var(--albirru-dark-border);
+
+        .o-mail-Composer-input {
+            background: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-dark-text);
+
+            &::placeholder {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+
+        textarea {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+            border-color: var(--albirru-dark-border);
+
+            &::placeholder {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+
+        // Text input wrapper
+        .o-mail-Composer-textInputContainer {
+            background: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border);
+        }
+
+        // Composer buttons
+        .o-mail-Composer-actions {
+            .btn {
+                color: var(--albirru-dark-text-muted);
+
+                &:hover {
+                    color: var(--albirru-dark-text);
+                    background: var(--albirru-dark-hover);
+                }
+            }
+        }
+
+        // Send button and other buttons
+        .o-mail-Composer-send,
+        .o-mail-Composer-button {
+            color: var(--albirru-dark-text-muted);
+
+            &:hover {
+                color: var(--albirru-primary);
+            }
+        }
+
+        // Icons in composer
+        .fa,
+        .oi {
+            color: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // Composer footer area
+    .o-mail-Composer-footer {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+    }
+
+    // Right sidebar (member list)
+    .o-mail-DiscussSidebarMembers,
+    .o-mail-Thread-sideBar {
+        background: var(--albirru-dark-bg-secondary);
+        border-left-color: var(--albirru-dark-border);
+
+        .o-mail-DiscussSidebarMembers-header {
+            color: var(--albirru-dark-text-muted);
+            border-bottom-color: var(--albirru-dark-border);
+        }
+
+        .o-mail-DiscussSidebarMembers-list {
+            .o-mail-DiscussSidebarMembers-member {
+                color: var(--albirru-dark-text);
+
+                &:hover {
+                    background: var(--albirru-dark-hover);
+                }
+            }
+        }
+    }
+
+    // Channel settings panel
+    .o-mail-ChannelInvitation {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+
+        input {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+            border-color: var(--albirru-dark-border);
+        }
+    }
+
+    // Date separator
+    .o-mail-DateSection {
+        color: var(--albirru-dark-text-muted);
+
+        .o-mail-DateSection-date {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // Welcome message in channel
+    .o-mail-Thread-emptyList {
+        color: var(--albirru-dark-text-muted);
+
+        .o-mail-WelcomeView {
+            color: var(--albirru-dark-text);
+        }
+    }
+
+    // Search conversations
+    .o-mail-DiscussSidebar-search {
+        input {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+            border-color: var(--albirru-dark-border);
+
+            &::placeholder {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+    }
+
+    // Messaging menu (systray)
+    .o-mail-MessagingMenu {
+        .o-mail-NotificationItem {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+
+            .o-mail-NotificationItem-name {
+                color: var(--albirru-dark-text);
+            }
+
+            .o-mail-NotificationItem-text {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+    }
+
+    // Snackbar / Toast messages
+    .o-mail-ChatHub,
+    .o-mail-Snackbar {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+
+    // Quoted message in reply (the embedded card)
+    .o-mail-Message .rounded-3,
+    .o-mail-Message [class*="bg-view"],
+    .o-mail-Message .bg-view,
+    .o-mail-Message .o_bg_light {
+        // Only the background fights a utility (`bg-view`); the other two have
+        // no !important opponent and are left plain.
+        // Only the background fights a utility (`bg-view`); the other two have
+        // no !important opponent and are left plain.
+        background-color: var(--albirru-dark-bg-secondary) !important;
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+
+    // Generic bg-view overrides for mail
+    .o-mail-Thread .bg-view,
+    .o-mail-Discuss .bg-view,
+    [class*="o-mail"] .bg-view {
+        background-color: var(--albirru-dark-bg-secondary) !important;
+    }
+
+    // Starred messages section header
+    .o-mail-DiscussSidebarCategory-header {
+        color: var(--albirru-dark-text-muted);
+    }
+
+    // Channel/chat switcher icons
+    .o-mail-DiscussSidebarChannel-icon {
+        color: var(--albirru-dark-text-muted);
+    }
+
+    // Generic text color fixes for discuss
+    .o-mail-Thread,
+    .o-mail-Discuss {
+        .text-muted {
+            color: var(--albirru-dark-text-muted) !important;
+        }
+
+        .text-primary {
+            color: var(--albirru-primary) !important;
+        }
+
+        .text-dark {
+            color: var(--albirru-dark-text) !important;
+        }
+
+        .border {
+            border-color: var(--albirru-dark-border);
+        }
+    }
+
+    // =============================================
+    // Calendar View Dark Mode
+    // =============================================
+    .o_calendar_view,
+    .o_calendar_renderer {
+        background: var(--albirru-dark-bg);
+
+        // Calendar header
+        .o_calendar_header {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-dark-text);
+        }
+
+        // Calendar navigation
+        .o_calendar_navigation_buttons {
+            .btn {
+                background: var(--albirru-dark-bg);
+                border-color: var(--albirru-dark-border);
+                color: var(--albirru-dark-text);
+
+                &:hover {
+                    background: var(--albirru-dark-hover);
+                }
+            }
+        }
+
+        // Calendar filter panel
+        .o_calendar_filter {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+
+            .o_calendar_filter_item {
+                color: var(--albirru-dark-text);
+            }
+        }
+
+        // FullCalendar overrides
+        .fc {
+            .fc-toolbar {
+                color: var(--albirru-dark-text);
+
+                .fc-button {
+                    background: var(--albirru-dark-bg-secondary);
+                    border-color: var(--albirru-dark-border);
+                    color: var(--albirru-dark-text);
+
+                    &:hover {
+                        background: var(--albirru-dark-hover);
+                    }
+
+                    &.fc-button-active {
+                        background: var(--albirru-primary);
+                        color: var(--albirru-primary-text);
+                    }
+                }
+            }
+
+            .fc-col-header {
+                background: var(--albirru-dark-bg-secondary);
+
+                th {
+                    border-color: var(--albirru-dark-border);
+                    color: var(--albirru-dark-text);
+                }
+            }
+
+            .fc-daygrid-day,
+            .fc-timegrid-slot {
+                background: var(--albirru-dark-bg);
+                border-color: var(--albirru-dark-border);
+
+                .fc-daygrid-day-number {
+                    color: var(--albirru-dark-text);
+                }
+            }
+
+            .fc-day-today {
+                background: rgba(var(--albirru-primary-rgb), 0.1);
+            }
+
+            .fc-day-other {
+                background: var(--albirru-dark-bg-secondary);
+
+                .fc-daygrid-day-number {
+                    color: var(--albirru-dark-text-muted);
+                }
+            }
+
+            .fc-event {
+                border-color: transparent;
+            }
+
+            .fc-scrollgrid {
+                border-color: var(--albirru-dark-border);
+            }
+
+            td,
+            th {
+                border-color: var(--albirru-dark-border);
+            }
+        }
+
+        // Mini calendar
+        .o_calendar_mini {
+            background: var(--albirru-dark-bg-secondary);
+
+            .o_calendar_mini_day {
+                color: var(--albirru-dark-text);
+
+                &.o_calendar_mini_day_today {
+                    background: var(--albirru-primary);
+                    color: var(--albirru-primary-text);
+                }
+            }
+        }
+    }
+
+    // Sidebar in calendar
+    .o_calendar_sidebar {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+    }
+
+    // =============================================
+    // Graph & Pivot Views moved to graph_pivot.scss
+    // =============================================
+
+
+    // =============================================
+    // Activity View Dark Mode
+    // =============================================
+    .o_activity_view {
+        background: var(--albirru-dark-bg);
+
+        .o_activity_view_table {
+            background: var(--albirru-dark-bg);
+
+            th {
+                background: var(--albirru-dark-bg-secondary);
+                border-color: var(--albirru-dark-border);
+                color: var(--albirru-dark-text);
+            }
+
+            td {
+                background: var(--albirru-dark-bg);
+                border-color: var(--albirru-dark-border);
+                color: var(--albirru-dark-text);
+            }
+        }
+    }
+
+    // Activity widget (in chatter)
+    .o_Activity,
+    .o-mail-Activity {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+
+        .o-mail-Activity-info {
+            color: var(--albirru-dark-text-muted);
+        }
+
+        .o-mail-Activity-user {
+            color: var(--albirru-dark-text);
+        }
+    }
+
+    // =============================================
+    // Hierarchy View Dark Mode
+    // =============================================
+    .o_hierarchy_view,
+    .o_hierarchy_renderer {
+        background: var(--albirru-dark-bg);
+
+        .o_hierarchy_node {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+        }
+
+        .o_hierarchy_line {
+            stroke: var(--albirru-dark-border);
+        }
+    }
+
+    // =============================================
+    // Settings View Dark Mode
+    // =============================================
+
+    // Override CSS variables for settings - with body specificity
+    body.o_web_client .o_base_settings_view .o_form_renderer {
+        --settings__tab-bg: var(--albirru-dark-bg-secondary);
+        --settings__tab-bg--active: rgba(var(--albirru-primary-rgb), 0.2);
+        --settings__tab-color: #ffffff;
+        --settings__title-bg: var(--albirru-dark-bg-secondary);
+    }
+
+    // ===== DIRECT SELECTORS FOR SETTINGS =====
+
+    // Main Form Renderer
+    .o_base_settings_view .o_form_renderer {
+        background: var(--albirru-dark-bg);
+        background-color: var(--albirru-dark-bg);
+    }
+
+    // The SETTINGS main container - MOST IMPORTANT
+    .o_base_settings_view .settings,
+    .o_base_settings_view .o_form_renderer .settings,
+    .o_setting_container .settings {
+        background: var(--albirru-dark-bg);
+        background-color: var(--albirru-dark-bg);
+    }
+
+    // Settings Tab Sidebar
+    .o_base_settings_view .settings_tab,
+    .o_setting_container .settings_tab {
+        background: var(--albirru-dark-bg-secondary);
+        background-color: var(--albirru-dark-bg-secondary);
+    }
+
+    // Tab items - ALL text white
+    .o_base_settings_view .settings_tab .tab,
+    .o_base_settings_view .settings_tab .tab span,
+    .o_base_settings_view .settings_tab .tab .app_name,
+    .settings_tab .tab,
+    .settings_tab .tab span,
+    .settings_tab .tab .app_name {
+        color: #ffffff;
+    }
+
+    // Selected/hover tab - ensure white text
+    .o_base_settings_view .settings_tab .tab.selected,
+    .o_base_settings_view .settings_tab .tab.selected span,
+    .o_base_settings_view .settings_tab .tab:hover,
+    .o_base_settings_view .settings_tab .tab:hover span,
+    .settings_tab .tab.selected,
+    .settings_tab .tab.selected span,
+    .settings_tab .tab:hover,
+    .settings_tab .tab:hover span {
+        color: #ffffff;
+    }
+
+    // Section Headers H2 - Users, Languages, Companies
+    .o_base_settings_view .app_settings_block h2,
+    .o_base_settings_view .app_settings_block h2 span,
+    .o_base_settings_view .settings h2,
+    .o_base_settings_view .settings h2 span,
+    .app_settings_block h2,
+    .app_settings_block h2 span,
+    .settings>.app_settings_block>h2,
+    .settings>.app_settings_block>h2 span,
+    .settings>.app_settings_block>div>h2,
+    .settings>.app_settings_block>div>h2 span {
+        color: #ffffff;
+        background: var(--albirru-dark-bg-secondary);
+        background-color: var(--albirru-dark-bg-secondary);
+    }
+
+    // H3 headers
+    .o_base_settings_view .app_settings_block h3,
+    .o_base_settings_view .app_settings_block h3 span,
+    .app_settings_block h3,
+    .app_settings_block h3 span {
+        color: #ffffff;
+    }
+
+    // Setting container
+    .o_setting_container {
+        background: var(--albirru-dark-bg);
+    }
+
+    // Global label overrides for settings
+    .o_form_label,
+    label.o_form_label {
+        color: var(--albirru-dark-text);
+    }
+
+    // Widget text overrides
+    .o_widget,
+    .o_widget span {
+        color: var(--albirru-dark-text);
+    }
+
+    // Links inside settings
+    a.btn-link,
+    .btn-link {
+        color: var(--albirru-primary);
+
+        &:hover {
+            color: var(--albirru-accent);
+        }
+    }
+
+    // Badges inside settings
+    .badge {
+        &.text-primary {
+            color: var(--albirru-primary) !important;
+        }
+    }
+
+    // App Settings Header
+    .o_settings_tabs,
+    .app_settings_header {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        .nav-link {
+            color: var(--albirru-dark-text-muted);
+
+            &:hover {
+                color: var(--albirru-dark-text);
+                background: var(--albirru-dark-hover);
+            }
+
+            &.active {
+                color: var(--albirru-primary);
+                background: var(--albirru-dark-bg);
+            }
+        }
+    }
+
+    // Settings Tabs Navigation (left sidebar in settings)
+    .o_app_settings_tabs_wrapper {
+        background: var(--albirru-dark-bg-secondary);
+        border-right-color: var(--albirru-dark-border);
+
+        .o_app_settings_tab {
+            background: transparent;
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+
+            &.active {
+                background: var(--albirru-dark-bg);
+                color: var(--albirru-primary);
+            }
+        }
+    }
+
+    // Setting box cards
+    .o_setting_box {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        .o_setting_left_pane {
+            border-color: var(--albirru-dark-border);
+        }
+
+        .o_setting_right_pane {
+            background: transparent;
+        }
+
+        label,
+        .o_form_label {
+            color: var(--albirru-dark-text);
+        }
+
+        .text-muted {
+            color: var(--albirru-dark-text-muted) !important;
+        }
+
+        // Links in settings
+        a {
+            color: var(--albirru-primary);
+        }
+    }
+
+    // Setting sections with white background
+    .o_settings_box,
+    .o_settings_header,
+    .o_user_emails,
+    .o_invite_user_form,
+    .o_lang_section,
+    .o_company_section {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+
+    // App settings header with icon
+    .o_app_settings_header {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        .o_settings_header_icon {
+            background: var(--albirru-dark-bg);
+        }
+    }
+
+    // Setting cards within sections
+    .card,
+    .o_user_emails_control {
+        background: var(--albirru-dark-bg);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+
+    // Text inputs in settings
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    textarea,
+    select,
+    .o_input {
+        background: var(--albirru-dark-bg);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+
+        &::placeholder {
+            color: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // Properties fields. properties_field.scss pins `color: $o-main-text-color
+    // !important` on these inputs, which is near-black - unreadable on the dark
+    // input background above. !important is the only way past it.
+    .o_field_properties,
+    .o_property_field_popover {
+        .o_input,
+        .o_input_dropdown,
+        .o_dropdown_button,
+        .o_datepicker_button {
+            color: var(--albirru-dark-text) !important;
+        }
+    }
+
+    // form_controller.scss paints this label with $headings-color at
+    // `.o_form_view .o_checkbox_optional_field > .o_form_label` (0,3,0), which
+    // out-specifies the generic dark label rule and lands dark-on-dark.
+    .o_form_view .o_checkbox_optional_field > .o_form_label {
+        color: var(--albirru-dark-text);
+    }
+
+    // Search in settings
+    .o_searchview_input_container {
+        background: var(--albirru-dark-bg);
+
+        input {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+        }
+    }
+
+    // General text elements
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--albirru-dark-text);
+    }
+
+    .text-900 {
+        color: var(--albirru-dark-text) !important;
+    }
+
+    // The bg-* overrides used to be repeated here with bg-100/bg-200 pointing at
+    // the secondary background. That block was fully superseded by the identical
+    // one further down ("Generic Background Overrides"), which separates
+    // bg-100/bg-200 onto --albirru-dark-bg, so it has been removed rather than
+    // left to shadow-fight its own duplicate.
+
+    // Company name/info section
+    .o_res_company_name,
+    .o_company_logo_container {
+        color: var(--albirru-dark-text);
+    }
+
+    // Update info button
+    .o_update_info {
+        color: var(--albirru-primary);
+    }
+}
+
+// =============================================
+// Dialog / Modal Dark Mode (extend)
+// =============================================
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+
+    .o_dialog,
+    .o_technical_modal {
+        .modal-content {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+        }
+
+        .modal-header {
+            background: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-dark-text);
+
+            .modal-title {
+                color: var(--albirru-dark-text);
+            }
+
+            .btn-close {
+                filter: invert(1);
+            }
+        }
+
+        .modal-body {
+            background: var(--albirru-dark-bg-secondary);
+            color: var(--albirru-dark-text);
+        }
+
+        .modal-footer {
+            background: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border);
+        }
+    }
+
+
+    // =============================================
+    // Search View / Filters Dark Mode
+    // =============================================
+    .o_searchview {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        .o_searchview_input {
+            background: transparent;
+            color: var(--albirru-dark-text);
+
+            &::placeholder {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+
+        .o_searchview_facet {
+            background: rgba(var(--albirru-primary-rgb), 0.2);
+            border-color: var(--albirru-primary);
+            color: var(--albirru-dark-text);
+        }
+    }
+
+    // Filter menu dropdown
+    .o_filter_menu,
+    .o_group_by_menu,
+    .o_favorite_menu {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        .dropdown-item {
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+        }
+    }
+
+    // =============================================
+    // Generic Background Overrides
+    // =============================================
+    //
+    // Odoo builds every bg-* and text-* class through the o-print-color mixin,
+    // which ends in `<property>: var(--<property>) !important`. Specificity
+    // cannot get past that, so these need !important too. Without it every
+    // element carrying one of these classes - the search panel, dialogs, most
+    // of the surrounding chrome - stays light while the rest of the UI is dark.
+    .bg-view,
+    .bg-white,
+    .bg-light {
+        background-color: var(--albirru-dark-bg-secondary) !important;
+    }
+
+    .bg-100,
+    .bg-200 {
+        background-color: var(--albirru-dark-bg) !important;
+    }
+
+    .text-dark {
+        color: var(--albirru-dark-text) !important;
+    }
+
+    .border-bottom,
+    .border-top,
+    .border-start,
+    .border-end {
+        border-color: var(--albirru-dark-border);
+    }
+// }
+
+// =============================================
+// Tooltip Dark Mode
+// =============================================
+.tooltip {
+    .tooltip-inner {
+        background: var(--albirru-dark-bg-tertiary, #0f0f1a);
+        color: var(--albirru-dark-text);
+        border: 1px solid var(--albirru-dark-border);
+        box-shadow: var(--albirru-dark-shadow-md);
+    }
+
+    .tooltip-arrow::before {
+        border-top-color: var(--albirru-dark-bg-tertiary, #0f0f1a);
+        border-bottom-color: var(--albirru-dark-bg-tertiary, #0f0f1a);
+    }
+}
+
+// Bootstrap Tooltip
+.bs-tooltip-top .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
+    border-top-color: var(--albirru-dark-bg-tertiary, #0f0f1a);
+}
+
+.bs-tooltip-bottom .tooltip-arrow::before,
+.bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
+    border-bottom-color: var(--albirru-dark-bg-tertiary, #0f0f1a);
+}
+
+// =============================================
+// Popover Dark Mode
+// =============================================
+.popover {
+    background: var(--albirru-dark-bg-secondary);
+    border-color: var(--albirru-dark-border);
+    box-shadow: var(--albirru-dark-shadow-lg);
+
+    .popover-header {
+        background: var(--albirru-dark-bg);
+        border-bottom-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+
+    .popover-body {
+        color: var(--albirru-dark-text);
+    }
+
+    .popover-arrow::before,
+    .popover-arrow::after {
+        border-color: transparent;
+    }
+}
+
+// =============================================
+// Input Focus States Enhancement
+// =============================================
+input:focus,
+textarea:focus,
+select:focus,
+.o_input:focus,
+.form-control:focus,
+.form-select:focus {
+    background: var(--albirru-dark-bg);
+    border-color: var(--albirru-primary);
+    box-shadow: 0 0 0 3px rgba(var(--albirru-primary-rgb), 0.25);
+    color: var(--albirru-dark-text);
+    outline: none;
+}
+
+// =============================================
+// Status Bar Buttons
+// =============================================
+.o_form_statusbar {
+    .o_statusbar_buttons {
+        .btn {
+            background: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+                border-color: var(--albirru-primary);
+                color: var(--albirru-primary);
+            }
+
+            &.btn-primary {
+                background: var(--albirru-primary);
+                border-color: var(--albirru-primary);
+                color: var(--albirru-primary-text);
+            }
+        }
+    }
+
+    .o_statusbar_status {
+        .o_arrow_button {
+            background: var(--albirru-dark-bg-secondary);
+            color: var(--albirru-dark-text-muted);
+
+            &::before,
+            &::after {
+                border-left-color: var(--albirru-dark-bg-secondary);
+            }
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+
+            &.o_arrow_button_current {
+                background: var(--albirru-primary);
+                color: var(--albirru-primary-text);
+
+                &::before {
+                    border-left-color: var(--albirru-dark-bg);
+                }
+
+                &::after {
+                    border-left-color: var(--albirru-primary);
+                }
+            }
+
+            &.disabled {
+                opacity: 0.5;
+            }
+        }
+    }
+}
+
+// =============================================
+// Many2One / Many2Many Field Dropdowns
+// =============================================
+.o-autocomplete--dropdown-menu,
+.o_m2o_dropdown_menu,
+.ui-autocomplete {
+    background: var(--albirru-dark-bg-secondary);
+    border-color: var(--albirru-dark-border);
+    box-shadow: var(--albirru-dark-shadow-lg);
+
+    .o-autocomplete--dropdown-item,
+    .o_m2o_dropdown_option,
+    .ui-menu-item {
+        color: var(--albirru-dark-text);
+        background: transparent;
+
+        &:hover,
+        &.ui-state-active {
+            background: var(--albirru-dark-hover);
+            color: var(--albirru-primary);
+        }
+
+        a {
+            color: inherit;
+        }
+    }
+
+    .o-autocomplete--dropdown-item-separator {
+        border-color: var(--albirru-dark-border);
+    }
+}
+
+// =============================================
+// Date/Time Picker
+// =============================================
+.o_datetime_picker,
+.bootstrap-datetimepicker-widget,
+.datepicker,
+.datetimepicker {
+    background: var(--albirru-dark-bg-secondary);
+    border-color: var(--albirru-dark-border);
+    box-shadow: var(--albirru-dark-shadow-lg);
+
+    .datepicker-days,
+    .datepicker-months,
+    .datepicker-years,
+    .datepicker-decades {
+        background: var(--albirru-dark-bg-secondary);
+
+        table {
+            color: var(--albirru-dark-text);
+
+            thead {
+                tr {
+                    th {
+                        color: var(--albirru-dark-text);
+                        background: var(--albirru-dark-bg);
+
+                        &:hover {
+                            background: var(--albirru-dark-hover);
+                        }
+                    }
+                }
+            }
+
+            tbody {
+                td {
+                    color: var(--albirru-dark-text);
+
+                    &:hover {
+                        background: var(--albirru-dark-hover);
+                    }
+
+                    &.today {
+                        background: rgba(var(--albirru-primary-rgb), 0.2);
+                        color: var(--albirru-primary);
+                    }
+
+                    &.active,
+                    &.selected {
+                        background: var(--albirru-primary);
+                        color: var(--albirru-primary-text);
+                    }
+
+                    &.disabled,
+                    &.old,
+                    &.new {
+                        color: var(--albirru-dark-text-muted);
+                        opacity: 0.5;
+                    }
+                }
+            }
+        }
+    }
+
+    .timepicker {
+        background: var(--albirru-dark-bg-secondary);
+
+        .btn {
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+        }
+
+        input {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+            border-color: var(--albirru-dark-border);
+        }
+    }
+}
+
+// =============================================
+// Notifications / Toasts
+// =============================================
+.o_notification_manager {
+    .o_notification {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        box-shadow: var(--albirru-dark-shadow-lg);
+        color: var(--albirru-dark-text);
+
+        .o_notification_title {
+            color: var(--albirru-dark-text);
+        }
+
+        .o_notification_content {
+            color: var(--albirru-dark-text-muted);
+        }
+
+        .o_notification_close {
+            color: var(--albirru-dark-text-muted);
+
+            &:hover {
+                color: var(--albirru-dark-text);
+            }
+        }
+
+        // Notification types
+        &.border-success {
+            border-left-color: var(--albirru-dark-success, #2ecc71) !important;
+            background-color: var(--albirru-dark-success-bg, rgba(46, 204, 113, 0.15));
+        }
+
+        &.border-warning {
+            border-left-color: var(--albirru-dark-warning, #f39c12) !important;
+            background-color: var(--albirru-dark-warning-bg, rgba(243, 156, 18, 0.15));
+        }
+
+        &.border-danger {
+            border-left-color: var(--albirru-dark-danger, #e74c3c) !important;
+            background-color: var(--albirru-dark-danger-bg, rgba(231, 76, 60, 0.15));
+        }
+
+        &.border-info {
+            border-left-color: var(--albirru-dark-info, #3498db) !important;
+            background-color: var(--albirru-dark-info-bg, rgba(52, 152, 219, 0.15));
+        }
+    }
+}
+
+// =============================================
+// Loading Indicators
+// =============================================
+.o_loading_indicator,
+.o_loading {
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--albirru-dark-text);
+
+    .o_loading_message {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+    }
+}
+
+.o_blockUI {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+// =============================================
+// Checkbox / Radio Dark Mode
+// =============================================
+.form-check-input {
+    background-color: var(--albirru-dark-bg);
+    border-color: var(--albirru-dark-border-light, #3a3a55);
+
+    &:checked {
+        background-color: var(--albirru-primary);
+        border-color: var(--albirru-primary);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px rgba(var(--albirru-primary-rgb), 0.25);
+    }
+}
+
+.o_checkbox {
+    input[type="checkbox"] {
+        &+span {
+            background: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border-light, #3a3a55);
+        }
+
+        &:checked+span {
+            background: var(--albirru-primary);
+            border-color: var(--albirru-primary);
+        }
+    }
+}
+
+// =============================================
+// Smart Buttons
+// =============================================
+.oe_button_box {
+    .oe_stat_button {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+
+        &:hover {
+            background: var(--albirru-dark-hover);
+            border-color: var(--albirru-primary);
+        }
+
+        .o_button_icon {
+            color: var(--albirru-primary);
+        }
+
+        .o_stat_info {
+            .o_stat_value {
+                color: var(--albirru-dark-text);
+            }
+
+            .o_stat_text {
+                color: var(--albirru-dark-text-muted);
+            }
+        }
+    }
+}
+
+// =============================================
+// Additional Dark Mode Styles (MUST be in dark mode block)
+// =============================================
+// html.albirru-dark-mode,
+// html[data-albirru-dark="true"] {
+
+    // =============================================
+    // Attachments / File Previews
+    // =============================================
+    .o_attachment_preview,
+    .o_attachment,
+    .o-Attachment {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        color: var(--albirru-dark-text);
+
+        .o_attachment_name,
+        .o-Attachment-name {
+            color: var(--albirru-dark-text);
+        }
+
+        .o_attachment_filesize {
+            color: var(--albirru-dark-text-muted);
+        }
+
+        &:hover {
+            background: var(--albirru-dark-hover);
+        }
+    }
+
+    .o_attachments_previews {
+        .o_attachment_wrap {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+        }
+    }
+
+    // =============================================
+    // Empty State / No Content
+    // =============================================
+    .o_view_nocontent,
+    .o_nocontent_help {
+
+        .o_view_nocontent_smiling_face,
+        .o_nocontent_help_icon {
+            color: var(--albirru-dark-text-muted);
+            opacity: 0.3;
+        }
+
+        p,
+        .o_view_nocontent_content {
+            color: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // =============================================
+    // Accordion / Collapsible Panels
+    // =============================================
+    .accordion {
+        .accordion-item {
+            background: var(--albirru-dark-bg-secondary);
+            border-color: var(--albirru-dark-border);
+        }
+
+        .accordion-header {
+            .accordion-button {
+                background: var(--albirru-dark-bg-secondary);
+                color: var(--albirru-dark-text);
+
+                &:not(.collapsed) {
+                    background: var(--albirru-dark-hover);
+                    color: var(--albirru-primary);
+                }
+
+                &::after {
+                    filter: invert(1) brightness(0.7);
+                }
+
+                &:focus {
+                    box-shadow: 0 0 0 3px rgba(var(--albirru-primary-rgb), 0.25);
+                }
+            }
+        }
+
+        .accordion-body {
+            background: var(--albirru-dark-bg);
+            color: var(--albirru-dark-text);
+        }
+    }
+
+    // =============================================
+    // Tabs Enhancement
+    // =============================================
+    .nav-tabs {
+        border-bottom-color: var(--albirru-dark-border);
+
+        .nav-link {
+            color: var(--albirru-dark-text-muted);
+            border-color: transparent;
+
+            &:hover {
+                border-color: var(--albirru-dark-border) var(--albirru-dark-border) transparent;
+                color: var(--albirru-dark-text);
+            }
+
+            &.active {
+                background: var(--albirru-dark-bg-secondary);
+                border-color: var(--albirru-dark-border) var(--albirru-dark-border) var(--albirru-dark-bg-secondary);
+                color: var(--albirru-primary);
+            }
+        }
+    }
+
+    .tab-content {
+        background: var(--albirru-dark-bg-secondary);
+    }
+
+    // =============================================
+    // Progress Bars
+    // =============================================
+    .progress {
+        background: var(--albirru-dark-bg);
+
+        .progress-bar {
+            background: var(--albirru-primary);
+        }
+    }
+
+    // =============================================
+    // Pagination
+    // =============================================
+    .pagination,
+    .o_pager {
+        .page-item {
+            .page-link {
+                background: var(--albirru-dark-bg-secondary);
+                border-color: var(--albirru-dark-border);
+                color: var(--albirru-dark-text);
+
+                &:hover {
+                    background: var(--albirru-dark-hover);
+                    color: var(--albirru-primary);
+                }
+            }
+
+            &.active .page-link {
+                background: var(--albirru-primary);
+                border-color: var(--albirru-primary);
+                color: var(--albirru-primary-text);
+            }
+
+            &.disabled .page-link {
+                background: var(--albirru-dark-bg);
+                color: var(--albirru-dark-text-muted);
+                opacity: 0.5;
+            }
+        }
+    }
+
+    // =============================================
+    // Selection Fields
+    // =============================================
+    .o_selection,
+    .o_field_selection {
+        select {
+            background: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-dark-text);
+
+            option {
+                background: var(--albirru-dark-bg-secondary);
+                color: var(--albirru-dark-text);
+            }
+        }
+    }
+
+    // =============================================
+    // Label / Form Labels
+    // =============================================
+    .o_form_label,
+    label {
+        color: var(--albirru-dark-text);
+    }
+
+    .o_form_label_help {
+        color: var(--albirru-dark-text-muted);
+    }
+
+    // =============================================
+    // Report View / Print Preview
+    // =============================================
+    .o_report_view {
+        background: var(--albirru-dark-bg);
+
+        .o_report_content {
+            background: var(--albirru-dark-bg-secondary);
+            box-shadow: var(--albirru-dark-shadow-lg);
+        }
+    }
+
+    // =============================================
+    // Wizard Steps Indicator
+    // =============================================
+    .o_wizard {
+        .o_wizard_steps {
+            .o_wizard_step {
+                color: var(--albirru-dark-text-muted);
+
+                &.active {
+                    color: var(--albirru-primary);
+                }
+
+                &.done {
+                    color: var(--albirru-dark-success, #2ecc71);
+                }
+            }
+        }
+    }
+
+    // =============================================
+    // Context Menu
+    // =============================================
+    .context-menu,
+    .o_context_menu {
+        background: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        box-shadow: var(--albirru-dark-shadow-lg);
+
+        .context-menu-item {
+            color: var(--albirru-dark-text);
+
+            &:hover {
+                background: var(--albirru-dark-hover);
+            }
+        }
+    }
+
+    // =============================================
+    // Code Blocks / Technical Content
+    // =============================================
+    pre,
+    code {
+        background: var(--albirru-dark-bg-tertiary, #0f0f1a);
+        color: var(--albirru-dark-text);
+        border-color: var(--albirru-dark-border);
+    }
+
+    // =============================================
+    // Fieldset / Group Boxes
+    // =============================================
+    fieldset,
+    .o_group {
+        border-color: var(--albirru-dark-border);
+
+        legend {
+            color: var(--albirru-dark-text);
+        }
+    }
+}

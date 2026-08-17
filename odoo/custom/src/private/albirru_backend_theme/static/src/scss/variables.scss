@@ -1,0 +1,487 @@
+// Albirru Backend Theme - CSS Variables
+// Compatible with Odoo 19
+
+// =============================================
+// Breakpoints
+// =============================================
+// Declared here because variables.scss is the first file of the backend
+// bundle; SCSS variables are only visible to files concatenated after them.
+// Values mirror Bootstrap's $grid-breakpoints so the theme lines up with
+// Odoo's own responsive behaviour.
+$breakpoint-xs: 0;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1400px;
+
+// Upper bounds for "below tier" queries. Bootstrap subtracts 0.02px so that a
+// max-width query and the matching min-width query never both apply at the
+// exact boundary pixel.
+$breakpoint-sm-max: $breakpoint-sm - 0.02;
+$breakpoint-md-max: $breakpoint-md - 0.02;
+$breakpoint-lg-max: $breakpoint-lg - 0.02;
+$breakpoint-xl-max: $breakpoint-xl - 0.02;
+$breakpoint-xxl-max: $breakpoint-xxl - 0.02;
+
+// Theme-specific breakpoints that are not Bootstrap tiers. Kept as named
+// values so they are centralised rather than scattered as magic numbers.
+$albirru-breakpoint-phone: 480px;      // compact phone layout
+$albirru-breakpoint-tablet: 1024px;    // login layout switch
+$albirru-breakpoint-laptop: 1366px;    // narrow-laptop sidebar tweak
+
+:root {
+    // Default Font Family
+    --albirru-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    // =============================================
+    // Color Schemes
+    // =============================================
+
+    // Scheme 1 - Blue Professional (Default)
+    --albirru-scheme-1-primary: #714B67;
+    --albirru-scheme-1-primary-text: #ffffff;
+    --albirru-scheme-1-accent: #017e84;
+
+    // Scheme 2 - Green Nature
+    --albirru-scheme-2-primary: #2e7d32;
+    --albirru-scheme-2-primary-text: #ffffff;
+    --albirru-scheme-2-accent: #66bb6a;
+
+    // Scheme 3 - Purple Elegant
+    --albirru-scheme-3-primary: #5e35b1;
+    --albirru-scheme-3-primary-text: #ffffff;
+    --albirru-scheme-3-accent: #9575cd;
+
+    // Scheme 4 - Orange Warm
+    --albirru-scheme-4-primary: #ef6c00;
+    --albirru-scheme-4-primary-text: #ffffff;
+    --albirru-scheme-4-accent: #ffb74d;
+
+    // Scheme 5 - Red Bold
+    --albirru-scheme-5-primary: #c62828;
+    --albirru-scheme-5-primary-text: #ffffff;
+    --albirru-scheme-5-accent: #ef5350;
+
+    // Scheme 6 - Teal Fresh
+    --albirru-scheme-6-primary: #00796b;
+    --albirru-scheme-6-primary-text: #ffffff;
+    --albirru-scheme-6-accent: #4db6ac;
+
+    // Scheme 7 - Pink Rose
+    --albirru-scheme-7-primary: #d81b60;
+    --albirru-scheme-7-primary-text: #ffffff;
+    --albirru-scheme-7-accent: #f48fb1;
+
+    // Scheme 8 - Blue Ocean
+    --albirru-scheme-8-primary: #1565c0;
+    --albirru-scheme-8-primary-text: #ffffff;
+    --albirru-scheme-8-accent: #64b5f6;
+
+    // Scheme 9 - Indigo Deep
+    --albirru-scheme-9-primary: #303f9f;
+    --albirru-scheme-9-primary-text: #ffffff;
+    --albirru-scheme-9-accent: #7986cb;
+
+    // Scheme 10 - Amber Gold
+    --albirru-scheme-10-primary: #ff8f00;
+    --albirru-scheme-10-primary-text: #212529;
+    --albirru-scheme-10-accent: #ffca28;
+
+    // Scheme 11 - Cyan Sky
+    --albirru-scheme-11-primary: #0097a7;
+    --albirru-scheme-11-primary-text: #ffffff;
+    --albirru-scheme-11-accent: #4dd0e1;
+
+    // Scheme 12 - Brown Earth
+    --albirru-scheme-12-primary: #5d4037;
+    --albirru-scheme-12-primary-text: #ffffff;
+    --albirru-scheme-12-accent: #a1887f;
+
+    // Scheme 13 - Black Elegance
+    --albirru-scheme-13-primary: #212121;
+    --albirru-scheme-13-primary-text: #ffffff;
+    --albirru-scheme-13-accent: #757575;
+
+    // Scheme 14 - Lime Fresh
+    --albirru-scheme-14-primary: #689f38;
+    --albirru-scheme-14-primary-text: #ffffff;
+    --albirru-scheme-14-accent: #aed581;
+
+    // Scheme 15 - Deep Purple
+    --albirru-scheme-15-primary: #4527a0;
+    --albirru-scheme-15-primary-text: #ffffff;
+    --albirru-scheme-15-accent: #9575cd;
+
+    // Scheme 16 - Light Blue
+    --albirru-scheme-16-primary: #0288d1;
+    --albirru-scheme-16-primary-text: #ffffff;
+    --albirru-scheme-16-accent: #4fc3f7;
+
+    // Scheme 17 - Grey Steel
+    --albirru-scheme-17-primary: #616161;
+    --albirru-scheme-17-primary-text: #ffffff;
+    --albirru-scheme-17-accent: #bdbdbd;
+
+    // Scheme 18 - Blue Grey
+    --albirru-scheme-18-primary: #455a64;
+    --albirru-scheme-18-primary-text: #ffffff;
+    --albirru-scheme-18-accent: #90a4ae;
+
+    // =============================================
+    // Active Theme Colors (Dynamic)
+    // =============================================
+    --albirru-primary: var(--albirru-scheme-1-primary);
+    --albirru-primary-rgb: 113, 75, 103;
+    --albirru-primary-text: var(--albirru-scheme-1-primary-text);
+    --albirru-secondary: #ffffff;
+    --albirru-accent: var(--albirru-scheme-1-accent);
+
+    // =============================================
+    // Light Theme Colors
+    // =============================================
+    --albirru-light-bg: #f8f9fa;
+    --albirru-light-bg-secondary: #ffffff;
+    --albirru-light-text: #212529;
+    --albirru-light-text-muted: #6c757d;
+    --albirru-light-border: #dee2e6;
+    --albirru-light-hover: #e9ecef;
+
+    // =============================================
+    // Dark Theme Colors
+    // =============================================
+    --albirru-dark-bg: #1a1a2e;
+    --albirru-dark-bg-secondary: #16213e;
+    --albirru-dark-bg-tertiary: #0f0f1a;
+    --albirru-dark-text: #e8e8e8;
+    --albirru-dark-text-muted: #a0a0a0;
+    --albirru-dark-text-subtle: #6b6b7b;
+    --albirru-dark-border: #2d2d44;
+    --albirru-dark-border-light: #3a3a55;
+    --albirru-dark-hover: #252542;
+    --albirru-dark-active: #2e2e4a;
+
+    // =============================================
+    // Semantic Colors (Light Mode)
+    // =============================================
+    --albirru-success: #28a745;
+    --albirru-success-bg: #d4edda;
+    --albirru-warning: #ffc107;
+    --albirru-warning-bg: #fff3cd;
+    --albirru-danger: #dc3545;
+    --albirru-danger-bg: #f8d7da;
+    --albirru-info: #17a2b8;
+    --albirru-info-bg: #d1ecf1;
+
+    // =============================================
+    // Semantic Colors (Dark Mode)
+    // =============================================
+    --albirru-dark-success: #2ecc71;
+    --albirru-dark-success-bg: rgba(46, 204, 113, 0.15);
+    --albirru-dark-warning: #f39c12;
+    --albirru-dark-warning-bg: rgba(243, 156, 18, 0.15);
+    --albirru-dark-danger: #e74c3c;
+    --albirru-dark-danger-bg: rgba(231, 76, 60, 0.15);
+    --albirru-dark-info: #3498db;
+    --albirru-dark-info-bg: rgba(52, 152, 219, 0.15);
+
+    // =============================================
+    // Dark Mode Shadows
+    // =============================================
+    --albirru-dark-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --albirru-dark-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --albirru-dark-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --albirru-dark-shadow-glow: 0 0 20px rgba(var(--albirru-primary-rgb), 0.3);
+
+    // =============================================
+    // Component Variables
+    // =============================================
+
+    // Navbar
+    --albirru-navbar-height: 46px;
+    --albirru-navbar-bg: var(--albirru-primary);
+    --albirru-navbar-text: var(--albirru-primary-text);
+
+    // Sidebar
+    --albirru-sidebar-width: 260px;
+    --albirru-sidebar-collapsed-width: 60px;
+    --albirru-sidebar-bg: var(--albirru-light-bg-secondary);
+    --albirru-sidebar-text: var(--albirru-light-text);
+    --albirru-sidebar-hover: var(--albirru-light-hover);
+    --albirru-sidebar-active: var(--albirru-primary);
+    --albirru-sidebar-active-text: var(--albirru-primary-text);
+
+    // Border Radius (Theme Styles)
+    --albirru-radius-sm: 4px;
+    --albirru-radius-md: 8px;
+    --albirru-radius-lg: 12px;
+    --albirru-radius-xl: 20px;
+
+    // Shadows
+    --albirru-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --albirru-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --albirru-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+    // Transitions
+    --albirru-transition-fast: 0.15s ease;
+    --albirru-transition-normal: 0.25s ease;
+    --albirru-transition-slow: 0.4s ease;
+
+    // Font Sizes
+    --albirru-font-xs: 0.75rem;
+    --albirru-font-sm: 0.875rem;
+    --albirru-font-md: 1rem;
+    --albirru-font-lg: 1.125rem;
+    --albirru-font-xl: 1.25rem;
+
+    // Spacing
+    --albirru-spacing-xs: 0.25rem;
+    --albirru-spacing-sm: 0.5rem;
+    --albirru-spacing-md: 1rem;
+    --albirru-spacing-lg: 1.5rem;
+    --albirru-spacing-xl: 2rem;
+
+    // List View
+    --albirru-list-row-height-compact: 36px;
+    --albirru-list-row-height-comfortable: 48px;
+}
+
+// =============================================
+// Theme Style Modifiers
+// =============================================
+
+// Rounded Theme
+html[data-albirru-style="rounded"] {
+    --albirru-radius-sm: 6px;
+    --albirru-radius-md: 10px;
+    --albirru-radius-lg: 16px;
+    --albirru-radius-xl: 24px;
+}
+
+// Standard Theme
+html[data-albirru-style="standard"] {
+    --albirru-radius-sm: 4px;
+    --albirru-radius-md: 6px;
+    --albirru-radius-lg: 8px;
+    --albirru-radius-xl: 12px;
+}
+
+// Square Theme
+html[data-albirru-style="square"] {
+    --albirru-radius-sm: 0;
+    --albirru-radius-md: 0;
+    --albirru-radius-lg: 2px;
+    --albirru-radius-xl: 4px;
+}
+
+// =============================================
+// Color Scheme Selectors
+// =============================================
+
+html[data-albirru-scheme="scheme_1"] {
+    --albirru-primary: var(--albirru-scheme-1-primary);
+    --albirru-primary-rgb: 113, 75, 103;
+    --albirru-primary-text: var(--albirru-scheme-1-primary-text);
+    --albirru-accent: var(--albirru-scheme-1-accent);
+}
+
+html[data-albirru-scheme="scheme_2"] {
+    --albirru-primary: var(--albirru-scheme-2-primary);
+    --albirru-primary-rgb: 46, 125, 50;
+    --albirru-primary-text: var(--albirru-scheme-2-primary-text);
+    --albirru-accent: var(--albirru-scheme-2-accent);
+}
+
+html[data-albirru-scheme="scheme_3"] {
+    --albirru-primary: var(--albirru-scheme-3-primary);
+    --albirru-primary-rgb: 94, 53, 177;
+    --albirru-primary-text: var(--albirru-scheme-3-primary-text);
+    --albirru-accent: var(--albirru-scheme-3-accent);
+}
+
+html[data-albirru-scheme="scheme_4"] {
+    --albirru-primary: var(--albirru-scheme-4-primary);
+    --albirru-primary-rgb: 239, 108, 0;
+    --albirru-primary-text: var(--albirru-scheme-4-primary-text);
+    --albirru-accent: var(--albirru-scheme-4-accent);
+}
+
+html[data-albirru-scheme="scheme_5"] {
+    --albirru-primary: var(--albirru-scheme-5-primary);
+    --albirru-primary-rgb: 198, 40, 40;
+    --albirru-primary-text: var(--albirru-scheme-5-primary-text);
+    --albirru-accent: var(--albirru-scheme-5-accent);
+}
+
+html[data-albirru-scheme="scheme_6"] {
+    --albirru-primary: var(--albirru-scheme-6-primary);
+    --albirru-primary-rgb: 0, 121, 107;
+    --albirru-primary-text: var(--albirru-scheme-6-primary-text);
+    --albirru-accent: var(--albirru-scheme-6-accent);
+}
+
+html[data-albirru-scheme="scheme_7"] {
+    --albirru-primary: var(--albirru-scheme-7-primary);
+    --albirru-primary-rgb: 216, 27, 96;
+    --albirru-primary-text: var(--albirru-scheme-7-primary-text);
+    --albirru-accent: var(--albirru-scheme-7-accent);
+}
+
+html[data-albirru-scheme="scheme_8"] {
+    --albirru-primary: var(--albirru-scheme-8-primary);
+    --albirru-primary-rgb: 21, 101, 192;
+    --albirru-primary-text: var(--albirru-scheme-8-primary-text);
+    --albirru-accent: var(--albirru-scheme-8-accent);
+}
+
+html[data-albirru-scheme="scheme_9"] {
+    --albirru-primary: var(--albirru-scheme-9-primary);
+    --albirru-primary-rgb: 48, 63, 159;
+    --albirru-primary-text: var(--albirru-scheme-9-primary-text);
+    --albirru-accent: var(--albirru-scheme-9-accent);
+}
+
+html[data-albirru-scheme="scheme_10"] {
+    --albirru-primary: var(--albirru-scheme-10-primary);
+    --albirru-primary-rgb: 255, 143, 0;
+    --albirru-primary-text: var(--albirru-scheme-10-primary-text);
+    --albirru-accent: var(--albirru-scheme-10-accent);
+}
+
+html[data-albirru-scheme="scheme_11"] {
+    --albirru-primary: var(--albirru-scheme-11-primary);
+    --albirru-primary-rgb: 0, 151, 167;
+    --albirru-primary-text: var(--albirru-scheme-11-primary-text);
+    --albirru-accent: var(--albirru-scheme-11-accent);
+}
+
+html[data-albirru-scheme="scheme_12"] {
+    --albirru-primary: var(--albirru-scheme-12-primary);
+    --albirru-primary-rgb: 93, 64, 55;
+    --albirru-primary-text: var(--albirru-scheme-12-primary-text);
+    --albirru-accent: var(--albirru-scheme-12-accent);
+}
+
+html[data-albirru-scheme="scheme_13"] {
+    --albirru-primary: var(--albirru-scheme-13-primary);
+    --albirru-primary-rgb: 33, 33, 33;
+    --albirru-primary-text: var(--albirru-scheme-13-primary-text);
+    --albirru-accent: var(--albirru-scheme-13-accent);
+}
+
+html[data-albirru-scheme="scheme_14"] {
+    --albirru-primary: var(--albirru-scheme-14-primary);
+    --albirru-primary-rgb: 104, 159, 56;
+    --albirru-primary-text: var(--albirru-scheme-14-primary-text);
+    --albirru-accent: var(--albirru-scheme-14-accent);
+}
+
+html[data-albirru-scheme="scheme_15"] {
+    --albirru-primary: var(--albirru-scheme-15-primary);
+    --albirru-primary-rgb: 69, 39, 160;
+    --albirru-primary-text: var(--albirru-scheme-15-primary-text);
+    --albirru-accent: var(--albirru-scheme-15-accent);
+}
+
+html[data-albirru-scheme="scheme_16"] {
+    --albirru-primary: var(--albirru-scheme-16-primary);
+    --albirru-primary-rgb: 2, 136, 209;
+    --albirru-primary-text: var(--albirru-scheme-16-primary-text);
+    --albirru-accent: var(--albirru-scheme-16-accent);
+}
+
+html[data-albirru-scheme="scheme_17"] {
+    --albirru-primary: var(--albirru-scheme-17-primary);
+    --albirru-primary-rgb: 97, 97, 97;
+    --albirru-primary-text: var(--albirru-scheme-17-primary-text);
+    --albirru-accent: var(--albirru-scheme-17-accent);
+}
+
+html[data-albirru-scheme="scheme_18"] {
+    --albirru-primary: var(--albirru-scheme-18-primary);
+    --albirru-primary-rgb: 69, 90, 100;
+    --albirru-primary-text: var(--albirru-scheme-18-primary-text);
+    --albirru-accent: var(--albirru-scheme-18-accent);
+}
+
+// =============================================
+// Font Families
+// =============================================
+
+html[data-albirru-font="inter"] {
+    --albirru-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html[data-albirru-font="roboto"] {
+    --albirru-font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html[data-albirru-font="poppins"] {
+    --albirru-font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html[data-albirru-font="open_sans"] {
+    --albirru-font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html[data-albirru-font="lato"] {
+    --albirru-font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html[data-albirru-font="nunito"] {
+    --albirru-font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+// =============================================
+// Font Sizes
+// =============================================
+
+html[data-albirru-font-size="small"] {
+    font-size: 13px;
+    --albirru-font-sm: 0.75rem;
+    --albirru-font-md: 0.8125rem;
+    --albirru-font-lg: 1rem;
+}
+
+html[data-albirru-font-size="medium"] {
+    font-size: 14px;
+    --albirru-font-sm: 0.875rem;
+    --albirru-font-md: 1rem;
+    --albirru-font-lg: 1.125rem;
+}
+
+html[data-albirru-font-size="large"] {
+    font-size: 16px;
+    --albirru-font-sm: 1rem;
+    --albirru-font-md: 1.125rem;
+    --albirru-font-lg: 1.25rem;
+}
+
+// =============================================
+// Apply Font Family globally
+// =============================================
+:root {
+    --bs-body-font-family: var(--albirru-font-family);
+    --font-family-sans-serif: var(--albirru-font-family);
+    --o-font-family-sans-serif: var(--albirru-font-family);
+}
+
+body {
+    font-family: var(--albirru-font-family);
+}
+
+// Ensure headings also use the theme font
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: var(--albirru-font-family);
+}

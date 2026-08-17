@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Albirru Backend Theme - NavBar Templates -->
+<!-- Compatible with Odoo 19 -->
+<templates xml:space="preserve">
+
+    <!-- Extend NavBar to add Albirru theme elements -->
+    <t t-inherit="web.NavBar" t-inherit-mode="extension">
+        <!-- Add theme data attributes to header -->
+        <xpath expr="//header[hasclass('o_navbar')]" position="attributes">
+            <attribute name="t-att-data-albirru-active">isAlbirruThemeActive</attribute>
+        </xpath>
+        
+        <!-- Add App Switcher button for mobile - For all menu positions (opens App Drawer) -->
+        <xpath expr="//nav[hasclass('o_main_navbar')]" position="inside">
+            <button t-if="isAlbirruThemeActive"
+                    class="albirru-mobile-menu-toggle order-first"
+                    t-on-click="onMobileAppSwitcher"
+                    title="Apps"
+                    aria-label="Apps">
+                <!-- Show favicon if available, otherwise fall back to an icon.
+                     The fallback is driven by an Owl handler rather than an
+                     inline onerror attribute, which a Content-Security-Policy
+                     would block. -->
+                <t t-if="branding.has_favicon and !albirruFaviconFailed">
+                    <img t-attf-src="/web/image/res.company/#{companyId}/albirru_favicon"
+                         class="albirru-mobile-favicon"
+                         alt="Apps"
+                         t-on-error="onAlbirruFaviconError"/>
+                </t>
+                <i t-else="" class="fa fa-th-large" aria-hidden="true"/>
+            </button>
+        </xpath>
+    </t>
+
+    <!-- Extend AppsMenu for better styling -->
+    <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_navbar_apps_menu')]" position="attributes">
+            <attribute name="class" add="albirru-apps-menu" separator=" "/>
+            <attribute name="t-if">!isScopedApp and (!isAlbirruThemeActive or sidebarPosition !== 'left')</attribute>
+        </xpath>
+
+        <!-- Replace icon with favicon if available -->
+        <xpath expr="//i[hasclass('oi-apps')]" position="replace">
+            <t t-if="isAlbirruThemeActive and branding.has_favicon">
+                <img t-attf-src="/albirru_backend_theme/favicon" 
+                     class="albirru-navbar-logo" alt="Favicon"
+                     style="width: 24px; height: 24px; object-fit: contain;"/>
+            </t>
+            <i t-else="" class="oi oi-apps"/>
+        </xpath>
+    </t>
+
+</templates>

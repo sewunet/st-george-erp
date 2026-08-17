@@ -1,0 +1,166 @@
+// Albirru Backend Theme - Graph & Pivot View Styles
+// Compatible with Odoo 19
+
+// =============================================
+// Explicit Light Mode
+// =============================================
+// Ensures standard appearance when not in dark mode
+// Using body selector for higher specificity
+body:not(.albirru-dark-mode),
+html:not([data-albirru-dark="true"]) body,
+html[data-albirru-dark="false"] body {
+
+    .o_pivot_view,
+    .o_graph_view,
+    .o_graph_renderer {
+        background-color: #ffffff;
+        color: #212529;
+    }
+
+    // Pivot Table Light Mode
+    //
+    // Odoo 19 renders `<div class="o_pivot"><table class="table ...">`. There is
+    // no `.o_pivot_table` class - that was pre-19 markup - so every rule that
+    // used to be nested under it never applied on this version. Colours are set
+    // through Bootstrap's own table variables, which reach the cells, borders
+    // and row hover without having to out-specify `.table`'s selectors.
+    .o_pivot_view .o_pivot table.table {
+        --bs-table-color: #212529;
+        --bs-table-bg: #ffffff;
+        --bs-table-border-color: #dee2e6;
+        --bs-table-hover-color: #212529;
+
+        th {
+            background-color: #f8f9fa; // Light gray headers
+            color: #212529;
+
+            div,
+            span,
+            b,
+            strong {
+                color: #212529;
+            }
+        }
+
+        td {
+            div,
+            span,
+            b,
+            strong {
+                color: #212529;
+            }
+        }
+
+        .o_pivot_cell_value {
+            color: #212529;
+        }
+    }
+}
+
+// =============================================
+// Dark Mode
+// =============================================
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+
+    // Base Containers
+    .o_pivot_view,
+    .o_graph_view,
+    .o_graph_renderer {
+        background-color: var(--albirru-dark-bg);
+        color: var(--albirru-dark-text);
+
+        .o_view_nocontent {
+            color: var(--albirru-dark-text-muted);
+        }
+    }
+
+    // ------------------------------------------
+    // PIVOT VIEW Styling
+    // ------------------------------------------
+    .o_pivot_view {
+        .o_pivot {
+            background-color: var(--albirru-dark-bg);
+        }
+
+        // See the light-mode note above: `.o_pivot_table` does not exist in
+        // Odoo 19, so this whole section used to be inert.
+        .o_pivot table.table {
+            --bs-table-color: var(--albirru-dark-text);
+            --bs-table-bg: var(--albirru-dark-bg);
+            --bs-table-border-color: var(--albirru-dark-border);
+            --bs-table-hover-color: var(--albirru-dark-text);
+            --bs-table-hover-bg: var(--albirru-dark-hover);
+
+            // Headers (Dimensions)
+            th {
+                background-color: var(--albirru-dark-bg-secondary);
+                color: var(--albirru-dark-text);
+                font-weight: 600;
+
+                // Force ALL inner elements to inherit color
+                * {
+                    color: inherit;
+                }
+            }
+
+            // Data Cells
+            td * {
+                color: inherit;
+            }
+
+            // pivot_view.scss pins `background-color: $gray-200 !important` on
+            // these hover states. They sit in <thead>, where .table-hover's
+            // overlay never reaches, so !important is the only way to recolour
+            // them. The pre-19 `.o_pivot_header_cell` is now split in two.
+            .o_pivot_measure_row:hover,
+            .o_pivot_origin_row:hover,
+            .o_pivot_header_cell_closed:hover,
+            .o_pivot_header_cell_opened:hover {
+                background-color: var(--albirru-dark-hover) !important;
+                color: #ffffff;
+            }
+
+            // Opened/Active state
+            .o_pivot_header_cell_closed,
+            .o_pivot_header_cell_opened {
+                &.show,
+                &[aria-expanded="true"] {
+                    background-color: var(--albirru-primary);
+                    color: #ffffff;
+                }
+            }
+
+            // Values
+            .o_pivot_cell_value {
+                color: var(--albirru-dark-text);
+
+                div {
+                    color: inherit;
+                }
+            }
+        }
+    }
+
+    // ------------------------------------------
+    // GRAPH VIEW Styling
+    // ------------------------------------------
+    .o_graph_view {
+        .o_graph_canvas_container {
+            background-color: var(--albirru-dark-bg);
+
+            // Fix Chart.js black text by inverting the canvas colors
+            canvas {
+                filter: invert(1) hue-rotate(180deg);
+            }
+        }
+
+        // The `.o_graph_controller` block that used to sit here targeted a class
+        // Odoo 19 does not render; the graph's buttons live in the control
+        // panel, which control_panel.scss already themes.
+
+        .o_view_nocontent {
+            background-color: transparent;
+        }
+    }
+}

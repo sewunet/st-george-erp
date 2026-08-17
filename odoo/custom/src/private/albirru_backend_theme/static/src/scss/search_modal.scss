@@ -1,0 +1,249 @@
+// Albirru Backend Theme - Search Modal Styles
+// Compatible with Odoo 19
+
+// Search Modal Backdrop
+.albirru-search-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vh;
+    animation: fadeIn 0.15s ease;
+}
+
+// Search Modal
+.albirru-search-modal {
+    width: 100%;
+    max-width: 640px;
+    background: var(--albirru-light-bg-secondary);
+    border-radius: var(--albirru-radius-lg);
+    box-shadow: var(--albirru-shadow-lg);
+    overflow: hidden;
+    animation: slideDown 0.2s ease;
+}
+
+// Search Header
+.albirru-search-header {
+    padding: var(--albirru-spacing-md);
+    border-bottom: 1px solid var(--albirru-light-border);
+
+    .search-input-wrapper {
+        display: flex;
+        align-items: center;
+        gap: var(--albirru-spacing-md);
+        background: var(--albirru-light-bg);
+        border-radius: var(--albirru-radius-md);
+        padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+
+        .search-icon {
+            color: var(--albirru-light-text-muted);
+            font-size: var(--albirru-font-lg);
+        }
+
+        .albirru-search-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: var(--albirru-font-lg);
+            color: var(--albirru-light-text);
+            outline: none;
+
+            &::placeholder {
+                color: var(--albirru-light-text-muted);
+            }
+        }
+
+        .search-shortcut {
+            display: flex;
+            gap: var(--albirru-spacing-xs);
+            color: var(--albirru-light-text-muted);
+            font-size: var(--albirru-font-xs);
+
+            kbd {
+                background: var(--albirru-light-border);
+                padding: 2px 6px;
+                border-radius: var(--albirru-radius-sm);
+                font-size: 10px;
+            }
+        }
+    }
+}
+
+// Search Tabs
+.albirru-search-tabs {
+    display: flex;
+    align-items: center;
+    padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+    gap: var(--albirru-spacing-sm);
+    border-bottom: 1px solid var(--albirru-light-border);
+    background: var(--albirru-light-bg);
+
+    .search-tab {
+        padding: var(--albirru-spacing-xs) var(--albirru-spacing-md);
+        border: none;
+        background: transparent;
+        color: var(--albirru-light-text-muted);
+        border-radius: var(--albirru-radius-md);
+        font-size: var(--albirru-font-sm);
+        cursor: pointer;
+        transition: all var(--albirru-transition-fast);
+
+        &:hover {
+            background: var(--albirru-light-hover);
+            color: var(--albirru-light-text);
+        }
+
+        &.active {
+            background: var(--albirru-primary);
+            color: var(--albirru-primary-text);
+        }
+    }
+
+    .search-model-select {
+        padding: var(--albirru-spacing-xs) var(--albirru-spacing-sm);
+        border: 1px solid var(--albirru-light-border);
+        border-radius: var(--albirru-radius-sm);
+        background: var(--albirru-light-bg-secondary);
+        font-size: var(--albirru-font-sm);
+        max-width: 200px;
+    }
+}
+
+// Search Results
+.albirru-search-results {
+    max-height: 100%;
+    overflow-y: auto;
+    padding: var(--albirru-spacing-sm);
+
+    .search-loading,
+    .search-no-results,
+    .search-hint {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: var(--albirru-spacing-xl);
+        color: var(--albirru-light-text-muted);
+        text-align: center;
+
+        i {
+            margin-bottom: var(--albirru-spacing-sm);
+        }
+    }
+
+    .search-tips {
+        display: flex;
+        gap: var(--albirru-spacing-lg);
+        margin-top: var(--albirru-spacing-md);
+        font-size: var(--albirru-font-xs);
+
+        kbd {
+            background: var(--albirru-light-border);
+            padding: 2px 6px;
+            border-radius: var(--albirru-radius-sm);
+            font-size: 10px;
+            margin: 0 2px;
+        }
+    }
+}
+
+// Search Results List
+.search-results-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .search-result-item {
+        display: flex;
+        align-items: center;
+        gap: var(--albirru-spacing-md);
+        padding: var(--albirru-spacing-md);
+        border-radius: var(--albirru-radius-md);
+        cursor: pointer;
+        transition: background var(--albirru-transition-fast);
+
+        &:hover,
+        &.selected {
+            background: var(--albirru-light-hover);
+        }
+
+        &.selected {
+            background: rgba(var(--albirru-primary-rgb), 0.1);
+        }
+
+        .result-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--albirru-light-bg);
+            border-radius: var(--albirru-radius-md);
+            color: var(--albirru-primary);
+        }
+
+        .result-content {
+            flex: 1;
+            min-width: 0;
+
+            .result-name {
+                display: block;
+                font-weight: 500;
+                color: var(--albirru-light-text);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .result-type {
+                display: block;
+                font-size: var(--albirru-font-xs);
+                color: var(--albirru-light-text-muted);
+            }
+        }
+
+        .result-arrow {
+            color: var(--albirru-light-text-muted);
+            opacity: 0;
+            transition: opacity var(--albirru-transition-fast);
+        }
+
+        &:hover .result-arrow,
+        &.selected .result-arrow {
+            opacity: 1;
+        }
+    }
+}
+
+// Search Footer
+.albirru-search-footer {
+    padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+    border-top: 1px solid var(--albirru-light-border);
+    background: var(--albirru-light-bg);
+    font-size: var(--albirru-font-xs);
+    color: var(--albirru-light-text-muted);
+}
+
+// Animations
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

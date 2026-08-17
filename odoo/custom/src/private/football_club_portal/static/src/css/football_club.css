@@ -1,0 +1,319 @@
+:root {
+    --club-primary: #0b6b3a;
+    --club-primary-dark: #064526;
+    --club-accent: #f2c94c;
+    --club-surface: #ffffff;
+    --club-background: #f5f7f6;
+    --club-text: #162019;
+    --club-muted: #5d6b62;
+    --club-danger: #b42318;
+    --club-border: #dce5df;
+}
+
+.fc-page {
+    background: var(--club-background);
+    color: var(--club-text);
+    min-height: 70vh;
+}
+
+.fc-hero {
+    align-items: center;
+    background:
+        linear-gradient(90deg, rgba(6, 69, 38, 0.92), rgba(11, 107, 58, 0.72)),
+        repeating-linear-gradient(90deg, #0d783f 0, #0d783f 80px, #0b6b3a 80px, #0b6b3a 160px);
+    color: #fff;
+    display: flex;
+    min-height: 420px;
+    padding: 72px 0;
+}
+
+.fc-hero__content {
+    max-width: 680px;
+}
+
+.fc-hero h1,
+.fc-section h1,
+.fc-success-panel h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.05;
+    margin: 0 0 18px;
+}
+
+.fc-hero p {
+    font-size: 1.2rem;
+    max-width: 560px;
+}
+
+.fc-eyebrow {
+    color: var(--club-accent);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.fc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.fc-section {
+    padding: 48px 0;
+}
+
+.fc-section__header {
+    align-items: center;
+    display: flex;
+    gap: 18px;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.fc-section__header h2,
+.fc-section__header h1 {
+    margin: 0;
+}
+
+.fc-event-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.fc-event-card {
+    background: var(--club-surface);
+    border: 1px solid var(--club-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.fc-event-card__media {
+    aspect-ratio: 16 / 9;
+    background: var(--club-primary-dark);
+    display: block;
+    overflow: hidden;
+}
+
+.fc-event-card__media img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.fc-event-card__fallback,
+.fc-event-detail__fallback {
+    align-items: center;
+    background:
+        linear-gradient(135deg, rgba(242, 201, 76, 0.9), rgba(255, 255, 255, 0.15)),
+        var(--club-primary);
+    color: #fff;
+    display: flex;
+    font-size: 2.6rem;
+    font-weight: 900;
+    height: 100%;
+    justify-content: center;
+}
+
+.fc-event-card__body {
+    padding: 18px;
+}
+
+.fc-event-card h3 {
+    font-size: 1.25rem;
+    line-height: 1.25;
+    margin: 10px 0 8px;
+}
+
+.fc-event-card h3 a,
+.fc-link {
+    color: var(--club-primary-dark);
+    font-weight: 700;
+}
+
+.fc-event-meta,
+.fc-event-summary,
+.fc-lead,
+.fc-detail-meta {
+    color: var(--club-muted);
+}
+
+.fc-status {
+    background: rgba(242, 201, 76, 0.25);
+    border: 1px solid rgba(242, 201, 76, 0.65);
+    border-radius: 999px;
+    color: var(--club-primary-dark);
+    display: inline-flex;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    text-transform: uppercase;
+}
+
+.fc-form-shell,
+.fc-success-panel {
+    background: var(--club-surface);
+    border: 1px solid var(--club-border);
+    border-radius: 8px;
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 32px;
+}
+
+.fc-form-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.fc-form label {
+    color: var(--club-text);
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+    gap: 6px;
+}
+
+.fc-form input,
+.fc-form select,
+.fc-filter select {
+    border: 1px solid var(--club-border);
+    border-radius: 6px;
+    min-height: 42px;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+.fc-consent {
+    align-items: flex-start;
+    flex-direction: row !important;
+    gap: 10px !important;
+    margin: 20px 0 6px;
+}
+
+.fc-consent input {
+    margin-top: 4px;
+    min-height: auto;
+    width: auto;
+}
+
+.fc-alert,
+.fc-field-error {
+    color: var(--club-danger);
+    font-weight: 700;
+}
+
+.fc-alert {
+    background: #fff1f0;
+    border: 1px solid #ffd6d2;
+    border-radius: 6px;
+    margin-bottom: 18px;
+    padding: 12px;
+}
+
+.fc-form-hint {
+    color: var(--club-muted);
+}
+
+.fc-submit {
+    margin-top: 14px;
+}
+
+.fc-empty {
+    background: var(--club-surface);
+    border: 1px dashed var(--club-border);
+    border-radius: 8px;
+    color: var(--club-muted);
+    padding: 24px;
+}
+
+.club-event-hero {
+    background: linear-gradient(180deg, rgba(11, 107, 58, 0.08), rgba(245, 247, 246, 0));
+    padding: 28px 0 10px;
+}
+
+.club-event-hero__frame {
+    align-items: center;
+    background: var(--club-surface);
+    border: 1px solid var(--club-border);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    min-height: 180px;
+    overflow: hidden;
+    padding: 24px;
+}
+
+.club-event-hero__frame img {
+    display: block;
+    height: auto;
+    max-height: min(340px, 42vh);
+    max-width: 100%;
+    object-fit: contain;
+    width: auto;
+}
+
+.club-event-hero__frame .fc-event-detail__fallback {
+    min-height: 180px;
+    width: 100%;
+}
+
+.fc-event-detail__content {
+    padding-top: 24px;
+}
+
+.fc-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 12px 0 18px;
+}
+
+.fc-address,
+.fc-rich-text {
+    margin: 24px 0;
+    max-width: 820px;
+}
+
+@media (max-width: 768px) {
+    .fc-hero {
+        min-height: 360px;
+        padding: 48px 0;
+    }
+
+    .fc-section__header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .fc-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .fc-form-shell,
+    .fc-success-panel {
+        padding: 22px;
+    }
+
+    .club-event-hero {
+        padding: 18px 0 6px;
+    }
+
+    .club-event-hero__frame {
+        min-height: 140px;
+        padding: 16px;
+    }
+
+    .club-event-hero__frame img {
+        max-height: min(260px, 36vh);
+    }
+
+    .fc-event-detail__content {
+        padding-top: 18px;
+    }
+}

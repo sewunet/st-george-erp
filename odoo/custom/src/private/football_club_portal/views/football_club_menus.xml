@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_football_club_root" name="Football Club" sequence="20" groups="football_club_portal.group_football_club_user" web_icon="football_club_portal,static/description/icon.png"/>
+    <menuitem id="menu_football_club_fans" name="Fans" parent="football_club_portal.menu_football_club_root" action="football_club_portal.action_football_club_fans" sequence="10" groups="football_club_portal.group_football_club_user"/>
+    <menuitem id="menu_football_club_events" name="Events" parent="football_club_portal.menu_football_club_root" action="football_club_portal.action_football_club_events" sequence="20" groups="football_club_portal.group_football_club_user"/>
+    <menuitem id="menu_football_club_configuration" name="Configuration" parent="football_club_portal.menu_football_club_root" sequence="90" groups="football_club_portal.group_football_club_manager"/>
+</odoo>
+

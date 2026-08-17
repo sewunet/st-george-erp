@@ -1,0 +1,291 @@
+// Albirru Backend Theme - Button Styles
+// Compatible with Odoo 19
+
+// Base Button Styles
+.btn {
+    border-radius: var(--albirru-radius-md);
+    font-weight: 500;
+    padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+    transition: all var(--albirru-transition-fast);
+    border: 1px solid transparent;
+
+    // Focus state
+    &:focus {
+        box-shadow: 0 0 0 3px rgba(var(--albirru-primary-rgb), 0.2);
+    }
+
+    // Icon spacing. Only when the icon is followed by a label - icon-only
+    // buttons (the kanban card menu, systray toggles, the statusbar arrows)
+    // would otherwise carry a phantom right margin that shifts the glyph
+    // off-centre inside its own button.
+    i, .fa, .oi {
+        margin-right: var(--albirru-spacing-xs);
+
+        &:only-child {
+            margin-right: 0;
+        }
+    }
+}
+
+// Primary Button
+.btn-primary {
+    background: var(--albirru-primary);
+    border-color: var(--albirru-primary);
+    color: var(--albirru-primary-text);
+
+    &:hover {
+        background: color-mix(in srgb, var(--albirru-primary) 85%, black);
+        border-color: color-mix(in srgb, var(--albirru-primary) 85%, black);
+    }
+
+    &:active {
+        background: color-mix(in srgb, var(--albirru-primary) 75%, black);
+    }
+}
+
+// Secondary Button
+.btn-secondary {
+    background: var(--albirru-light-bg-secondary);
+    border-color: var(--albirru-light-border);
+    color: var(--albirru-light-text);
+
+    &:hover {
+        background: var(--albirru-light-hover);
+        border-color: var(--albirru-light-text-muted);
+    }
+}
+
+// Outline Secondary (Themed)
+.btn-outline-secondary {
+    --btn-bg: rgba(var(--albirru-primary-rgb), 0.05);
+    --btn-color: var(--albirru-light-text);
+    --btn-border-color: var(--albirru-light-border);
+    --btn-hover-bg: var(--albirru-primary);
+    --btn-hover-color: var(--albirru-primary-text);
+    --btn-hover-border-color: var(--albirru-primary);
+    --btn-active-bg: rgba(var(--albirru-primary-rgb), 0.2);
+    --btn-active-color: var(--albirru-primary);
+    --btn-active-border-color: var(--albirru-primary);
+
+    background-color: var(--btn-bg);
+    color: var(--btn-color);
+    border-color: var(--btn-border-color);
+
+    &:hover {
+        background-color: var(--btn-hover-bg);
+        color: var(--btn-hover-color);
+        border-color: var(--btn-hover-border-color);
+    }
+
+    &:active, &.active, &.show {
+        background-color: var(--btn-active-bg);
+        color: var(--btn-active-color);
+        border-color: var(--btn-active-border-color);
+    }
+}
+
+// Outline Primary
+.btn-outline-primary {
+    background: transparent;
+    border-color: var(--albirru-primary);
+    color: var(--albirru-primary);
+
+    &:hover {
+        background: var(--albirru-primary);
+        color: var(--albirru-primary-text);
+    }
+}
+
+// Success Button
+.btn-success {
+    background: #27ae60;
+    border-color: #27ae60;
+
+    &:hover {
+        background: #219a52;
+        border-color: #219a52;
+    }
+}
+
+// Danger Button
+.btn-danger {
+    background: #e74c3c;
+    border-color: #e74c3c;
+
+    &:hover {
+        background: #c0392b;
+        border-color: #c0392b;
+    }
+}
+
+// Warning Button
+.btn-warning {
+    background: #f39c12;
+    border-color: #f39c12;
+    color: #ffffff;
+
+    &:hover {
+        background: #d68910;
+        border-color: #d68910;
+    }
+}
+
+// Info Button
+.btn-info {
+    background: #3498db;
+    border-color: #3498db;
+
+    &:hover {
+        background: #2980b9;
+        border-color: #2980b9;
+    }
+}
+
+// Light Button
+.btn-light {
+    background: var(--albirru-light-bg);
+    border-color: var(--albirru-light-border);
+    color: var(--albirru-light-text);
+
+    &:hover {
+        background: var(--albirru-light-hover);
+    }
+}
+
+// Link Button
+.btn-link {
+    color: var(--albirru-primary);
+    text-decoration: none;
+
+    &:hover {
+        color: color-mix(in srgb, var(--albirru-primary) 75%, black);
+        text-decoration: underline;
+    }
+}
+
+// Button Sizes
+.btn-sm {
+    padding: var(--albirru-spacing-xs) var(--albirru-spacing-sm);
+    font-size: var(--albirru-font-sm);
+    border-radius: var(--albirru-radius-sm);
+}
+
+.btn-lg {
+    padding: var(--albirru-spacing-md) var(--albirru-spacing-lg);
+    font-size: var(--albirru-font-lg);
+    border-radius: var(--albirru-radius-lg);
+}
+
+// Button Groups
+.btn-group {
+    border-radius: var(--albirru-radius-md);
+    overflow: hidden;
+
+    .btn {
+        border-radius: 0;
+
+        &:first-child {
+            border-top-left-radius: var(--albirru-radius-md);
+            border-bottom-left-radius: var(--albirru-radius-md);
+        }
+
+        &:last-child {
+            border-top-right-radius: var(--albirru-radius-md);
+            border-bottom-right-radius: var(--albirru-radius-md);
+        }
+    }
+}
+
+// Icon-only Buttons
+.btn-icon {
+    padding: var(--albirru-spacing-sm);
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    i, .fa, .oi {
+        margin: 0;
+    }
+}
+
+// Control Panel Buttons (Odoo specific)
+.o_control_panel {
+    .o_cp_buttons {
+        gap: var(--albirru-spacing-sm);
+
+        .btn {
+            &.btn-primary {
+                box-shadow: var(--albirru-shadow-sm);
+            }
+        }
+    }
+
+    .o_cp_switch_buttons {
+        .btn {
+            padding: var(--albirru-spacing-xs) var(--albirru-spacing-sm);
+            border-color: var(--albirru-light-border);
+
+            &.active {
+                background: var(--albirru-primary);
+                color: var(--albirru-primary-text);
+                border-color: var(--albirru-primary);
+            }
+        }
+    }
+}
+
+// Floating Action Button Style
+.btn-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    box-shadow: var(--albirru-shadow-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    i, .fa, .oi {
+        font-size: var(--albirru-font-lg);
+        margin: 0;
+    }
+
+    &:hover {
+        box-shadow: var(--albirru-shadow-lg);
+        transform: translateY(-2px);
+    }
+}
+
+// Button Style Variants (based on settings)
+html[data-albirru-button="outlined"] {
+    .o_form_view .o_form_statusbar .o_statusbar_buttons,
+    .o_control_panel .o_cp_buttons {
+        .btn-primary {
+            background: transparent;
+            border-color: var(--albirru-primary);
+            color: var(--albirru-primary);
+
+            &:hover {
+                background: var(--albirru-primary);
+                color: var(--albirru-primary-text);
+            }
+        }
+    }
+}
+
+html[data-albirru-button="soft"] {
+    .o_form_view .o_form_statusbar .o_statusbar_buttons,
+    .o_control_panel .o_cp_buttons {
+        .btn-primary {
+            background: rgba(var(--albirru-primary-rgb), 0.15);
+            border-color: transparent;
+            color: var(--albirru-primary);
+
+            &:hover {
+                background: rgba(var(--albirru-primary-rgb), 0.25);
+            }
+        }
+    }
+}

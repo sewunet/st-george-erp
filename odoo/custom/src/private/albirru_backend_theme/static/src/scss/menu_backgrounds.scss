@@ -1,0 +1,109 @@
+// Albirru Backend Theme - Menu Background Images
+// Compatible with Odoo 19
+
+// CSS Variables for menu background
+:root {
+    --albirru-menu-bg-opacity: 0.15;
+}
+
+// Sidebar Background Image (for left sidebar position)
+.o_web_client.albirru-sidebar-left {
+    .albirru-sidebar.has-background-image {
+        // NOTE: position: relative removed to preserve sidebar's position: fixed
+        background: transparent; // Ensure solid background doesn't cover image
+        isolation: isolate; // Ensure stacking context
+
+
+        // Background image layer
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: var(--albirru-menu-bg-image);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: var(--albirru-menu-bg-opacity, 0.15);
+            pointer-events: none;
+            z-index: -1; // Place behind content
+        }
+
+        // Make app groups transparent when background is set
+        .albirru-group-item {
+            background: transparent;
+
+            &:hover {
+                background: rgba(var(--albirru-primary-rgb), 0.1);
+            }
+        }
+    }
+}
+
+// App Drawer Background Image (for top menu position)
+.albirru-app-drawer.has-background-image {
+    position: relative;
+    // background: transparent; // Removed: User wants solid background with image blend
+    isolation: isolate;
+
+    // Background image layer
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: var(--albirru-menu-bg-image);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: var(--albirru-menu-bg-opacity, 0.15);
+        pointer-events: none;
+        z-index: 0; // Place ON TOP of solid background
+    }
+
+    // Ensure content is above the background image
+    >* {
+        position: relative;
+        z-index: 1;
+    }
+
+    // Customize App Groups for better aesthetics over background
+    .albirru-app-group {
+        background: transparent;
+        margin-bottom: 0.5rem;
+
+        .albirru-group-header {
+            // Glassmorphism effect
+            background: rgba(255, 255, 255, 0.1); // Increased transparency (was 0.2)
+            backdrop-filter: blur(8px); // Reduced blur (was 12px)
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-radius: var(--albirru-border-radius, 8px);
+        }
+    }
+
+}
+
+// Dark mode adjustments for backgrounds
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+    .albirru-sidebar.has-background-image::before {
+        opacity: calc(var(--albirru-menu-bg-opacity, 0.15) * 0.5);
+    }
+
+    .albirru-app-drawer.has-background-image {
+        &::before {
+            opacity: calc(var(--albirru-menu-bg-opacity, 0.15) * 0.5);
+        }
+
+        .albirru-app-group .albirru-group-header {
+            background: rgba(30, 30, 30, 0.4); // Dark glassmorphism
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+}

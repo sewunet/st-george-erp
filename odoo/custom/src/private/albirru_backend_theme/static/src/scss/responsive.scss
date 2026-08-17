@@ -1,0 +1,509 @@
+// Albirru Backend Theme - Responsive Styles
+// Compatible with Odoo 19
+
+// Breakpoints now live in variables.scss, which is the first file of the
+// bundle, so that every stylesheet can use them (SCSS variables are only
+// visible to files concatenated after their declaration).
+
+// =============================================
+// Touch Device Optimizations (from spiffy)
+// =============================================
+.o_web_client.o_touch_device {
+
+    .btn,
+    .btn .btn-sm {
+        padding: 4px 10px;
+    }
+
+    .o_statusbar_status .btn {
+        padding: 4px 12px;
+    }
+
+    .o_control_panel .o_control_panel_breadcrumbs {
+        flex-wrap: initial;
+    }
+
+    // App menu sidebar positioning for touch
+    .o_app_menu_sidebar {
+        transform: translateX(-100%);
+        right: unset;
+        left: 100%;
+    }
+}
+
+// =============================================
+// Control Panel Responsive (from spiffy) 
+// =============================================
+
+// Large desktops
+@media (min-width: #{$breakpoint-xl}) {
+    .o_control_panel .o_control_panel_actions {
+        min-width: MIN(640px, 37%);
+    }
+}
+
+// Control panel filter text hide on smaller screens
+@media (max-width: #{$albirru-breakpoint-laptop}) {
+    body.o_web_client {
+        .o_control_panel .o_cp_bottom .o_cp_bottom_right {
+
+            .o_filter_menu,
+            .o_group_by_menu,
+            .o_favorite_menu {
+                .o_dropdown_title {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+// Medium screens - stack control panel
+@media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-xl-max}) {
+    .o_control_panel {
+        .o_cp_bottom {
+            display: block;
+
+            .o_cp_bottom_left,
+            .o_cp_bottom_right {
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Tablets and small desktops
+@media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-xxl-max}) {
+    .o_control_panel .o_cp_bottom {
+        .o_cp_bottom_left {
+            .btn-group {
+                gap: 8px;
+            }
+
+            .o_cp_buttons {
+                .o_list_selection_box {
+                    border: 0;
+                    padding: 0.6rem 1rem;
+                    margin: 0;
+                }
+
+                gap: 8px;
+            }
+
+            .o_cp_action_menus {
+                .dropdown-toggle {
+                    margin-right: 0;
+                }
+
+                margin-left: unset;
+                padding: 0;
+            }
+        }
+
+        .o_cp_bottom_right {
+            >.o_cp_pager {
+                margin: 0;
+                padding: 0;
+            }
+
+            .btn-group {
+                justify-content: end;
+            }
+
+            row-gap: 8px;
+        }
+
+        align-items: start;
+    }
+}
+
+// =============================================
+// Extra Small devices (phones, less than 576px)
+// =============================================
+@media (max-width: #{$breakpoint-sm-max}) {
+
+    // Navbar
+    .o_main_navbar {
+        padding: var(--albirru-spacing-xs) var(--albirru-spacing-sm);
+
+        .o_menu_brand {
+            font-size: var(--albirru-font-sm);
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .o_menu_sections {
+            display: none;
+        }
+    }
+
+    // Control Panel
+    .o_control_panel {
+        flex-wrap: wrap;
+        padding: 5px 15px;
+
+        .o_cp_top {
+            flex-wrap: wrap;
+            gap: var(--albirru-spacing-sm);
+        }
+
+        .o_cp_top_left,
+        .o_cp_top_right {
+            flex: 1 1 100%;
+        }
+
+        .o_cp_top_left {
+            flex-basis: 80%;
+        }
+
+        .o_cp_top_right {
+            flex-basis: 20%;
+        }
+
+        .o_searchview.o_searchview_quick {
+            display: flex;
+            padding-right: 5px;
+            flex: 1 1 auto;
+            align-items: center;
+
+            .o_searchview_input_container {
+                margin-right: auto;
+            }
+        }
+
+        .o_cp_bottom {
+            gap: 8px;
+
+            .o_cp_bottom_left .o_cp_buttons.o_list_buttons.o-editing {
+                .open_wizard_action {
+                    padding: 8px;
+                }
+            }
+
+            .o_cp_bottom_right .o_cp_switch_buttons .dropdown-menu.show {
+                display: flex;
+                font-size: 12px;
+                justify-content: end;
+            }
+        }
+
+        .o_cp_buttons {
+            width: 100%;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: var(--albirru-spacing-xs);
+
+            .btn {
+                flex: 1;
+                min-width: 80px;
+            }
+        }
+
+        .o_cp_searchview {
+            width: 100%;
+            order: -1;
+        }
+    }
+
+    // Form View
+    .o_form_view {
+        padding: 0;
+
+        .o_form_sheet_bg {
+            padding: var(--albirru-spacing-sm);
+
+            .o_form_sheet {
+                padding: var(--albirru-spacing-md);
+                margin: 0;
+                margin-top: 15px;
+                min-width: unset;
+            }
+        }
+
+        .o_inner_group {
+            .o_group_col_6 {
+                width: 100%;
+                padding: 0;
+            }
+        }
+
+        // Label width constraint on mobile (from spiffy)
+        &.o_form_readonly .o_group table.o_group.o_inner_group tbody tr {
+            flex-direction: row;
+
+            td {
+                width: unset;
+
+                &.o_td_label {
+                    flex: unset;
+                    max-width: 130px;
+                    min-width: 130px;
+
+                    label {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        word-break: break-all;
+                        max-width: 120px;
+                    }
+                }
+            }
+        }
+
+        .o_group table.o_group.o_inner_group {
+            width: 100%;
+        }
+
+        // Notebook tabs horizontal scroll (from spiffy)
+        .o_notebook .o_notebook_headers .nav-tabs {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            .nav-link {
+                width: max-content;
+            }
+
+            &::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+            }
+        }
+
+        .o_notebook .tab-content>.tab-pane {
+            padding: 9px 0;
+        }
+
+        // Chatter always bottom on mobile
+        .o-mail-Form-chatter,
+        .o_FormRenderer_chatterContainer {
+            width: 100%;
+            border-left: none;
+            border-top: 1px solid var(--albirru-light-border);
+            padding: 15px 0;
+        }
+    }
+
+    // List View
+    .o_list_view {
+        .o_list_table {
+            font-size: var(--albirru-font-sm);
+
+            thead th,
+            tbody td {
+                padding: var(--albirru-spacing-xs) var(--albirru-spacing-sm);
+            }
+        }
+    }
+
+    // Kanban View
+    .o_kanban_view {
+        padding: var(--albirru-spacing-sm);
+
+        .o_kanban_mobile .oe_kanban_card {
+            margin-bottom: 8px;
+        }
+    }
+
+    // Full-width columns on phones. Core sizes the column from
+    // --KanbanGroup-width (90% on small screens) at
+    // `.o_kanban_renderer.o_kanban_grouped .o_kanban_group:not(.o_column_folded)`,
+    // and kanban_view.scss pins 300px at that same depth, so this has to match
+    // it to win - a shallower `.o_kanban_view .o_kanban_group` loses to both.
+    .o_kanban_renderer.o_kanban_grouped .o_kanban_group:not(.o_column_folded) {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    // Modal
+    .modal {
+        .modal-dialog {
+            margin: var(--albirru-spacing-sm);
+            max-width: calc(100% - #{var(--albirru-spacing-md)});
+        }
+    }
+
+    // Discuss
+    .o_Discuss {
+        padding: 0 15px;
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: $breakpoint-sm) and (max-width: #{$breakpoint-md-max}) {
+    .o_form_view {
+        .o_inner_group {
+            .o_group_col_6 {
+                width: 100%;
+            }
+        }
+    }
+
+    // Same depth as core and kanban_view.scss - see the note in the phone
+    // breakpoint above.
+    .o_kanban_renderer.o_kanban_grouped .o_kanban_group:not(.o_column_folded) {
+        min-width: 280px;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: $breakpoint-md) and (max-width: #{$breakpoint-lg-max}) {
+
+    // Control panel adjustments
+    .o_control_panel {
+
+        .o_cp_top_left,
+        .o_cp_top_right {
+            flex: 1 1 100%;
+        }
+
+        .o_cp_top_left {
+            flex-basis: 50%;
+        }
+
+        .o_cp_top_right {
+            flex-basis: 50%;
+        }
+
+        .o_searchview.o_searchview_quick {
+            display: flex;
+            padding-right: 5px;
+            flex: 1 1 auto;
+            align-items: center;
+
+            .o_searchview_input_container {
+                margin-right: auto;
+            }
+        }
+    }
+
+    // Sidebar
+    .o_web_client.albirru-sidebar-left {
+        .albirru-sidebar {
+            width: var(--albirru-sidebar-collapsed-width);
+            min-width: var(--albirru-sidebar-collapsed-width);
+
+            &:hover {
+                width: var(--albirru-sidebar-width);
+            }
+        }
+    }
+
+    .o_form_view {
+        .o_inner_group {
+            .o_group_col_6 {
+                width: 50%;
+            }
+        }
+
+        .o-mail-Form-chatter {
+            padding: 15px 0;
+        }
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: $breakpoint-lg) {
+
+    // Full sidebar on large screens
+    .o_web_client.albirru-sidebar-left:not(.albirru-sidebar-collapsed) {
+        .albirru-sidebar {
+            width: var(--albirru-sidebar-width);
+        }
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: $breakpoint-xl) {
+    .o_form_view:not(.o_xxl_form_view) {
+        .o_form_sheet_bg {
+            .o_form_sheet {
+                max-width: 1140px;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
+// =============================================
+// Print Styles
+// =============================================
+@media print {
+
+    .o_main_navbar,
+    .o_menu_systray,
+    .o_cp_buttons,
+    .albirru-sidebar,
+    .o_FormRenderer_chatterContainer {
+        display: none;
+    }
+
+    .o_form_view {
+        .o_form_sheet_bg {
+            padding: 0;
+            background: white;
+
+            .o_form_sheet {
+                box-shadow: none;
+                border: none;
+                max-width: 100%;
+            }
+        }
+    }
+
+    .o_list_view {
+        .o_list_table {
+            font-size: 10pt;
+        }
+    }
+}
+
+// =============================================
+// Touch Device Optimizations
+// =============================================
+@media (hover: none) and (pointer: coarse) {
+
+    // Reasonable touch targets (not too large)
+    .btn {
+        min-height: 38px;
+        min-width: 38px;
+    }
+
+    .dropdown-item {
+        padding: var(--albirru-spacing-md);
+    }
+
+    .o_list_view {
+        .o_list_table tbody tr td {
+            min-height: 44px;
+        }
+    }
+
+    // Disable hover effects on touch
+    .o_kanban_record:hover {
+        transform: none;
+    }
+}
+
+// =============================================
+// High DPI / Retina displays
+// =============================================
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    :root {
+        --albirru-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --albirru-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+        --albirru-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+}
+
+// =============================================
+// Reduced motion preference
+// =============================================
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
+    }
+}

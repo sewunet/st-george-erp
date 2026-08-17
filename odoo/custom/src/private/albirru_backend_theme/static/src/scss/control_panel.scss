@@ -1,0 +1,430 @@
+// Albirru Backend Theme - Control Panel & Search View Styles
+// Compatible with Odoo 19
+
+// =============================================
+// Explicit Light Mode (when dark mode is NOT active)
+// =============================================
+html:not(.albirru-dark-mode):not([data-albirru-dark="true"]) {
+    .o_searchview {
+        background-color: #ffffff;
+        border-color: #dee2e6;
+
+        .o_searchview_input_container {
+            background-color: transparent;
+
+            input,
+            .o_searchview_input {
+                background-color: transparent;
+                color: #212529;
+
+                &::placeholder {
+                    color: #6c757d;
+                }
+            }
+        }
+
+        .o_searchview_dropdown_toggler {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+            color: var(--albirru-primary);
+        }
+
+        .o_searchview_facet {
+            background-color: rgba(var(--albirru-primary-rgb), 0.1);
+            border-color: rgba(var(--albirru-primary-rgb), 0.2);
+            color: #212529;
+
+            .o_facet_values,
+            .o_facet_value {
+                color: #212529;
+            }
+
+            .o_facet_remove {
+                color: #6c757d;
+
+                &:hover {
+                    color: #dc3545;
+                }
+            }
+        }
+    }
+
+    .o_control_panel {
+        background-color: #ffffff;
+        border-bottom-color: #dee2e6;
+    }
+
+    .o_control_panel_actions {
+
+        button,
+        .btn {
+            color: #212529;
+
+            &:hover {
+                background-color: #e9ecef;
+            }
+        }
+
+        .btn-primary {
+            color: #ffffff;
+            background-color: var(--albirru-primary);
+        }
+    }
+
+    // Search Bar Menu Popover (Filters, Group By, Favorites)
+    .o_popover,
+    .o_search_bar_menu {
+        background-color: #ffffff;
+        border-color: #dee2e6;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+        // Inner dropdown containers - these need explicit light mode styling
+        .o_dropdown_container,
+        .o_filter_menu,
+        .o_group_by_menu,
+        .o_favorite_menu,
+        >div {
+            background-color: #ffffff;
+            color: #212529;
+        }
+
+        // Section headers (Filters, Group By, Favorites)
+        .o_dropdown_title,
+        .fw-bolder {
+            color: #212529;
+        }
+
+        // Menu items
+        .o_menu_item,
+        .o-dropdown--menu-item,
+        .dropdown-item,
+        .o-dropdown-item {
+            color: #212529;
+            background-color: transparent;
+
+            &:hover,
+            &:focus {
+                background-color: #e9ecef;
+            }
+
+            // Icons
+            i,
+            .fa,
+            .oi {
+                color: var(--albirru-primary);
+            }
+        }
+
+        // Custom filter accordion
+        .o_accordion {
+            .o_accordion_toggle {
+                color: #212529;
+            }
+
+            .o_accordion_values {
+                background-color: #f8f9fa;
+            }
+        }
+
+        // Toggle switches
+        .form-switch {
+            .form-check-input {
+                &:not(:checked) {
+                    background-color: #e9ecef;
+                    border-color: #ced4da;
+                }
+            }
+        }
+
+        // Links
+        a {
+            color: var(--albirru-primary);
+        }
+
+        // Separator lines
+        .border-start,
+        .border-end {
+            border-color: #dee2e6;
+        }
+    }
+}
+
+
+// =============================================
+// Base Styles
+// =============================================
+.o_searchview {
+    border: 1px solid var(--albirru-light-border);
+    border-radius: var(--albirru-radius-md);
+    background-color: var(--albirru-light-bg-secondary);
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    transition: all var(--albirru-transition-fast);
+    box-shadow: var(--albirru-shadow-sm), inset 0 1px 2px rgba(0, 0, 0, 0.03);
+    min-height: 34px;
+
+    &:hover {
+        border-color: #bbc0c4; // Slightly darker than default border
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    &:focus-within {
+        border-color: var(--albirru-primary);
+        background-color: var(--albirru-light-bg-secondary);
+        box-shadow: 0 0 0 3px rgba(var(--albirru-primary-rgb), 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .o_searchview_input_container {
+        border: none;
+        padding-left: 12px;
+
+        input {
+            &::placeholder {
+                color: var(--albirru-light-text-muted);
+                opacity: 0.7;
+            }
+        }
+    }
+
+    .o_searchview_dropdown_toggler {
+        background-color: var(--albirru-light-bg);
+        color: var(--albirru-primary);
+        border: 1px solid var(--albirru-light-border);
+        border-radius: var(--albirru-radius-sm);
+        margin-left: 4px;
+        margin-right: 2px;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--albirru-transition-fast);
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+        &:hover {
+            background-color: var(--albirru-primary);
+            color: var(--albirru-primary-text);
+            border-color: var(--albirru-primary);
+            transform: scale(1.05);
+            box-shadow: var(--albirru-shadow-sm);
+        }
+
+        // Odoo 19 caret icon
+        &::after {
+            border-top-width: 5px;
+            border-right-width: 4px;
+            border-left-width: 4px;
+            border-top-color: currentColor;
+        }
+    }
+
+    .o_searchview_icon {
+        color: var(--albirru-primary);
+        margin-left: 10px;
+        font-size: 16px;
+        opacity: 0.6;
+        transition: opacity var(--albirru-transition-fast);
+    }
+
+    &:hover,
+    &:focus-within {
+        .o_searchview_icon {
+            opacity: 1;
+        }
+    }
+
+    // Search Facets
+    .o_searchview_facet {
+        background-color: rgba(var(--albirru-primary-rgb), 0.1);
+        border: 1px solid rgba(var(--albirru-primary-rgb), 0.2);
+        border-radius: 4px;
+        margin-right: 4px;
+
+        .o_searchview_facet_label {
+            background-color: var(--albirru-primary);
+            color: var(--albirru-primary-text);
+            border-radius: 3px 0 0 3px;
+            padding: 0 6px;
+        }
+
+        .o_facet_remove {
+            color: var(--albirru-primary);
+
+            &:hover {
+                color: #ff0000;
+            }
+        }
+    }
+}
+
+// Dark Mode Support
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+    .o_searchview {
+        background-color: var(--albirru-dark-bg-secondary);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.2);
+
+        &:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        &:focus-within {
+            border-color: var(--albirru-primary);
+            background-color: var(--albirru-dark-bg-secondary);
+            box-shadow: 0 0 0 3px rgba(var(--albirru-primary-rgb), 0.3), 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .o_searchview_input_container input {
+            color: var(--albirru-dark-text);
+
+            &::placeholder {
+                color: var(--albirru-dark-text-muted);
+                opacity: 0.6;
+            }
+        }
+
+        .o_searchview_dropdown_toggler {
+            background-color: var(--albirru-dark-bg);
+            border-color: var(--albirru-dark-border);
+            color: var(--albirru-primary);
+            border-radius: var(--albirru-radius-sm);
+
+            &:hover {
+                background-color: var(--albirru-primary);
+                color: var(--albirru-primary-text);
+                border-color: var(--albirru-primary);
+            }
+        }
+
+        .o_searchview_facet {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+
+            .o_facet_remove {
+                color: var(--albirru-dark-text);
+            }
+        }
+    }
+
+    // Dark mode autocomplete dropdown
+    .o_searchview_autocomplete {
+        background-color: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+        .o-dropdown-item,
+        .dropdown-item {
+            color: var(--albirru-dark-text);
+            background-color: transparent;
+
+            &:hover,
+            &:focus {
+                background-color: var(--albirru-dark-hover);
+                color: var(--albirru-dark-text);
+            }
+
+            &.active,
+            &:active {
+                background-color: var(--albirru-primary);
+                color: #ffffff;
+            }
+        }
+
+        .o_menu_item,
+        .o-dropdown--menu-item {
+            color: var(--albirru-dark-text);
+        }
+
+        // Group headers in autocomplete
+        .o_dropdown_header,
+        .dropdown-header {
+            color: var(--albirru-dark-text-muted);
+            border-bottom-color: var(--albirru-dark-border);
+        }
+    }
+
+    // Dropdown menu general styling for dark mode
+    .dropdown-menu {
+        background-color: var(--albirru-dark-bg-secondary);
+        border-color: var(--albirru-dark-border);
+
+        .dropdown-item {
+            color: var(--albirru-dark-text);
+
+            &:hover,
+            &:focus {
+                background-color: var(--albirru-dark-hover);
+            }
+        }
+    }
+}
+
+// =============================================
+// Search Autocomplete Dropdown - Base & Light Mode
+// =============================================
+.o_searchview_autocomplete {
+    background-color: var(--albirru-light-bg-secondary);
+    border: 1px solid var(--albirru-light-border);
+    border-radius: var(--albirru-radius-md);
+    box-shadow: var(--albirru-shadow-lg);
+    padding: 4px 0;
+
+    .o-dropdown-item,
+    .dropdown-item {
+        color: var(--albirru-light-text);
+        padding: 8px 16px;
+        transition: background-color 0.15s ease;
+
+        &:hover,
+        &:focus {
+            background-color: var(--albirru-light-hover);
+            color: var(--albirru-light-text);
+        }
+
+        &.active,
+        &:active {
+            background-color: var(--albirru-primary);
+            color: #ffffff;
+        }
+
+        a {
+            color: inherit;
+        }
+    }
+
+    .o_dropdown_header,
+    .dropdown-header {
+        color: var(--albirru-light-text-muted);
+        font-weight: 600;
+        padding: 6px 16px;
+        border-bottom: 1px solid var(--albirru-light-border);
+    }
+}
+
+// Explicit Light Mode for autocomplete
+html:not(.albirru-dark-mode):not([data-albirru-dark="true"]) {
+    .o_searchview_autocomplete {
+        background-color: #ffffff;
+        border-color: #dee2e6;
+
+        .o-dropdown-item,
+        .dropdown-item {
+            color: #212529;
+
+            &:hover,
+            &:focus {
+                background-color: #e9ecef;
+            }
+        }
+
+        .o_dropdown_header,
+        .dropdown-header {
+            color: #6c757d;
+        }
+    }
+}

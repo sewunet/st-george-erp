@@ -1,0 +1,252 @@
+// Albirru Backend Theme - Navbar Styles
+// Compatible with Odoo 19
+
+// =============================================
+// Override Odoo 19 CSS Variables
+// =============================================
+// Odoo uses these variables for theming, we need to set them
+// based on our color scheme selection
+:root {
+    // NavBar variables - Odoo 19 core
+    --NavBar-backgroundColor: var(--albirru-primary);
+    --NavBar-entry-backgroundColor: transparent;
+    --NavBar-entry-hover-backgroundColor: rgba(255, 255, 255, 0.15);
+    --NavBar-entry-active-backgroundColor: rgba(255, 255, 255, 0.2);
+    --NavBar-color: var(--albirru-primary-text);
+    --NavBar-entry-color: var(--albirru-primary-text);
+
+    // Additional Odoo theme variables
+    --o-navbar-bg: var(--albirru-primary);
+    --o-navbar-color: var(--albirru-primary-text);
+    --o-menu-bg: var(--albirru-primary);
+    --o-menu-color: var(--albirru-primary-text);
+}
+
+// Apply to web client scope as well
+.o_web_client {
+    --NavBar-backgroundColor: var(--albirru-primary);
+    --NavBar-entry-backgroundColor: transparent;
+    --NavBar-entry-hover-backgroundColor: rgba(255, 255, 255, 0.15);
+    --NavBar-color: var(--albirru-primary-text);
+    --NavBar-entry-color: var(--albirru-primary-text);
+    --o-navbar-bg: var(--albirru-primary);
+    --o-menu-color: var(--albirru-primary-text);
+    --primary: var(--albirru-primary);
+
+    // Main Navbar
+    .o_main_navbar {
+        background: var(--albirru-primary);
+        background-color: var(--albirru-primary);
+        height: var(--albirru-navbar-height);
+        box-shadow: var(--albirru-shadow-sm);
+        transition: background var(--albirru-transition-normal);
+
+        // All navbar text/icons - EXCLUDE dropdown menus
+        // This prevents navbar white text from affecting dropdown content
+        >.o_menu_brand,
+        >.o_menu_sections>*:not(.dropdown-menu),
+        >.o_menu_systray>*:not(.dropdown):not(.dropdown-menu),
+        >.o_navbar_apps_menu>.dropdown-toggle,
+        .o_menu_sections>.dropdown>.dropdown-toggle,
+        .o_menu_sections>.o_nav_entry>a,
+        .o_menu_systray > div > .dropdown-toggle,
+        .o_menu_systray > div > button,
+        .o_menu_systray .o_nav_entry {
+            color: var(--albirru-navbar-text);
+        }
+
+        // Reset color for dropdown menu content (not navbar)
+        .dropdown-menu {
+            z-index: 1050;
+        }
+
+        .dropdown-menu,
+        .dropdown-menu * {
+            color: inherit;
+        }
+
+        // Apps Menu Button
+        .o_navbar_apps_menu {
+            .dropdown-toggle {
+                background: transparent;
+                border: none;
+                color: var(--albirru-navbar-text);
+                padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+                border-radius: var(--albirru-radius-md);
+                transition: background var(--albirru-transition-fast);
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.15);
+                }
+
+                .oi-apps {
+                    font-size: var(--albirru-font-lg);
+                }
+
+                .albirru-navbar-logo {
+                    max-height: 32px;
+                    max-width: 150px;
+                    width: auto;
+                    object-fit: contain;
+                }
+            }
+        }
+
+        // App Brand Name
+        .o_menu_brand {
+            font-weight: 600;
+            font-size: var(--albirru-font-md);
+            padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+            border-radius: var(--albirru-radius-md);
+            transition: background var(--albirru-transition-fast);
+            background: transparent;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+                text-decoration: none;
+            }
+        }
+
+        // Section Menu Items - Odoo uses these specific selectors
+        .o_menu_sections {
+
+            .o_nav_entry,
+            .dropdown-toggle {
+                background: transparent;
+                border: 1px solid transparent;
+                color: var(--albirru-navbar-text);
+                font-weight: 500;
+                padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+                border-radius: var(--albirru-radius-md);
+                transition: background var(--albirru-transition-fast);
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.15);
+                    text-decoration: none;
+                }
+            }
+
+            >.dropdown,
+            >.o_nav_entry {
+
+                >button,
+                >a {
+                    color: var(--albirru-navbar-text);
+                    background: transparent;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.15);
+                    }
+                }
+            }
+        }
+
+        // Systray
+        .o_menu_systray {
+            gap: var(--albirru-spacing-xs);
+
+            >div {
+                display: flex;
+                align-items: center;
+            }
+
+            .dropdown-toggle,
+            > div > button,
+            .o_nav_entry {
+                background: transparent;
+                border: none;
+                color: var(--albirru-navbar-text);
+                padding: var(--albirru-spacing-sm);
+                border-radius: var(--albirru-radius-md);
+                transition: background var(--albirru-transition-fast);
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.15);
+                }
+            }
+        }
+    }
+}
+
+// Apps Dropdown Menu
+.o_navbar_apps_menu .dropdown-menu {
+    padding: var(--albirru-spacing-md);
+    border-radius: var(--albirru-radius-lg);
+    box-shadow: var(--albirru-shadow-lg);
+    border: 1px solid var(--albirru-light-border);
+    min-width: 280px;
+
+    .o_app {
+        display: flex;
+        align-items: center;
+        padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+        border-radius: var(--albirru-radius-md);
+        transition: background var(--albirru-transition-fast);
+        margin-bottom: var(--albirru-spacing-xs);
+
+        &:hover {
+            background: var(--albirru-light-hover);
+            text-decoration: none;
+        }
+
+        &.focus {
+            background: var(--albirru-primary);
+            color: var(--albirru-primary-text);
+        }
+    }
+}
+
+// Sections Dropdown
+.o_menu_sections .dropdown-menu {
+    border-radius: var(--albirru-radius-lg);
+    box-shadow: var(--albirru-shadow-md);
+    border: 1px solid var(--albirru-light-border);
+    padding: var(--albirru-spacing-sm);
+
+    .dropdown-item {
+        border-radius: var(--albirru-radius-sm);
+        padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+        transition: background var(--albirru-transition-fast);
+
+        &:hover {
+            background: var(--albirru-light-hover);
+        }
+    }
+
+    .dropdown-header {
+        font-weight: 600;
+        color: var(--albirru-light-text-muted);
+        font-size: var(--albirru-font-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+}
+
+// User Menu Dropdown
+.o_user_menu .dropdown-menu {
+    border-radius: var(--albirru-radius-lg);
+    box-shadow: var(--albirru-shadow-lg);
+    min-width: 220px;
+    padding: var(--albirru-spacing-sm);
+
+    .dropdown-item {
+        border-radius: var(--albirru-radius-sm);
+        padding: var(--albirru-spacing-sm) var(--albirru-spacing-md);
+
+        &:hover {
+            background: var(--albirru-light-hover);
+        }
+
+        i,
+        .fa,
+        .oi {
+            width: 20px;
+            margin-right: var(--albirru-spacing-sm);
+            text-align: center;
+        }
+    }
+
+    .dropdown-divider {
+        margin: var(--albirru-spacing-sm) 0;
+    }
+}

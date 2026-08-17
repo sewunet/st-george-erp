@@ -1,0 +1,32 @@
+// Albirru Backend Theme - Theme Switching Transitions
+// Compatible with Odoo 19
+//
+// Applies in BOTH light and dark mode, so it lives in web.assets_backend
+// rather than in the dark-only bundle.
+
+// =============================================
+// Theme Switching Transitions (applies to ALL modes)
+// =============================================
+html {
+
+    // Smooth color transitions when switching themes
+    body,
+    .o_web_client,
+    .o_action_manager,
+    .o_content,
+    .o_form_view,
+    .o_list_view,
+    .o_kanban_view,
+    .modal-content,
+    .dropdown-menu,
+    .card,
+    input,
+    textarea,
+    select,
+    button {
+        transition: background-color 0.3s ease,
+            border-color 0.3s ease,
+            color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+}

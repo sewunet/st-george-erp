@@ -1,0 +1,297 @@
+// Albirru Backend Theme - Loader Styles
+// Compatible with Odoo 19
+
+// Loader Container - Simple bar style
+// Loader Container - Base styles (Resets & Positioning)
+.o_loading_indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+
+    // Hide any text content inside loader
+    font-size: 0;
+    color: transparent;
+    pointer-events: none;
+}
+
+// Progress Bar Loader (Centered + Explicit + Default Fallback)
+html[data-albirru-loader="bar"],
+html:not([data-albirru-loader]) {
+    .o_loading_indicator {
+        // Centered Container (Track)
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        right: auto;
+        width: 200px;
+        height: 6px;
+        transform: translate(-50%, -50%);
+        background: rgba(var(--albirru-primary-rgb), 0.2);
+        border-radius: 4px;
+        overflow: hidden;
+
+        // Disable animation on container
+        animation: none;
+
+        // Animated Fill
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: var(--albirru-primary);
+            animation: albirruProgress 1.5s ease-in-out infinite;
+        }
+    }
+}
+
+// Spinner Loader (when data-albirru-loader="spinner")
+html[data-albirru-loader="spinner"] {
+    .o_loading_indicator {
+        height: 0; // Hide container
+        background: transparent;
+
+        // Add centered spinner
+        &::after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--albirru-light-border);
+            border-top-color: var(--albirru-primary);
+            border-radius: 50%;
+            animation: albirruSpin 0.8s linear infinite;
+        }
+    }
+}
+
+// Dots Loader - Using box-shadow for 3 dots effect
+html[data-albirru-loader="dots"] {
+    .o_loading_indicator {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        right: auto;
+        width: 10px;
+        height: 10px;
+        transform: translate(-50%, -50%);
+        background: var(--albirru-primary);
+        border-radius: 50%;
+        animation: albirruDot1 0.6s ease-in-out infinite;
+
+        // Create 2 additional dots using box-shadows
+        box-shadow:
+            24px 0 0 var(--albirru-primary),
+            -24px 0 0 var(--albirru-primary);
+    }
+}
+
+@keyframes albirruDot1 {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow:
+            24px 0 0 var(--albirru-primary),
+            -24px 0 0 var(--albirru-primary);
+    }
+
+    33% {
+        transform: translate(-50%, -50%) scale(1.3);
+        box-shadow:
+            24px 0 0 var(--albirru-primary),
+            -24px 0 0 rgba(var(--albirru-primary-rgb), 0.5);
+    }
+
+    66% {
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow:
+            24px 0 0 rgba(var(--albirru-primary-rgb), 0.5),
+            -24px 0 0 var(--albirru-primary);
+    }
+}
+
+// Custom Loader Overlay
+.albirru-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--albirru-transition-normal);
+
+    &.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+// Spinner Component
+.albirru-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--albirru-light-border);
+    border-top-color: var(--albirru-primary);
+    border-radius: 50%;
+    animation: albirruSpin 0.8s linear infinite;
+}
+
+// Dots Component
+.albirru-dots {
+    display: flex;
+    gap: 8px;
+
+    span {
+        width: 12px;
+        height: 12px;
+        background: var(--albirru-primary);
+        border-radius: 50%;
+        animation: albirruBounce 0.6s ease-in-out infinite;
+
+        &:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        &:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+    }
+}
+
+// Pulse Component
+.albirru-pulse {
+    width: 48px;
+    height: 48px;
+    background: var(--albirru-primary);
+    border-radius: 50%;
+    animation: albirruPulse 1s ease-in-out infinite;
+}
+
+// Block UI Loader
+.o_blockUI {
+    .albirru-loader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--albirru-spacing-md);
+
+        .loader-text {
+            font-size: var(--albirru-font-sm);
+            color: var(--albirru-light-text-muted);
+        }
+    }
+}
+
+// Animations
+@keyframes albirruSpin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes albirruProgress {
+    0% {
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+
+    50% {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    50.1% {
+        transform: scaleX(1);
+        transform-origin: right;
+    }
+
+    100% {
+        transform: scaleX(0);
+        transform-origin: right;
+    }
+}
+
+@keyframes albirruBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+@keyframes albirruPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+}
+
+// Dark mode adjustments
+html.albirru-dark-mode,
+html[data-albirru-dark="true"] {
+    .albirru-loader-overlay {
+        background: rgba(26, 26, 46, 0.95);
+    }
+
+    .albirru-spinner {
+        border-color: var(--albirru-dark-border);
+        border-top-color: var(--albirru-primary);
+    }
+}
+
+// RPC Loading state
+.o_rpc_loading {
+    .o_loading_indicator {
+        display: block;
+    }
+}
+
+// View loading
+.o_view_controller {
+    &.o_view_loading {
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+    }
+}

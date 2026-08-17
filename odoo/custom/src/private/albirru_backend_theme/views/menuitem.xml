@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Albirru Backend Theme - App Group Views -->
+<!-- Compatible with Odoo 19 -->
+<odoo>
+    <data>
+
+        <record id="action_backend_theme_config_settings" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'module' : 'albirru_backend_theme', 'bin_size': False}</field>
+        </record>
+
+        <!-- Menu Item under Settings - Backend Theme -->
+        <menuitem id="albirru_theme_config_root"
+                  name="Backend Theme"
+                  parent="base.menu_administration"
+                  sequence="100"
+                  groups="base.group_system"/>
+
+        <!-- Menu General Settings -->
+        <menuitem id="albirru_theme_config_general_settings"
+                  name="Settings" parent="albirru_theme_config_root"
+                  sequence="0"
+                  action="action_backend_theme_config_settings"/>
+
+        <!-- Menu Theme Settings -->
+        <menuitem id="albirru_theme_config_menu"
+                  name="Theme Settings"
+                  parent="albirru_theme_config_root"
+                  action="albirru_theme_config_server_action"
+                  sequence="10"/>
+
+        <!-- Menu App Groups -->
+        <menuitem id="menu_albirru_app_groups"
+                  name="App Groups"
+                  parent="albirru_theme_config_root"
+                  action="action_albirru_app_group"
+                  sequence="20"/>
+
+
+    </data>
+</odoo>

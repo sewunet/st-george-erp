@@ -1,0 +1,512 @@
+// Albirru Backend Theme - Login Page Styles
+// Compatible with Odoo 19 (Configurable Styles)
+
+// =============================================
+// Variables & Mixins
+// =============================================
+// NOTE: Do NOT define $primary here - it overrides Bootstrap's $primary
+// and breaks SCSS color functions (darken, rgba, etc.) during compilation.
+// Use CSS custom properties directly in rules instead.
+$albirru-radius: var(--albirru-radius-xl, 16px);
+$albirru-font-family: var(--albirru-font-family, 'Inter', sans-serif);
+
+// =============================================
+// Global Reset & Base
+// =============================================
+body.oe_login {
+    background: transparent; // Handled by overlays or split view
+    min-height: 100vh;
+    font-family: $albirru-font-family;
+
+    // Hide standard footer/powered by if needed, or style it
+    .o_footer {
+        display: none;
+    }
+}
+
+// =============================================
+// Shared Form Styles (All Modes)
+// =============================================
+.oe_login_form {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    max-width: 600px; // Further increased width for better presence
+    margin: 0 auto;
+    width: 100%;
+
+    // Form Title
+    .text-center {
+        margin-bottom: 24px;
+    }
+
+    // Inputs
+    .form-control {
+        height: 52px; // Classic "Premium" height
+        padding: 12px 18px;
+        font-size: 16px; // Readable font size
+        border-radius: 12px;
+        border: 2px solid rgba(0, 0, 0, 0.08); // Subtle border
+        background: rgba(255, 255, 255, 0.9);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        color: #1f2937;
+
+        &::placeholder {
+            color: #9ca3af;
+            font-weight: 400;
+        }
+
+        &:focus {
+            background: #ffffff;
+            border-color: var(--albirru-primary, #714B67);
+            box-shadow: 0 0 0 4px rgba(var(--albirru-primary-rgb, 113, 75, 103), 0.15);
+            transform: translateY(-1px);
+        }
+    }
+
+    // Input Icons (if any)
+    .input-group-text {
+        border-radius: 12px;
+        border: 2px solid rgba(0, 0, 0, 0.08);
+        background: rgba(255, 255, 255, 0.9);
+        color: #6b7280;
+    }
+
+    // Primary Button - "Premium SaaS" Style
+    .btn-primary {
+        height: 52px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--albirru-primary, #714B67) 0%, color-mix(in srgb, var(--albirru-primary, #714B67) 85%, black) 100%);
+        border: none;
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: 0.3px;
+        box-shadow: 0 4px 14px rgba(var(--albirru-primary-rgb, 113, 75, 103), 0.35), 0 2px 6px rgba(var(--albirru-primary-rgb, 113, 75, 103), 0.2);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+        margin-top: 24px;
+        position: relative;
+        overflow: hidden;
+
+        // Shine effect
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(var(--albirru-primary-rgb, 113, 75, 103), 0.45), 0 4px 10px rgba(var(--albirru-primary-rgb, 113, 75, 103), 0.3);
+
+            &::before {
+                left: 100%;
+            }
+        }
+
+        &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(var(--albirru-primary-rgb, 113, 75, 103), 0.3);
+        }
+    }
+
+    // Secondary Buttons (OAuth)
+    .btn-secondary {
+        border-radius: 12px;
+        height: 48px;
+        font-weight: 500;
+        background: #fff;
+        border: 2px solid #e5e7eb;
+        color: #374151;
+        transition: all 0.2s;
+
+        &:hover {
+            background: #f9fafb;
+            border-color: #d1d5db;
+            color: #111827;
+        }
+    }
+
+    // Labels & Links
+    label {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        color: #374151;
+        display: block; // Ensure it takes full width
+    }
+
+    a {
+        color: var(--albirru-primary, #714B67);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.15s;
+
+        &:hover {
+            color: color-mix(in srgb, var(--albirru-primary, #714B67) 80%, black);
+            text-decoration: none;
+        }
+    }
+
+    div.d-flex.justify-content-between.align-items-center.small.mt-2 {
+        margin-top: 16px;
+    }
+}
+
+// =============================================
+// STYLE 1: Glassmorphism (Centered)
+// =============================================
+[data-albirru-login-style="glass"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .oe_login_form {
+        background: rgba(255, 255, 255, 0.75); // Lighter for better contrast
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        padding: 48px; // Increased padding
+        border-radius: 24px; // Larger radius
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow:
+            0 25px 50px -12px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+        animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+
+        // Logo styling
+        .albirru-logo-container img {
+            max-height: 90px; // Slightly larger logo
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.1));
+            margin-bottom: 12px;
+        }
+    }
+}
+
+// =============================================
+// STYLE 2: Split Screen
+// =============================================
+[data-albirru-login-style="split"] {
+
+    &.oe_login {
+        display: block;
+        padding: 0;
+        margin: 0;
+    }
+
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+
+    // Left Side (Branding)
+    .albirru-split-branding {
+        flex: 1.2; // Give image slightly more space
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end; // Text at bottom left usually looks better
+        padding: 6rem;
+        color: white;
+
+        .albirru-split-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            transition: transform 10s ease; // Slow zoom effect
+        }
+
+        // Hover effect on the container zooms background slightly
+        &:hover .albirru-split-bg {
+            transform: scale(1.05);
+        }
+
+        .albirru-split-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.1) 100%);
+            z-index: 1;
+        }
+
+        .albirru-split-content {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            animation: slideUpFade 0.8s 0.2s backwards;
+
+            h1 {
+                font-size: 3.5rem;
+                line-height: 1.1;
+                margin-bottom: 1.5rem;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            p {
+                font-size: 1.25rem;
+                opacity: 0.9;
+                font-weight: 300;
+                line-height: 1.6;
+            }
+
+            .albirru-split-logo img {
+                max-height: 60px;
+                margin-bottom: 2rem;
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            }
+        }
+    }
+
+    // Right Side (Form)
+    .container {
+        flex: 0 0 600px; // Generous width for split view container
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 60px;
+        position: relative;
+        z-index: 10;
+        margin: 0;
+        max-width: none;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05); // Shadow separation
+
+        .logo {
+            display: none;
+        }
+
+        .oe_login_form {
+            width: 100%;
+            max-width: 440px; // Slightly wider form in split view
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
+            padding: 0;
+            border: none;
+            animation: fadeIn 0.8s ease-out;
+
+            // Override labels for white background
+            label {
+                color: #111827;
+            }
+
+            .form-control {
+                background: #f3f4f6;
+                border-color: transparent;
+            }
+
+            .form-control:focus {
+                background: #fff;
+                border-color: var(--albirru-primary, #714B67);
+            }
+        }
+    }
+
+    @media (max-width: #{$albirru-breakpoint-tablet}) {
+        flex-direction: column;
+
+        .albirru-split-branding {
+            display: none;
+        }
+
+        // Hide image on tablets/mobile
+        .container {
+            flex: 1;
+            width: 100%;
+            box-shadow: none;
+        }
+    }
+}
+
+// =============================================
+// STYLE 3: Immersive Minimalist
+// =============================================
+[data-albirru-login-style="minimal"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .oe_login_form {
+        // Dark Glass Container
+        background: rgba(15, 23, 42, 0.75); // Slightly darker for better contrast
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        padding: 48px;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+        max-width: 550px;
+        width: 100%;
+        animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+
+        // Input Styles - Dark Transparency
+        .form-control {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            backdrop-filter: blur(0px);
+            font-weight: 500;
+            transition: all 0.25s ease;
+
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+                font-weight: 400;
+            }
+
+            &:focus {
+                background: rgba(0, 0, 0, 0.5);
+                border-color: rgba(255, 255, 255, 0.4);
+                box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+                transform: translateY(-1px);
+            }
+        }
+
+        // Input Icons
+        .input-group-text {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: none;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        // Labels
+        label {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        // Branding / Title Text (if any present in form excluding label)
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .text-center {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        // Reset Password / Links (Text Only)
+        a:not(.btn) {
+            color: rgba(255, 255, 255, 0.75);
+            font-weight: 500;
+            transition: 0.2s;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+
+            &:hover {
+                color: #ffffff;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+                text-decoration: underline;
+            }
+        }
+
+        // Primary Button - Gradient or Solid Light
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            color: #0f172a; // Dark text for contrast
+            border: none;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+            &:hover {
+                background: #ffffff;
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+
+        // Secondary Button (Use a Passkey, OAuth, etc.)
+        // Ensure these have DARK text if they are light buttons
+        // target specifically .list-group-item and .passkey_login_link because Odoo uses these for the passkey button
+        .btn-secondary,
+        .btn-light,
+        a.btn-secondary,
+        .list-group-item,
+        a.list-group-item {
+            background: rgba(255, 255, 255, 0.9); // Light background
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #111827; // Dark text for visibility
+            font-weight: 600;
+            text-shadow: none;
+            border-radius: 12px;
+
+            &:hover {
+                background: #ffffff;
+                color: #000000;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                text-decoration: none;
+            }
+
+            // Fix icon color inside
+            i,
+            span {
+                color: #111827;
+            }
+        }
+
+        // Logo Formatting
+        .albirru-logo-container img {
+            // Force white logo
+            filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.5)) brightness(0) invert(1);
+            opacity: 0.95;
+        }
+
+        // Remove background from database selector if clear
+        .o_database_list {
+            a {
+                color: rgba(255, 255, 255, 0.8);
+            }
+        }
+    }
+}
+
+// =============================================
+// Animations
+// =============================================
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: #{$albirru-breakpoint-phone}) {
+    [data-albirru-login-style="glass"] .oe_login_form {
+        padding: 30px 20px;
+    }
+}

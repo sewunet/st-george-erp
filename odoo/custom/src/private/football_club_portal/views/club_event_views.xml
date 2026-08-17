@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_football_club_event_list" model="ir.ui.view">
+        <field name="name">football.club.event.list</field>
+        <field name="model">football.club.event</field>
+        <field name="arch" type="xml">
+            <list string="Events" decoration-success="state == 'published'" decoration-muted="not active or state == 'completed'" decoration-danger="state == 'cancelled'">
+                <field name="name"/>
+                <field name="event_type"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="venue"/>
+                <field name="state" widget="badge"/>
+                <field name="website_published" widget="boolean_toggle"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_football_club_event_form" model="ir.ui.view">
+        <field name="name">football.club.event.form</field>
+        <field name="model">football.club.event</field>
+        <field name="arch" type="xml">
+            <form string="Event">
+                <header>
+                    <button name="action_publish" string="Publish" type="object" class="btn-primary" groups="football_club_portal.group_football_club_manager" invisible="state != 'draft'"/>
+                    <button name="action_unpublish" string="Unpublish" type="object" groups="football_club_portal.group_football_club_manager" invisible="state != 'published'"/>
+                    <button name="action_complete" string="Complete" type="object" groups="football_club_portal.group_football_club_manager" invisible="state != 'published'"/>
+                    <button name="action_cancel" string="Cancel" type="object" groups="football_club_portal.group_football_club_manager" invisible="state not in ('draft', 'published')"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" groups="football_club_portal.group_football_club_manager" invisible="state not in ('published', 'completed', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,published,completed,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Event name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Event Information">
+                            <field name="event_type"/>
+                            <field name="registration_required"/>
+                            <field name="maximum_attendees"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Scheduling">
+                            <field name="start_datetime"/>
+                            <field name="end_datetime"/>
+                            <field name="website_published" readonly="1"/>
+                            <field name="website_url" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Venue">
+                            <field name="venue"/>
+                            <field name="address"/>
+                        </group>
+                        <group string="Cover Image">
+                            <field name="cover_image" widget="image"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Short Description">
+                            <field name="short_description"/>
+                        </page>
+                        <page string="Description">
+                            <field name="description" widget="html"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_football_club_event_kanban" model="ir.ui.view">
+        <field name="name">football.club.event.kanban</field>
+        <field name="model">football.club.event</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="event_type"/>
+                <field name="start_datetime"/>
+                <field name="venue"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div><field name="event_type"/></div>
+                            <div><field name="start_datetime"/></div>
+                            <div><field name="venue"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_football_club_event_search" model="ir.ui.view">
+        <field name="name">football.club.event.search</field>
+        <field name="model">football.club.event</field>
+        <field name="arch" type="xml">
+            <search string="Search Events">
+                <field name="name"/>
+                <field name="event_type"/>
+                <field name="venue"/>
+                <filter string="Upcoming" name="upcoming" domain="[('start_datetime', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter string="Published" name="published" domain="[('state', '=', 'published'), ('website_published', '=', True)]"/>
+                <filter string="Drafts" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter string="Event Type" name="group_event_type" context="{'group_by': 'event_type'}"/>
+                    <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Month" name="group_month" context="{'group_by': 'start_datetime:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_football_club_events" model="ir.actions.act_window">
+        <field name="name">Events</field>
+        <field name="res_model">football.club.event</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="football_club_portal.view_football_club_event_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first football club event.</p>
+        </field>
+    </record>
+</odoo>

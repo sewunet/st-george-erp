@@ -1,0 +1,69 @@
+// Albirru Backend Theme - Mail & Discuss Styles
+// Compatible with Odoo 19
+
+// =============================================
+// Mail Composer - Explicit Light Mode
+// =============================================
+// We target html:not(.albirru-dark-mode) to ensure these only apply in light mode
+// and don't conflict with dark_mode.scss which uses html.albirru-dark-mode
+
+html:not(.albirru-dark-mode):not([data-albirru-dark="true"]) {
+
+    // Main Composer Container
+    .o-mail-Composer,
+    .o-mail-Composer-main,
+    .o-mail-Composer-coreFooter {
+        background-color: #ffffff;
+        border-color: #dee2e6;
+        color: #212529;
+    }
+
+    // Input Area
+    .o-mail-Composer-input {
+        background-color: #f8f9fa;
+        color: #212529;
+        border-color: #dee2e6;
+
+        &::placeholder {
+            color: #6c757d;
+        }
+
+        &:focus {
+            background-color: #ffffff;
+            border-color: var(--albirru-primary, #714B67);
+            box-shadow: 0 0 0 3px rgba(var(--albirru-primary-rgb, 113, 75, 103), 0.15);
+        }
+    }
+
+    // Text Input Container
+    .o-mail-Composer-textInputContainer {
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+    }
+
+    // Textarea specific
+    textarea.o-mail-Composer-input {
+        background-color: #f8f9fa;
+        color: #212529;
+    }
+
+    // Actions / Buttons in Composer
+    .o-mail-Composer-actions {
+        .btn {
+            color: #6c757d;
+
+            &:hover {
+                background-color: #e9ecef;
+                color: #212529;
+            }
+        }
+    }
+
+    // Icons
+    .fa,
+    .oi {
+        &.o-mail-Composer-action {
+            color: #6c757d;
+        }
+    }
+}

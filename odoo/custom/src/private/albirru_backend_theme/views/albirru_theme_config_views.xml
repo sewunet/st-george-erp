@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Theme Configuration Form View -->
+    <record id="albirru_theme_config_view_form" model="ir.ui.view">
+        <field name="name">albirru.theme.config.form</field>
+        <field name="model">albirru.theme.config</field>
+        <field name="arch" type="xml">
+            <form string="Theme Settings" create="false" delete="false">
+                <header>
+                    <button name="action_apply_refresh" string="Apply &amp; Refresh" type="object" class="btn-primary" 
+                            help="Save changes and reload the page to apply theme settings immediately."/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Configuration Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="theme_scope" widget="radio"
+                               help="Company-wide applies these settings to everyone and hides the personalization panel. Dark mode stays a personal choice either way."/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <!-- Appearance Tab -->
+                        <page string="Appearance" name="appearance">
+                            <group>
+                                <group string="Theme Style">
+                                    <field name="theme_style" widget="radio"/>
+                                </group>
+                                <group string="Color Scheme">
+                                    <field name="color_scheme" widget="selection"/>
+                                </group>
+                            </group>
+                            <group string="Custom Colors" col="4">
+                                <field name="use_custom_colors"/>
+                                <field name="primary_color" widget="color" invisible="not use_custom_colors"/>
+                                <field name="secondary_color" widget="color" invisible="not use_custom_colors"/>
+                                <field name="accent_color" widget="color" invisible="not use_custom_colors"/>
+                            </group>
+                        </page>
+
+                        <!-- Layout Tab -->
+                        <page string="Layout" name="layout">
+                            <group>
+                                <group string="Sidebar">
+                                    <field name="sidebar_position" widget="radio"/>
+                                    <field name="open_drawer_on_home"/>
+                                </group>
+                                <group string="Menu Background">
+                                    <field name="menu_background" widget="image" class="oe_avatar" options="{'size': [90, 90]}"/>
+                                    <field name="menu_bg_opacity" widget="integer" options="{'type': 'number'}"/>
+                                </group>
+                                <group string="Form View">
+                                    <field name="chatter_position" widget="radio"/>
+                                </group>
+                            </group>
+                            <group string="List View" col="4">
+                                <field name="list_row_height" widget="radio"/>
+                                <field name="list_sticky_header"/>
+                            </group>
+                        </page>
+
+                        <!-- Typography Tab -->
+                        <page string="Typography" name="typography">
+                            <group>
+                                <group>
+                                    <field name="font_family" widget="radio"/>
+                                </group>
+                                <group>
+                                    <field name="font_size" widget="radio"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- UI Elements Tab -->
+                        <page string="UI Elements" name="ui_elements">
+                            <group>
+                                <group string="Buttons">
+                                    <field name="button_style" widget="radio"/>
+                                </group>
+                                <group string="Inputs">
+                                    <field name="input_style" widget="radio"/>
+                                </group>
+                            </group>
+                            <group string="Loading">
+                                <field name="loader_style" widget="radio"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Theme Configuration Tree View -->
+    <record id="albirru_theme_config_view_tree" model="ir.ui.view">
+        <field name="name">albirru.theme.config.tree</field>
+        <field name="model">albirru.theme.config</field>
+        <field name="arch" type="xml">
+            <list string="Theme Configurations" create="false" delete="false">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="theme_style"/>
+                <field name="color_scheme"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Server Action to open form with correct config -->
+    <record id="albirru_theme_config_server_action" model="ir.actions.server">
+        <field name="name">Open Theme Settings</field>
+        <field name="model_id" ref="model_albirru_theme_config"/>
+        <field name="state">code</field>
+        <field name="code">
+config = env['albirru.theme.config'].get_current_config()
+action = {
+    'type': 'ir.actions.act_window',
+    'name': 'Theme Settings',
+    'res_model': 'albirru.theme.config',
+    'view_mode': 'form',
+    'res_id': config.id,
+    'target': 'current',
+    'context': {'form_view_initial_mode': 'edit', 'create': False},
+}
+        </field>
+    </record>
+
+    <!-- Window Action (for reference, still useful for tree view if needed) -->
+    <record id="albirru_theme_config_action" model="ir.actions.act_window">
+        <field name="name">Theme Configurations</field>
+        <field name="res_model">albirru.theme.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="target">current</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+</odoo>
