@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Required clearing activity and clearing product in Advance -->
+    <record id="hr_expense_view_form_activity" model="ir.ui.view">
+        <field name="name">hr.expense.view.form.activity</field>
+        <field name="model">hr.expense</field>
+        <field name="priority">60</field>
+        <field
+            name="inherit_id"
+            ref="budget_activity_advance_clearing.hr_expense_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='clearing_activity_id']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('advance', '=', False)], 'readonly': [('is_editable', '=', False)], 'required': [("advance", "=", True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_expense_sheet_form" model="ir.ui.view">
+        <field name="name">view.hr.expense.sheet.form</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//header/button[@name='reset_expense_sheets']"
+                position="before"
+            >
+                <button
+                    name="%(hr_expense.hr_expense_refuse_wizard_action)d"
+                    states="draft"
+                    context="{'hr_expense_refuse_model':'hr.expense.sheet', 'self_refuse': 1}"
+                    string="Refuse"
+                    type="action"
+                />
+            </xpath>
+            <xpath
+                expr="//header/button[@name='reset_expense_sheets']"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'invisible': ['|', '|', ('can_reset', '=', False), ('state', 'not in', ['submit', 'cancel']), ('review_ids', '!=', [])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="review_ids" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('review_ids', '!=', [])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="create_uid" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Show all state on Expenses -->
+    <record
+        id="hr_expense.action_hr_expense_sheet_my_all"
+        model="ir.actions.act_window"
+    >
+        <field name="domain">[]</field>
+    </record>
+    <record
+        id="hr_expense_advance_clearing.action_my_hr_advance_sheet"
+        model="ir.actions.act_window"
+    >
+        <field
+            name="domain"
+        >['|', ('advance', '=', True), ('advance_sheet_id', '!=', False)]</field>
+    </record>
+    <record
+        id="hr_expense_advance_clearing.action_my_hr_expense_sheet"
+        model="ir.actions.act_window"
+    >
+        <field
+            name="domain"
+        >[('advance', '!=', True), ('advance_sheet_id', '=', False)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,2 @@
+"id","name","cash_account_code_prefix","bank_account_code_prefix","transfer_account_code_prefix","currency_id/id","country_id/id"
+"st_george_coa.st_george_chart","St. George FC - Chart of Accounts",11010100,11010200,11010400,"base.THB","base.th"
