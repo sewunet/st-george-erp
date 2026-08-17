@@ -59,12 +59,12 @@ contract:
   - contract_invoice_plan
   - contract_invoice_plan_selection
 
-ecosoft-addons:
-  - account_financial_report_extension
-  - account_move_reconcile_no_cancel
-  - account_reconciliation_widget_extension
-  - base_report_extension
-  - stock_account_visible_valuation
+# ecosoft-addons:
+#   - account_financial_report_extension
+#   - account_move_reconcile_no_cancel
+#   - account_reconciliation_widget_extension
+#   - base_report_extension
+#   - stock_account_visible_valuation
 
 hr:
   - hr_department_code
