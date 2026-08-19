@@ -10,6 +10,29 @@
     --club-border: #dce5df;
 }
 
+/*
+ * Single source of truth for the public club website palette (homepage, events,
+ * fan registration, shared header/footer). --sg-red is the St. George crest red.
+ *
+ * Declared on the public club shell (.sg-club-page wraps every public club page)
+ * rather than on :root on purpose: club_login.css keeps its own :root palette and
+ * is bundled after this file, so a :root declaration here would be overridden by
+ * it. Scoping to the shell element keeps the two palettes fully independent.
+ */
+.sg-club-page {
+    --sg-red: #c4212a;
+    --sg-red-dark: #a91c24;
+    --sg-red-deep: #8f171e;
+    --sg-yellow: #ffd800;
+    --sg-yellow-dark: #e5b900;
+    --sg-green: #064f35;
+    --sg-white: #ffffff;
+    --sg-background: #f7f7f5;
+    --sg-text: #181d22;
+    --sg-muted: #666d78;
+    --sg-border: #e4e6e8;
+}
+
 .fc-page {
     background: var(--club-background);
     color: var(--club-text);

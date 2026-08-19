@@ -1,15 +1,4 @@
-:root {
-    --sg-red: #bf1725;
-    --sg-red-dark: #781019;
-    --sg-red-deep: #530b12;
-    --sg-yellow: #ffd800;
-    --sg-yellow-dark: #e5b900;
-    --sg-white: #ffffff;
-    --sg-background: #f7f7f5;
-    --sg-text: #181d22;
-    --sg-muted: #666d78;
-    --sg-border: #e4e6e8;
-}
+/* Club palette (--sg-*) is defined once on .sg-club-page in football_club.css. */
 
 .sg-events-page,
 .sg-events-page * {
@@ -43,12 +32,12 @@
 
 .sg-events-page .sg-events-hero {
     background:
-        linear-gradient(90deg, rgba(83, 11, 18, 0.96), rgba(120, 16, 25, 0.66) 45%, rgba(0, 0, 0, 0.32)),
+        linear-gradient(90deg, rgba(169, 28, 36, 0.96), rgba(196, 33, 42, 0.66) 45%, rgba(0, 0, 0, 0.32)),
         url('/football_club_portal/static/src/img/home_stadium_background.jpg');
     background-position: center;
     background-size: cover;
     border-radius: 18px;
-    box-shadow: 0 24px 64px rgba(83, 11, 18, 0.18);
+    box-shadow: 0 24px 64px rgba(143, 23, 30, 0.18);
     margin-inline: auto;
     min-height: 310px;
     overflow: hidden;
@@ -168,7 +157,7 @@
 }
 
 .sg-events-page .sg-events-field select {
-    background-color: rgba(32, 24, 14, 0.78);
+    background-color: rgba(143, 23, 30, 0.82);
     color: var(--sg-white);
 }
 
@@ -226,7 +215,7 @@
 
 .sg-events-page .sg-event-card {
     background: var(--sg-white);
-    border: 1px solid rgba(120, 16, 25, 0.1);
+    border: 1px solid rgba(169, 28, 36, 0.12);
     border-radius: 14px;
     box-shadow: 0 14px 34px rgba(24, 29, 34, 0.08);
     display: flex;
@@ -239,7 +228,7 @@
 .sg-events-page .sg-event-card:hover,
 .sg-events-page .sg-event-card:focus-within {
     border-color: rgba(255, 216, 0, 0.72);
-    box-shadow: 0 22px 50px rgba(83, 11, 18, 0.16);
+    box-shadow: 0 22px 50px rgba(143, 23, 30, 0.16);
     transform: translateY(-6px);
 }
 

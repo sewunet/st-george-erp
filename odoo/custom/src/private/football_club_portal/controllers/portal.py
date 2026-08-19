@@ -78,7 +78,7 @@ class FootballClubPortal(http.Controller):
         self._parse_date_value(values, errors, "date_of_birth", "Date of birth")
         self._parse_date_value(values, errors, "supporter_since", "Supporter since")
 
-        for optional_field in ("middle_name", "gender", "date_of_birth", "supporter_since", "preferred_communication", "city", "favorite_player"):
+        for optional_field in ("gender", "date_of_birth", "supporter_since", "preferred_communication", "city", "favorite_player"):
             if not values.get(optional_field):
                 values.pop(optional_field, None)
 
@@ -90,8 +90,10 @@ class FootballClubPortal(http.Controller):
         errors = {}
         if not values.get("first_name"):
             errors["first_name"] = "First name is required."
+        if not values.get("middle_name"):
+            errors["middle_name"] = "Middle name is required."
         if not values.get("last_name"):
-            errors["last_name"] = "Last name is required."
+            errors["last_name"] = "Grandfather's name is required."
         if not values.get("email") and not values.get("phone"):
             errors["contact"] = "Provide at least an email address or phone number."
         if not values.get("consent_accepted"):

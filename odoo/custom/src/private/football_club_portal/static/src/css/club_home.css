@@ -1,17 +1,4 @@
-:root {
-    --sg-red: #bf1725;
-    --sg-red-dark: #781019;
-    --sg-red-deep: #530b12;
-    --sg-yellow: #ffd800;
-    --sg-yellow-dark: #e5b900;
-    --sg-green: #064f35;
-    --sg-white: #ffffff;
-    --sg-background: #f7f7f5;
-    --sg-text: #181d22;
-    --sg-muted: #666d78;
-    --sg-border: #e4e6e8;
-}
-
+/* Club palette (--sg-*) is defined once on .sg-club-page in football_club.css. */
 
 body.sg-club-body #wrapwrap > header,
 body.sg-club-body #wrapwrap > footer {
@@ -48,7 +35,7 @@ body.sg-club-body #wrapwrap > footer {
 }
 
 .sg-home-topbar {
-    background: var(--sg-red-deep);
+    background: var(--sg-red);
     color: var(--sg-white);
     font-size: 0.88rem;
 }
@@ -185,7 +172,7 @@ body.sg-club-body #wrapwrap > footer {
 
 .sg-home-hero {
     background:
-        linear-gradient(90deg, rgba(83, 11, 18, 0.94), rgba(120, 16, 25, 0.78) 48%, rgba(83, 11, 18, 0.62)),
+        linear-gradient(90deg, rgba(169, 28, 36, 0.94), rgba(196, 33, 42, 0.78) 48%, rgba(143, 23, 30, 0.62)),
         url('/football_club_portal/static/src/img/home_stadium_background.jpg');
     background-position: center;
     background-size: cover;
@@ -506,7 +493,7 @@ body.sg-club-body #wrapwrap > footer {
 }
 
 .sg-home-footer {
-    background: var(--sg-red-deep);
+    background: var(--sg-red);
     color: rgba(255, 255, 255, 0.86);
 }
 

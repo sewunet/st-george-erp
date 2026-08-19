@@ -242,11 +242,12 @@
                                         <small t-if="errors.get('first_name')" class="fc-field-error"><t t-out="errors.get('first_name')"/></small>
                                     </label>
                                     <label>
-                                        <span>Middle name</span>
-                                        <input name="middle_name" t-att-value="values.get('middle_name', '')"/>
+                                        <span>Middle name *</span>
+                                        <input name="middle_name" required="required" t-att-value="values.get('middle_name', '')"/>
+                                        <small t-if="errors.get('middle_name')" class="fc-field-error"><t t-out="errors.get('middle_name')"/></small>
                                     </label>
                                     <label>
-                                        <span>Last name *</span>
+                                        <span>Grandfather's name *</span>
                                         <input name="last_name" required="required" t-att-value="values.get('last_name', '')"/>
                                         <small t-if="errors.get('last_name')" class="fc-field-error"><t t-out="errors.get('last_name')"/></small>
                                     </label>

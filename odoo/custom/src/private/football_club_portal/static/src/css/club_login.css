@@ -1,7 +1,7 @@
 :root {
-    --sg-red: #bf1725;
-    --sg-red-dark: #781019;
-    --sg-red-deep: #530b12;
+    --sg-red: #c4212a;
+    --sg-red-dark: #a91c24;
+    --sg-red-deep: #8f171e;
     --sg-yellow: #ffd800;
     --sg-yellow-dark: #e5b900;
     --sg-green: #064f35;
@@ -51,7 +51,7 @@ body:has(.sg-login-page) footer {
 
 .sg-login-brand-panel {
     background:
-        linear-gradient(0deg, rgba(83, 11, 18, 0.92), rgba(120, 16, 25, 0.86)),
+        linear-gradient(0deg, rgba(169, 28, 36, 0.92), rgba(196, 33, 42, 0.86)),
         url('/football_club_portal/static/src/img/stadium_login_background.jpg'),
         radial-gradient(circle at 42% 36%, rgba(255, 216, 0, 0.16), transparent 30%),
         linear-gradient(135deg, var(--sg-red-dark), var(--sg-red-deep));

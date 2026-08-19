@@ -31,7 +31,9 @@ class FootballClubFan(models.Model):
         ondelete="restrict",
     )
     first_name = fields.Char(required=True, tracking=True)
-    middle_name = fields.Char()
+    middle_name = fields.Char(required=True)
+    # last_name carries the fan's grandfather's name in this project; the public
+    # registration form labels it accordingly.
     last_name = fields.Char(required=True, tracking=True)
     email = fields.Char()
     normalized_email = fields.Char(compute="_compute_normalized_contacts", store=True, index=True)
@@ -199,13 +201,20 @@ class FootballClubFan(models.Model):
             raise AccessError(_("Only Football Club managers can delete fan records."))
         return super().unlink()
 
-    @api.constrains("first_name", "last_name")
+    @api.constrains("first_name", "middle_name", "last_name")
     def _check_required_names(self):
+        """Reject blank or whitespace-only parts of the first + middle + last name.
+
+        All three columns are NOT NULL, so the database already rejects missing values.
+        This adds the check it cannot make: "   " satisfies NOT NULL but is not a name.
+        """
         for fan in self:
             if not (fan.first_name or "").strip():
                 raise ValidationError(_("First name cannot be blank."))
+            if not (fan.middle_name or "").strip():
+                raise ValidationError(_("Middle name cannot be blank."))
             if not (fan.last_name or "").strip():
-                raise ValidationError(_("Last name cannot be blank."))
+                raise ValidationError(_("Grandfather's name (last name) cannot be blank."))
 
     @api.constrains("email", "phone")
     def _check_contact_required_and_format(self):
