@@ -135,6 +135,11 @@ class FootballClubFan(models.Model):
         }
 
     @api.model
+    def _partner_has_internal_user(self, partner):
+        users = partner.sudo().with_context(active_test=False).user_ids
+        return any(user._is_internal() for user in users)
+
+    @api.model
     def _find_matching_partner(self, vals):
         Partner = self.env["res.partner"].sudo()
         email = self._normalize_email(vals.get("email"))
@@ -155,7 +160,9 @@ class FootballClubFan(models.Model):
         partner = self._find_matching_partner(vals)
         partner_values = self._prepare_partner_values(vals)
         if partner:
-            updates = {key: value for key, value in partner_values.items() if value and not partner[key]}
+            updates = {}
+            if not self._partner_has_internal_user(partner):
+                updates = {key: value for key, value in partner_values.items() if value and not partner[key]}
             if updates:
                 partner.write(updates)
             return partner
@@ -183,6 +190,8 @@ class FootballClubFan(models.Model):
         sync_fields = {"email", "phone", "city", "first_name", "middle_name", "last_name"}
         if sync_fields.intersection(vals):
             for fan in self.filtered("partner_id"):
+                if self._partner_has_internal_user(fan.partner_id):
+                    continue
                 partner_updates = {}
                 if "email" in vals and fan.email and not fan.partner_id.email:
                     partner_updates["email"] = fan.email.strip()

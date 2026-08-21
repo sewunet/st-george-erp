@@ -291,6 +291,17 @@ body:has(.sg-login-page) footer {
     color: var(--sg-green);
 }
 
+.sg-auth-note {
+    background: #fff9d9;
+    border-left: 4px solid var(--sg-yellow);
+    border-radius: 8px;
+    color: var(--sg-muted);
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin: 0 0 0.75rem;
+    padding: 0.7rem 0.8rem;
+}
+
 .sg-login-submit,
 .sg-login-card .btn-primary {
     background: var(--sg-red);

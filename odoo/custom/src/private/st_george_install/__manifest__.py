@@ -329,8 +329,8 @@
         # "web_widget_section_and_note_text_scrollable",
         # "web_widget_url_advanced",        
         
-        #Themes
-        muk_web_theme,
-        football_club_portal,
+        # Themes
+        "muk_web_theme",
+        "football_club_portal",
     ],
 }

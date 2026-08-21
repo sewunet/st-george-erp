@@ -1,16 +1,21 @@
 ﻿import logging
 
+from psycopg2 import IntegrityError
 from werkzeug.urls import urlencode
 
-from odoo import fields, http
-from odoo.exceptions import ValidationError
+from odoo import Command, fields, http
+from odoo.exceptions import AccessDenied, ValidationError
 from odoo.http import request
+from odoo.tools import escape_psql, single_email_re
 
 
 _logger = logging.getLogger(__name__)
 
 
 class FootballClubPortal(http.Controller):
+    _fan_auth_url = "/club/fan/auth"
+    _fan_register_url = "/club/fan/register"
+    _minimum_password_length = 8
     _fan_allowed_fields = {
         "first_name",
         "middle_name",
@@ -59,6 +64,67 @@ class FootballClubPortal(http.Controller):
             values[field_name] = fields.Date.to_string(fields.Date.to_date(value))
         except (TypeError, ValueError):
             errors[field_name] = f"{label} is not a valid date."
+
+    def _normalize_login(self, email):
+        return (email or "").strip().lower()
+
+    def _is_plausible_email(self, email):
+        return bool(single_email_re.fullmatch(email))
+
+    def _authenticate(self, login, password):
+        credential = {"login": login, "password": password, "type": "password"}
+        return request.session.authenticate(request.env, credential)
+
+    def _find_user_by_login(self, login):
+        Users = request.env["res.users"].sudo().with_context(active_test=False)
+        user = Users.search([("login", "=", login)], limit=1)
+        if user:
+            return user
+        candidates = Users.search([("login", "=ilike", escape_psql(login))], order="id")
+        return candidates.filtered(lambda candidate: self._normalize_login(candidate.login) == login)[:1]
+
+    def _create_portal_user(self, login, password):
+        partner = request.env["res.partner"].sudo().create({"name": login, "email": login})
+        portal_group = request.env.ref("base.group_portal").sudo()
+        return request.env["res.users"].sudo().with_context(no_reset_password=True).create({
+            "name": partner.name or login,
+            "login": login,
+            "email": login,
+            "partner_id": partner.id,
+            "password": password,
+            "group_ids": [Command.set([portal_group.id])],
+        })
+
+    def _send_portal_welcome_email(self, user):
+        template = request.env.ref(
+            "football_club_portal.mail_template_portal_account_welcome",
+            raise_if_not_found=False,
+        )
+        if not template:
+            _logger.warning("Portal account welcome mail template is unavailable")
+            return
+        try:
+            template.sudo().send_mail(user.id, force_send=False, raise_exception=False)
+        except Exception:
+            _logger.exception("Unable to queue portal account welcome email for user ID %s", user.id)
+
+    def _fan_for_current_partner(self):
+        if request.env.user._is_public():
+            return request.env["football.club.fan"].browse()
+        return request.env["football.club.fan"].sudo().with_context(active_test=False).search(
+            [("partner_id", "=", request.env.user.partner_id.id)],
+            order="active desc, id",
+            limit=1,
+        )
+
+    def _fan_values(self, fan):
+        if not fan:
+            return {}
+        values = {field_name: fan[field_name] or "" for field_name in self._fan_allowed_fields}
+        for field_name in ("date_of_birth", "supporter_since"):
+            values[field_name] = fields.Date.to_string(fan[field_name]) if fan[field_name] else ""
+        values["consent_accepted"] = fan.consent_accepted
+        return values
 
     def _prepare_fan_values(self, post):
         values = {
@@ -109,30 +175,99 @@ class FootballClubPortal(http.Controller):
         )
         return request.render("football_club_portal.club_home", {"events": events})
 
+    @http.route(
+        "/club/fan/auth",
+        type="http",
+        auth="public",
+        website=True,
+        sitemap=False,
+        csrf=True,
+        methods=["GET", "POST"],
+    )
+    def fan_auth(self, **post):
+        if not request.env.user._is_public():
+            return request.redirect(self._fan_register_url)
+
+        login = self._normalize_login(post.get("email"))
+        error = False
+        if request.httprequest.method == "POST":
+            password = post.get("password") or ""
+            if not self._is_plausible_email(login):
+                error = "Enter a valid email address."
+            elif not password:
+                error = "Password is required."
+            elif len(password) < self._minimum_password_length:
+                error = f"Password must be at least {self._minimum_password_length} characters."
+            else:
+                new_account_created = False
+                user = self._find_user_by_login(login)
+                if not user:
+                    try:
+                        with request.env.cr.savepoint():
+                            user = self._create_portal_user(login, password)
+                        new_account_created = True
+                    except (IntegrityError, ValidationError):
+                        request.env.invalidate_all()
+                        user = self._find_user_by_login(login)
+                    except Exception:
+                        _logger.exception("Unexpected fan account creation failure for normalized login %s", login)
+                        error = "We could not complete sign-in. Please try again later."
+
+                if user and not error:
+                    try:
+                        auth_info = self._authenticate(login, password)
+                        if auth_info.get("uid") == request.session.uid:
+                            if new_account_created:
+                                self._send_portal_welcome_email(user)
+                            return request.redirect(self._fan_register_url)
+                        error = "Additional account verification is required. Please use the standard sign-in page."
+                    except AccessDenied:
+                        error = "Incorrect email or password."
+                    except Exception:
+                        _logger.exception("Unexpected fan authentication failure for normalized login %s", login)
+                        error = "We could not complete sign-in. Please try again later."
+                elif not error:
+                    error = "Incorrect email or password."
+
+        return request.render(
+            "football_club_portal.fan_auth",
+            {"email": login, "error": error, "minimum_password_length": self._minimum_password_length},
+        )
+
     @http.route("/club/fan/register", type="http", auth="public", website=True, csrf=True, methods=["GET", "POST"])
     def fan_register(self, **post):
-        values = {field_name: post.get(field_name, "") for field_name in self._fan_allowed_fields}
-        values["consent_accepted"] = post.get("consent_accepted") in {"on", "1", "true", "True", "yes"}
+        if request.env.user._is_public():
+            return request.redirect(self._fan_auth_url)
+
+        fan = self._fan_for_current_partner()
+        values = self._fan_values(fan)
         errors = {}
         if request.httprequest.method == "POST":
+            values = {field_name: post.get(field_name, "") for field_name in self._fan_allowed_fields}
+            values["consent_accepted"] = post.get("consent_accepted") in {"on", "1", "true", "True", "yes"}
             create_values, errors = self._prepare_fan_values(post)
             values.update(create_values)
             errors.update(self._fan_form_errors(create_values))
             if not errors:
                 try:
                     with request.env.cr.savepoint():
-                        request.env["football.club.fan"].sudo().create(create_values)
+                        if fan:
+                            fan.write(create_values)
+                        else:
+                            create_values["partner_id"] = request.env.user.partner_id.id
+                            fan = request.env["football.club.fan"].sudo().create(create_values)
                     return request.redirect("/club/fan/register/success")
                 except ValidationError as error:
                     errors["general"] = error.args[0] if error.args else "Please review the registration form."
                 except Exception:
-                    _logger.exception("Unexpected public fan registration failure")
+                    _logger.exception("Unexpected website fan registration failure")
                     errors["general"] = "We could not complete the registration. Please try again later."
         return request.render(
             "football_club_portal.fan_registration_form",
             {
                 "values": values,
                 "errors": errors,
+                "fan": fan,
                 "gender_options": request.env["football.club.fan"]._fields["gender"].selection,
                 "communication_options": request.env["football.club.fan"]._fields["preferred_communication"].selection,
             },

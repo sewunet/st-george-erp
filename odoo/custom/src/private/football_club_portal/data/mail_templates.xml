@@ -16,5 +16,29 @@
             </div>
         </field>
     </record>
+
+    <record id="mail_template_portal_account_welcome" model="mail.template">
+        <field name="name">St. George Supporter Portal Account Welcome</field>
+    <field name="model_id" ref="base.model_res_users"/>
+    <field name="subject">Welcome to St. George Sports Club</field>
+    <field name="email_from">{{ object.company_id.email_formatted or object.company_id.default_from_email or '' }}</field>
+    <field name="email_to">{{ object.partner_id.email or object.email or '' }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <div style="font-family: Arial, sans-serif; color: #202633; line-height: 1.6;">
+                <div style="background: #c4212a; border-bottom: 6px solid #ffd800; color: #ffffff; padding: 20px 24px;">
+                    <h1 style="font-size: 24px; margin: 0;">St. George Sports Club</h1>
+                </div>
+                <div style="padding: 24px;">
+                    <p>Welcome to St. George Sports Club.</p>
+                    <p>Your supporter portal account has been created successfully.</p>
+                    <p>You can now complete your fan registration and later sign in using the same email and password.</p>
+                    <p style="color: #707788; font-size: 14px;">
+                        This email address has not been verified. No email verification is required at this stage.
+                    </p>
+                </div>
+            </div>
+        </field>
+    </record>
 </odoo>
 

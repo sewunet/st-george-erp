@@ -99,4 +99,78 @@
             </t>
         </xpath>
     </template>
+
+    <template id="fan_auth" name="St. George Fan Login or Signup">
+        <t t-call="web.frontend_layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
+            <t t-set="body_classname" t-value="'sg-login-body'"/>
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+
+            <div class="sg-login-page sg-fan-auth-page">
+                <section class="sg-login-brand-panel" aria-label="St. George Sports Club">
+                    <div class="sg-login-brand-panel__accent" aria-hidden="true"/>
+                    <div class="sg-login-brand-panel__content">
+                        <div class="sg-login-club-mark">
+                            <img src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                            <div>
+                                <p class="sg-login-club-name"><span>ST. GEORGE</span><span>SPORTS CLUB</span></p>
+                                <p class="sg-login-since">SINCE 1935</p>
+                            </div>
+                        </div>
+                        <div class="sg-login-brand-copy">
+                            <h1>ONE CLUB.<br/><span>ONE HEART.</span><br/>ONE LEGACY.</h1>
+                            <p>Join the St. George supporter community or continue with your existing club account.</p>
+                        </div>
+                        <div class="sg-login-brand-footer">
+                            <span aria-hidden="true" class="sg-login-strokes"/>
+                            <p>Stronger Together.<br/><strong>Proud Forever.</strong></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="sg-login-form-panel" aria-label="Fan account">
+                    <div class="sg-login-dot-pattern" aria-hidden="true"/>
+                    <div class="sg-login-card">
+                        <div class="sg-login-card__header">
+                            <img src="/football_club_portal/static/src/img/st_george_logo.png" alt="St. George Sports Club crest"/>
+                            <h2>Join as a Fan</h2>
+                            <p>Enter your email and password to sign in or create an account.</p>
+                        </div>
+
+                        <form class="oe_login_form" role="form" action="/club/fan/auth" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="mb-3 field-login">
+                                <label for="fan_auth_email" class="form-label">Email</label>
+                                <input id="fan_auth_email" type="email" name="email" class="form-control"
+                                    placeholder="fan@example.com" t-att-value="email" required="required"
+                                    autocapitalize="off" autocomplete="username" autofocus="autofocus"/>
+                            </div>
+                            <p class="sg-auth-note">Please use a real email address if possible. Email verification is not required at this stage.</p>
+                            <div class="mb-3">
+                                <label for="fan_auth_password" class="form-label">Password</label>
+                                <div class="sg-password-field">
+                                    <input id="fan_auth_password" type="password" name="password" class="form-control"
+                                        placeholder="At least 8 characters" required="required"
+                                        t-att-minlength="minimum_password_length" maxlength="4096"
+                                        autocomplete="current-password"/>
+                                    <button type="button" class="sg-password-toggle" aria-label="Show password"
+                                        data-show-label="Show password" data-hide-label="Hide password">Show password</button>
+                                </div>
+                            </div>
+
+                            <p class="alert alert-danger" t-if="error" role="alert"><t t-esc="error"/></p>
+                            <div class="d-grid pt-2">
+                                <button type="submit" class="btn btn-primary sg-login-submit">Continue</button>
+                            </div>
+                        </form>
+
+                        <div class="sg-login-card__actions">
+                            <a class="sg-login-home-link" href="/club">Back to Club Website</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
 </odoo>
