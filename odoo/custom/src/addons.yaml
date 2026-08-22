@@ -105,8 +105,6 @@ bank-statement-import:
   - account_statement_import_sheet_file_xls
   - account_statement_import_sheet_file_xlsx
 
-
-
 contract:
   - contract
   - contract_analytic_tag
@@ -147,7 +145,8 @@ hr-expense:
   - hr_expense_tier_validation
   - hr_expense_widget_o2m
 
-
+payroll:
+  - payroll
 
 mis-builder:
   - mis_builder
@@ -237,7 +236,6 @@ purchase-workflow:
   - purchase_uom_discrete
   - sale_purchase_force_vendor
   - supplier_calendar
-
 
 queue:
   - queue_job
@@ -346,4 +344,3 @@ web:
   - web_widget_product_label_section_and_note_name_visibility
   - web_widget_section_and_note_text_scrollable
   - web_widget_url_advanced
-

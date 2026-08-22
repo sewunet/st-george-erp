@@ -29,7 +29,6 @@
             eval="[(6, 0, [ref('group_role_sale_user'),
                            ref('sales_team.group_sale_manager'),
                            ref('stock.group_stock_manager'),
-                           ref('sale_operating_unit_access_all.group_all_ou_sale'),
                            ])]"
         />
     </record>

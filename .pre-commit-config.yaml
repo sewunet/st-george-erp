@@ -101,7 +101,7 @@ repos:
       - id: pyupgrade
         args: ["--keep-percent-format"]
   - repo: https://github.com/PyCQA/isort
-    rev: 5.9.3
+    rev: 5.13.2
     hooks:
       - id: isort
         name: isort except __init__.py
@@ -112,7 +112,9 @@ repos:
     rev: 3.1.8
     hooks:
       - id: setuptools-odoo-make-default
+        additional_dependencies: ["setuptools<70.0.0"]
       - id: setuptools-odoo-get-requirements
+        additional_dependencies: ["setuptools<70.0.0"]
         args:
           - --output
           - requirements.txt
