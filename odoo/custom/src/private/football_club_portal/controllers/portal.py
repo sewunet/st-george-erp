@@ -186,7 +186,7 @@ class FootballClubPortal(http.Controller):
     )
     def fan_auth(self, **post):
         if not request.env.user._is_public():
-            return request.redirect(self._fan_register_url)
+            return request.redirect("/club" if self._fan_for_current_partner() else self._fan_register_url)
 
         login = self._normalize_login(post.get("email"))
         error = False
@@ -219,7 +219,9 @@ class FootballClubPortal(http.Controller):
                         if auth_info.get("uid") == request.session.uid:
                             if new_account_created:
                                 self._send_portal_welcome_email(user)
-                            return request.redirect(self._fan_register_url)
+                            return request.redirect(
+                                "/club" if self._fan_for_current_partner() else self._fan_register_url
+                            )
                         error = "Additional account verification is required. Please use the standard sign-in page."
                     except AccessDenied:
                         error = "Incorrect email or password."

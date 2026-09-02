@@ -1,5 +1,6 @@
 ﻿import re
 from datetime import timedelta
+from unittest.mock import patch
 
 from psycopg2 import IntegrityError
 
@@ -8,6 +9,8 @@ from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import tagged
 from odoo.tests.common import HttpCase, TransactionCase, new_test_user
 from odoo.tools import mute_logger
+
+from ..controllers.portal import FootballClubPortal
 
 
 class TestFanRegistration(TransactionCase):
@@ -182,6 +185,19 @@ class TestFanRegistrationController(HttpCase):
             groups=groups,
         )
 
+    def _create_linked_fan(self, user, **overrides):
+        values = {
+            "partner_id": user.partner_id.id,
+            "first_name": "Existing",
+            "middle_name": "Linked",
+            "last_name": "Fan",
+            "email": user.login,
+            "phone": "+251911610000",
+            "consent_accepted": True,
+        }
+        values.update(overrides)
+        return self.Fan.create(values)
+
     def _post_registration(self, **overrides):
         payload = {
             "csrf_token": self._csrf_token(self.REGISTER_URL),
@@ -285,6 +301,75 @@ class TestFanRegistrationController(HttpCase):
         self.assertTrue(response.url.endswith(self.REGISTER_URL))
         self.assertEqual(self.Users.search_count([("login", "=", login)]), 1)
         self.assertTrue(user._is_portal())
+
+    def test_existing_portal_user_with_linked_fan_logs_in_to_club(self):
+        login = "existing.portal.fan@example.com"
+        user = self._create_user(login)
+        self._create_linked_fan(user)
+
+        response = self._post_auth(login)
+
+        self.assertTrue(response.url.endswith("/club"))
+        self.assertFalse(response.url.endswith(self.REGISTER_URL))
+
+    def test_existing_internal_user_with_linked_fan_logs_in_to_club_without_identity_changes(self):
+        login = "existing.internal.fan@example.com"
+        user = self._create_user(login, groups="base.group_user")
+        partner = user.partner_id
+        partner.write({
+            "name": "Existing Internal Fan",
+            "email": login,
+            "phone": "+251911610010",
+            "city": "Addis Ababa",
+        })
+        original_groups = user.group_ids
+        original_partner_values = partner.read(["name", "email", "phone", "city"])[0]
+        self._create_linked_fan(
+            user,
+            email="linked.internal.fan@example.com",
+            phone="+251911610011",
+        )
+
+        response = self._post_auth(login)
+
+        self.assertTrue(response.url.endswith("/club"))
+        self.env.invalidate_all()
+        self.assertEqual(partner.read(["name", "email", "phone", "city"])[0], original_partner_values)
+        self.assertEqual(user.group_ids, original_groups)
+        self.assertTrue(user._is_internal())
+        self.assertFalse(user._is_portal())
+
+    def test_authenticated_user_with_linked_fan_auth_route_redirects_to_club(self):
+        login = "authenticated.linked.fan@example.com"
+        user = self._create_user(login)
+        self._create_linked_fan(user, phone="+251911610020")
+        self.authenticate(login, self.PASSWORD)
+
+        response = self.url_open(self.AUTH_URL, allow_redirects=False)
+
+        self.assertIn(response.status_code, (302, 303))
+        self.assertTrue(response.headers["Location"].endswith("/club"))
+
+    def test_authenticated_user_without_fan_auth_route_redirects_to_registration(self):
+        login = "authenticated.no.fan@example.com"
+        self._create_user(login)
+        self.authenticate(login, self.PASSWORD)
+
+        response = self.url_open(self.AUTH_URL, allow_redirects=False)
+
+        self.assertIn(response.status_code, (302, 303))
+        self.assertTrue(response.headers["Location"].endswith(self.REGISTER_URL))
+
+    def test_partial_mfa_auth_does_not_use_linked_fan_redirect(self):
+        login = "pending.mfa.fan@example.com"
+        user = self._create_user(login)
+        self._create_linked_fan(user, phone="+251911610030")
+
+        with patch.object(FootballClubPortal, "_authenticate", return_value={"uid": user.id, "mfa": "totp"}):
+            response = self._post_auth(login)
+
+        self.assertTrue(response.url.endswith(self.AUTH_URL))
+        self.assertIn("Additional account verification is required.", response.text)
 
     def test_existing_portal_user_wrong_password_is_rejected(self):
         login = "wrong.password@example.com"
@@ -474,3 +559,25 @@ class TestFanRegistrationController(HttpCase):
         fans = self.Fan.with_context(active_test=False).search([("partner_id", "=", user.partner_id.id)])
         self.assertEqual(len(fans), 1)
         self.assertEqual(fans.first_name, "Updated")
+
+    def test_existing_fan_can_directly_get_and_post_registration_update(self):
+        login = "direct.update.fan@example.com"
+        user = self._create_user(login)
+        fan = self._create_linked_fan(user, phone="+251911610040")
+        self.authenticate(login, self.PASSWORD)
+
+        get_response = self.url_open(self.REGISTER_URL)
+        self.assertEqual(get_response.status_code, 200)
+        self.assertIn("Update fan registration", get_response.text)
+        self.assertIn(fan.email, get_response.text)
+
+        post_response = self._post_registration(
+            first_name="Directly Updated",
+            email=fan.email,
+            phone=fan.phone,
+        )
+
+        self.assertTrue(post_response.url.endswith("/club/fan/register/success"))
+        fans = self.Fan.with_context(active_test=False).search([("partner_id", "=", user.partner_id.id)])
+        self.assertEqual(fans, fan)
+        self.assertEqual(fan.first_name, "Directly Updated")
