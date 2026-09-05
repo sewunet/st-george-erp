@@ -229,7 +229,7 @@
                 <section class="fc-section">
                     <div class="container">
                         <div class="fc-form-shell">
-                            <h1>Fan registration</h1>
+                            <h1><t t-if="fan">Update fan registration</t><t t-else="">Fan registration</t></h1>
                             <t t-if="errors.get('general')">
                                 <div class="fc-alert" role="alert"><t t-out="errors.get('general')"/></div>
                             </t>
@@ -306,7 +306,9 @@
                                 </label>
                                 <small t-if="errors.get('consent_accepted')" class="fc-field-error"><t t-out="errors.get('consent_accepted')"/></small>
                                 <p class="fc-form-hint js_fc_form_hint d-none">Please review required fields before submitting.</p>
-                                <button class="btn btn-primary fc-submit" type="submit">Submit registration</button>
+                                <button class="btn btn-primary fc-submit" type="submit">
+                                    <t t-if="fan">Save registration</t><t t-else="">Submit registration</t>
+                                </button>
                             </form>
                         </div>
                     </div>
